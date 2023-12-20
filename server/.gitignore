@@ -1,0 +1,7 @@
+node_modules/*
+# .gitignore
+# Ignore .env files
+.env
+
+package-lock.json
+package.json

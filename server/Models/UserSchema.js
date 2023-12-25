@@ -1,41 +1,64 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const UserSchema = new mongoose.Schema(
   {
-    FirstName: {
-      typeof: String,
+    firstName: {
+      type: String,
       trim: true,
     },
-    LastName: {
-      typeof: String,
+    lastName: {
+      type: String,
       trim: true,
     },
-    Email: {
-      typeof: String,
-      require: true,
+    userName: {
+      type: String,
+      unique: [true, "username must be unique"],
+      required: [true, "username must bee required"],
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
       unique: true,
       lowercase: true,
       trim: true,
     },
-    Password: {
-      typeof: String,
-      require: [true, "password is required"],
-      minlength: 5,
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: 4,
       maxlength: 10,
     },
-    ConfirmPassword: {
-      typeof: String,
-      require: [true, "password is required"],
-      minlength: 5,
+    confirmPassword: {
+      type: String,
+      required: [true, "Confirm password is required"],
+      minlength: 4,
       maxlength: 10,
     },
     otp: {
-      typeof: String,
-      require: true,
-      trim: true,
+      type: String,
+      required: true,
     },
+    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
+
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password") || !this.isModified("confirmPassword")) {
+    return next();
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    const hashedConfirmPassword = await bcrypt.hash(this.confirmPassword, 10);
+    this.password = hashedPassword;
+    this.confirmPassword = hashedConfirmPassword;
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});
 
 const User = mongoose.model("users", UserSchema);
 

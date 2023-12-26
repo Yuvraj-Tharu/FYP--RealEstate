@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
 const speakeasy = require("speakeasy");
 const User = require("../Models/UserSchema");
+const jwk = require("jsonwebtoken");
+const SECRET_KEY = "NOTESAPI";
 
 const secret = speakeasy.generateSecret({ length: 20 });
 
@@ -56,6 +58,17 @@ const signupUser = async (req, res) => {
           otp,
         });
         // console.log(" result:", result);
+
+        jwk.sign({ result }, SECRET_KEY, { expiresIn: "2h" }, (err, token) => {
+          if (err) {
+            res
+              .status(410)
+              .json({ message: "some thing went wrong with the token" });
+          } else {
+            res.status(200).json({ result: result, token });
+            console.log(result, token);
+          }
+        });
       }
     }
   } catch (error) {

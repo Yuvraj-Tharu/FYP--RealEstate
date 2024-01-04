@@ -7,7 +7,7 @@ const ForgotPassword = async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email: email });
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     //
@@ -35,10 +35,10 @@ const ForgotPassword = async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error);
-        res.status(500).json({ message: "Failed to send OTP" });
+        return res.status(500).json({ message: "Failed to send OTP" });
       } else {
         console.log("Email sent: " + info.response);
-        res.status(200).json({ message: "OTP sent successfully" });
+        return res.status(200).json({ message: "OTP sent successfully" });
       }
     });
 
@@ -63,31 +63,27 @@ const resetPassword = async (req, res) => {
     const { otp, password, confirmPassword } = req.body;
     const existingUser = await User.findOne({ otp: otp });
     if (!existingUser) {
-      return res.status(404).json({ message: "Invalid OTP" });
+      return res.status(410).json({ message: "Invalid OTP" });
     }
     if (existingUser.otp !== otp) {
-      return res.status(400).json({ message: "Invalid OTP" });
+      return res.status(412).json({ message: "Invalid OTP" });
     }
     const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
       $set: { password: password, confirmPassword: confirmPassword },
+      $unset: { otp: "" },
     });
 
     if (!updatedUser) {
-      return res.status(500).json({ message: "Internal Server Error" });
+      return res.status(503).json({ message: "Internal Server Error" });
     }
-
-    //
-    await User.findByIdAndUpdate(existingUser._id, {
-      $unset: { otp: 1, otpSecret: 1 },
-    });
-
-    res.status(200).json({ message: "Password changed successfully" });
 
     if (password === confirmPassword) {
-      res.status(202).json({ message: "new password matched !!" });
+      return res.status(220).json({ message: "new password matched !!" });
     }
+    res.status(208).json({ message: "Password changed successfully" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

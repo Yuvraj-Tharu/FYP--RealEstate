@@ -8,8 +8,7 @@ const secret = speakeasy.generateSecret({ length: 20 });
 
 const signupUser = async (req, res) => {
   try {
-    const { firstName, lastName, userName, email, password, confirmPassword } =
-      req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -51,7 +50,6 @@ const signupUser = async (req, res) => {
         const result = await User.create({
           firstName,
           lastName,
-          userName,
           email,
           password,
           confirmPassword,
@@ -86,7 +84,7 @@ const sendOTP = async (req, res) => {
       if (existingOTP.otp === otp) {
         const UpdateUser = await User.findByIdAndUpdate(existingOTP._id, {
           $set: { isVerified: true },
-          $unset: { otp: "" },
+          $unset: { otp: "1" },
         });
 
         res.status(200).json({ message: "User signed up, OTP matched!" });

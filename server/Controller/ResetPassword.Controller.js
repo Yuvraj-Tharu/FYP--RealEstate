@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const speakeasy = require("speakeasy");
 const User = require("../Models/UserSchema");
+const bcrypt = require("bcrypt");
 
 const ForgotPassword = async (req, res) => {
   try {
@@ -62,14 +63,22 @@ const resetPassword = async (req, res) => {
   try {
     const { otp, password, confirmPassword } = req.body;
     const existingUser = await User.findOne({ otp: otp });
+    console.log(existingUser);
     if (!existingUser) {
       return res.status(410).json({ message: "Invalid OTP" });
     }
     if (existingUser.otp !== otp) {
       return res.status(412).json({ message: "Invalid OTP" });
     }
+    if (password !== confirmPassword) {
+      return res.status(413).json({ message: "password doesnt match" });
+    }
+
+    const hashpasword = await bcrypt.hash(password, 10);
+    const hashConfirmpasword = await bcrypt.hash(confirmPassword, 10);
+
     const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
-      $set: { password: password, confirmPassword: confirmPassword },
+      $set: { password: hashpasword, confirmPassword: hashConfirmpasword },
       $unset: { otp: "" },
     });
 

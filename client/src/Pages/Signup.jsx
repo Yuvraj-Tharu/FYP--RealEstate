@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../assets/Style/Signup-Style.css";
 import {
   MDBBtn,
@@ -9,21 +9,73 @@ import {
   MDBCardBody,
   MDBInput,
 } from "mdb-react-ui-kit";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Signup() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const onTrigger = async () => {
+    let response; // declare response outside the try block
+
+    try {
+      if (password === confirmPassword) {
+        if (password.length < 5) {
+          console.warn("Password must be at least 5 characters long");
+          setError("Password must be at least 5 characters long");
+          return;
+        }
+
+        response = await fetch("http://localhost:8080/signup-user", {
+          method: "POST",
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          toast.info(<div>Please Check your Email !!</div>, {
+            theme: "colored",
+          });
+          return navigate("/");
+        } else {
+          if (result.error && result.error.includes("duplicate key error")) {
+            setError("User with this email already exists");
+          } else {
+            setError("Signup failed. Please try again. ");
+          }
+        }
+      } else {
+        setError("Password and Confirm Password do not match");
+      }
+    } catch (error) {
+      console.error("An error occurred during signup:", error);
+      setError("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <>
       <MDBContainer
         fluid
-        className="p-4 background-radial-gradient overflow-hidden"
+        className=" p-4 background-radial-gradient overflow-hidden"
       >
         <MDBRow className="align-items-center">
-          <MDBCol
-            md="6"
-            className="text-center text-md-start d-flex flex-column justify-content-center"
-          >
+          <MDBCol md="6" className="text-center text-md-start mb-4 mb-md-0">
             <h1
-              className="my-5 display-3 fw-bold ls-tight px-3"
+              className="my-4 display-4 fw-bold ls-tight"
               style={{ color: "hsl(218, 81%, 95%)" }}
             >
               The best offer <br />
@@ -32,12 +84,12 @@ export default function Signup() {
               </span>
             </h1>
 
-            <span className="px-3 " style={{ color: "hsl(218, 81%, 85%)" }}>
+            <p className="px-3 text-sm" style={{ color: "hsl(218, 81%, 85%)" }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
               itaque accusantium odio, soluta, corrupti aliquam quibusdam
               tempora at cupiditate quis eum maiores libero veritatis? Dicta
               facilis sint aliquid ipsum atque?
-            </span>
+            </p>
           </MDBCol>
 
           <MDBCol md="6" className="position-relative">
@@ -51,14 +103,30 @@ export default function Signup() {
             ></div>
 
             <MDBCard className="my-5 bg-glass">
-              <MDBCardBody className="p-5">
-                <MDBRow>
-                  <MDBCol sm="6" className="mb-4">
-                    <MDBInput label="First name" id="form1" type="text" />
+              <MDBCardBody className="p-3 p-md-5">
+                <MDBRow className="mb-3">
+                  <MDBCol xs="12" md="6" className="mb-3">
+                    <MDBInput
+                      label="First name"
+                      id="form1"
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
+                    />
                   </MDBCol>
 
-                  <MDBCol sm="6" className="mb-4">
-                    <MDBInput label="Last name" id="form2" type="text" />
+                  <MDBCol xs="12" md="6" className="mb-3">
+                    <MDBInput
+                      label="Last name"
+                      id="form2"
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
+                    />
                   </MDBCol>
                 </MDBRow>
 
@@ -66,26 +134,56 @@ export default function Signup() {
                   label="Email"
                   id="form3"
                   type="email"
-                  className="mb-4"
+                  className="mb-3"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
                 <MDBInput
                   label="Password"
                   id="form4"
                   type="password"
-                  className="mb-4"
+                  className="mb-3"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
                 <MDBInput
                   label="Confirm Password"
-                  id="form4"
+                  id="form5"
                   type="password"
-                  className="mb-4"
+                  className="mb-3"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                 />
 
-                <MDBBtn className="w-100 mb-4" size="md">
+                <MDBBtn
+                  onClick={onTrigger}
+                  className="w-100 mb-3 hover:bg-orange-400"
+                  size="md"
+                >
                   Sign up
                 </MDBBtn>
+                {error && (
+                  <p className="text-center text-xs text-red-500 mt-2">
+                    {error}
+                  </p>
+                )}
 
-                {/* The social media buttons can be added here if needed */}
+                <p className="text-center mt-2 text-xs">
+                  Have an account?
+                  <Link
+                    to="/sign-in"
+                    className="text-blue-600 hover:text-orange-400"
+                  >
+                    {" "}
+                    Click here...
+                  </Link>
+                </p>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

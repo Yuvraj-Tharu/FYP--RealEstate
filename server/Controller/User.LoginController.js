@@ -13,7 +13,9 @@ const userLogin = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     if (!existingUser.isVerified) {
-      return res.status(406).json({ message: "user not verified" });
+      return res
+        .status(406)
+        .json({ message: "user not verified", existingUser });
     }
 
     const matchPassword = await bcrypt.compare(password, existingUser.password);
@@ -32,12 +34,12 @@ const userLogin = async (req, res) => {
         } else {
           // console.log(existingUser, token);
           // res.status(200).json({ result: existingUser, token });
-          res.status(200).json({ message: "Login successful" });
+          res.status(200).json({ result: existingUser, token: token });
         }
       }
     );
   } catch (error) {
-    console.error("Error in userLogin:", error);
+    console.warn("Error in userLogin:", error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };

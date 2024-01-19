@@ -43,6 +43,9 @@ export default function Navbar() {
             <Link to="/sign-in">
               <li className=" text-slate-600 hover:underline">SignIn</li>
             </Link>
+            <Link to="/verify/otp">
+              <li className=" text-slate-600 hover:underline">otp</li>
+            </Link>
           </ul>
         </div>
       </header>

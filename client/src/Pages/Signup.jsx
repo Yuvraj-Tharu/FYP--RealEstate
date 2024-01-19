@@ -163,7 +163,7 @@ export default function Signup() {
 
                 <MDBBtn
                   onClick={onTrigger}
-                  className="w-100 mb-3 hover:bg-orange-400"
+                  className="w-100 mb-3 bg-orange-400 hover:bg-slate-700"
                   size="md"
                 >
                   Sign up
@@ -178,7 +178,7 @@ export default function Signup() {
                   Have an account?
                   <Link
                     to="/sign-in"
-                    className="text-blue-600 hover:text-orange-400"
+                    className="text-orange-400 hover:text-slate-700"
                   >
                     {" "}
                     Click here...

@@ -10,6 +10,7 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Signup from "./Pages/Signup";
 import SignIn from "./Pages/SignIn";
+import OTPVerify from "./Pages/OTPVerify";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/verify/otp" element={<OTPVerify />} />
         </Routes>
       </BrowserRouter>
     </div>

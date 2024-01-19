@@ -11,7 +11,6 @@ import {
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import axios from "axios";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -22,6 +21,7 @@ export default function SignIn() {
   // console.log(email, password);
 
   const collectData = async () => {
+    // e.preventDefault();
     try {
       const result = await fetch("http://localhost:8080/login-user", {
         method: "POST",
@@ -97,6 +97,7 @@ export default function SignIn() {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  // required
                 />
                 <MDBInput
                   label="Password"
@@ -107,11 +108,12 @@ export default function SignIn() {
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
+                  // required
                 />
 
                 <MDBBtn
                   onClick={collectData}
-                  className="w-100 mb-3 hover:bg-orange-400"
+                  className="w-100 mb-3 bg-orange-400 hover:bg-slate-700"
                   size="md"
                 >
                   Sign In
@@ -126,7 +128,7 @@ export default function SignIn() {
                   Dont have an account?
                   <Link
                     to="/sign-up"
-                    className="text-blue-600 hover:text-orange-400"
+                    className="text-orange-400 hover:text-slate-700"
                   >
                     {" "}
                     Click here...

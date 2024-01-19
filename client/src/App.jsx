@@ -11,6 +11,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Signup from "./Pages/Signup";
 import SignIn from "./Pages/SignIn";
 import OTPVerify from "./Pages/OTPVerify";
+// import PrivateComponent from "./Components/PrivateComponent";
 
 function App() {
   return (
@@ -19,8 +20,11 @@ function App() {
         <Navbar />
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route element={<PrivateComponent />}> */}
           <Route path="/profile" element={<Profile />} />
+          {/* </Route> */}
+
+          <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<SignIn />} />

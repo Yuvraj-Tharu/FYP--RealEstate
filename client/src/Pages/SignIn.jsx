@@ -13,6 +13,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function SignIn() {
+  const auth = sessionStorage.getItem("users");
+  if (auth) {
+    navigate1("/");
+  }
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -20,8 +25,9 @@ export default function SignIn() {
   const [error, setError] = useState("");
   // console.log(email, password);
 
+  const navigate1 = useNavigate();
+
   const collectData = async () => {
-    // e.preventDefault();
     try {
       const result = await fetch("http://localhost:8080/login-user", {
         method: "POST",
@@ -29,22 +35,27 @@ export default function SignIn() {
         body: JSON.stringify({ email, password }),
       });
 
-      if (result.ok) {
-        const data = await result.json();
-        if (data.result.email === email) {
+      let data = await result.json();
+      if (data) {
+        if (data.result.isVerified == true) {
           toast.success(<div>Login Successfully</div>, {
             theme: "colored",
           });
+          sessionStorage.setItem("users", JSON.stringify(data.result));
           return navigate("/");
         } else {
-          setError("Error in login");
+          setError("User not verrified   ");
         }
+        if (data.result.email !== email && data.result.password !== password) {
+          setError("Password or email not matched !! ");
+        }
+        setError("");
       } else {
         setError("Invalid email or password");
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
-      setError("An unexpected error occurred");
+      setError("Invalid email or password");
     }
   };
 

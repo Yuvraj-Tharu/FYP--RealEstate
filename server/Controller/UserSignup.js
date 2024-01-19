@@ -87,10 +87,14 @@ const sendOTP = async (req, res) => {
           $unset: { otp: "1" },
         });
 
-        res.status(200).json({ message: "User signed up, OTP matched!" });
+        res.status(200).json({
+          message: "User signed up, OTP matched!",
+          existingOTP: existingOTP.otp,
+        });
       } else {
         res.status(401).json({ message: "Invalid OTP" });
       }
+      // res.send(existingOTP);
     } else {
       res.status(404).json({ message: "User not found with provided OTP" });
     }

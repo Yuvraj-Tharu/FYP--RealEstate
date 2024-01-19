@@ -22,7 +22,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const onTrigger = async () => {
-    let response; // declare response outside the try block
+    let response;
 
     try {
       if (password === confirmPassword) {
@@ -44,12 +44,13 @@ export default function Signup() {
           headers: { "Content-Type": "application/json" },
         });
 
-        if (response.ok) {
+        if (response) {
           const result = await response.json();
+
           toast.info(<div>Please Check your Email !!</div>, {
             theme: "colored",
           });
-          return navigate("/");
+          return navigate("/verify/otp");
         } else {
           if (result.error && result.error.includes("duplicate key error")) {
             setError("User with this email already exists");
@@ -99,9 +100,9 @@ export default function Signup() {
             ></div>
             <div
               id="radius-shape-2"
-              className="position-absolute shadow-5-strong"
+              className="position-absolute
+            shadow-5-strong"
             ></div>
-
             <MDBCard className="my-5 bg-glass">
               <MDBCardBody className="p-3 p-md-5">
                 <MDBRow className="mb-3">

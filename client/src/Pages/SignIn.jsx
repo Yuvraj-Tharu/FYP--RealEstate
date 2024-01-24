@@ -13,11 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function SignIn() {
-  const auth = sessionStorage.getItem("users");
-  if (auth) {
-    navigate1("/");
-  }
-
+  const navigate1 = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -25,9 +21,35 @@ export default function SignIn() {
   const [error, setError] = useState("");
   // console.log(email, password);
 
-  const navigate1 = useNavigate();
+  const auth = sessionStorage.getItem("users");
+  if (auth) {
+    navigate1("/");
+  }
 
-  const collectData = async () => {
+  // const UserLogin = async () => {
+  //   try {
+  //     const result = await fetch("http://localhost:8080/login-user", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "Application/json" },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     let data = await result.json();
+  //     // console.log(data.result.isAdmin);
+
+  //     if (data) {
+  //       if (data.result.isAdmin == false) {
+  //         toast.success(<div>Login Successfully</div>, {
+  //           theme: "colored",
+  //         });
+  //         sessionStorage.setItem("users", JSON.stringify(data.result));
+  //         return navigate("/");
+  //       }
+  //     }
+  //   } catch (error) {}
+  // };
+
+  const UserLogin = async () => {
     try {
       const result = await fetch("http://localhost:8080/login-user", {
         method: "POST",
@@ -38,11 +60,19 @@ export default function SignIn() {
       let data = await result.json();
       if (data) {
         if (data.result.isVerified == true) {
-          toast.success(<div>Login Successfully</div>, {
-            theme: "colored",
-          });
-          sessionStorage.setItem("users", JSON.stringify(data.result));
-          return navigate("/");
+          if (data.result.isAdmin == false) {
+            toast.success(<div>Login Successfully</div>, {
+              theme: "colored",
+            });
+            sessionStorage.setItem("users", JSON.stringify(data.result));
+            return navigate("/");
+          } else {
+            toast.success(<div>Login Successfully</div>, {
+              theme: "colored",
+            });
+            sessionStorage.setItem("admin", JSON.stringify(data.result));
+            return navigate("/");
+          }
         } else {
           setError("User not verrified   ");
         }
@@ -58,6 +88,32 @@ export default function SignIn() {
       setError("Invalid email or password");
     }
   };
+
+  // const AdminLogin = async () => {
+  //   try {
+  //     const adminApi = await fetch("http://localhost:8080/admin/login", {
+  //       headers: { "Content-Type": "Application/json" },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+  //     let data = await adminApi.json();
+  //     if (data) {
+  //       toast.success(<div>Login Successfully</div>, {
+  //         theme: "colored",
+  //       });
+  //       sessionStorage.setItem("users", JSON.stringify(data.result));
+  //       return navigate("/");
+  //     } else {
+  //       setError("email or password must be wrong");
+  //     }
+
+  //     if (data.result.email !== email && data.result.password !== password) {
+  //       setError("Password or email not matched !! ");
+  //     }
+  //     setError("");
+  //   } catch (error) {
+  //     console.error("some thing is wrong", error);
+  //   }
+  // };
 
   return (
     <>
@@ -123,7 +179,7 @@ export default function SignIn() {
                 />
 
                 <MDBBtn
-                  onClick={collectData}
+                  onClick={UserLogin}
                   className="w-100 mb-3 bg-orange-400 hover:bg-slate-700"
                   size="md"
                 >

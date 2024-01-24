@@ -40,13 +40,14 @@ const UserSchema = new mongoose.Schema(
       unique: true,
     },
     isVerified: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
   },
 
   { timestamps: true }
 );
 
 UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password") || !this.isModified("confirmPassword")) {
+  if (!this.isModified("password") && !this.isModified("confirmPassword")) {
     return next();
   }
 

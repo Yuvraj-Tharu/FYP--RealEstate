@@ -7,7 +7,9 @@ export default function Navbar() {
   const imgUrl =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
-  const auth = sessionStorage.getItem("users");
+  const user = sessionStorage.getItem("users");
+  const admin = sessionStorage.getItem("admin");
+  const isLoggedIn = user || admin;
 
   const logout = () => {
     sessionStorage.clear();
@@ -47,7 +49,7 @@ export default function Navbar() {
               </li>
             </Link>
 
-            {auth ? (
+            {isLoggedIn ? (
               <>
                 <Link to="/profile">
                   <img

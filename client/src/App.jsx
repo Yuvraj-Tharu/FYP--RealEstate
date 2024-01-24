@@ -29,6 +29,7 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/verify/otp" element={<OTPVerify />} />
+          <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />
         </Routes>
       </BrowserRouter>
     </div>

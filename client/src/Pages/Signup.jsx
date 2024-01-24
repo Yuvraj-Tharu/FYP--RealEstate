@@ -32,7 +32,7 @@ export default function Signup() {
           return;
         }
 
-        response = await fetch("http://localhost:8080/signup-user", {
+        response = await fetch("/api/signup-user", {
           method: "POST",
           body: JSON.stringify({
             firstName,

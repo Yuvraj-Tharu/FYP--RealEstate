@@ -11,7 +11,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Signup from "./Pages/Signup";
 import SignIn from "./Pages/SignIn";
 import OTPVerify from "./Pages/OTPVerify";
-// import PrivateComponent from "./Components/PrivateComponent";
+import ForgetPassword from "./Pages/ForgetPassword";
 
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/verify/otp" element={<OTPVerify />} />
+          <Route path="/forget/password" element={<ForgetPassword />} />
           <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />
         </Routes>
       </BrowserRouter>

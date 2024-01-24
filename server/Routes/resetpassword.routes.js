@@ -5,6 +5,6 @@ const {
   resetPassword,
 } = require("../Controller/ResetPassword.Controller");
 
-ResetPasswordRouter.post("/forgot-password", ForgotPassword);
-ResetPasswordRouter.post("/reset-password", resetPassword);
+ResetPasswordRouter.post("/api/forgot-password", ForgotPassword);
+ResetPasswordRouter.post("/api/reset-password", resetPassword);
 module.exports = ResetPasswordRouter;

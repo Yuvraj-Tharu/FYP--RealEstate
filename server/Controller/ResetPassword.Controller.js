@@ -39,7 +39,9 @@ const ForgotPassword = async (req, res) => {
         return res.status(500).json({ message: "Failed to send OTP" });
       } else {
         console.log("Email sent: " + info.response);
-        return res.status(200).json({ message: "OTP sent successfully" });
+        return res
+          .status(200)
+          .json({ message: "OTP sent successfully", originalOtp: otp });
       }
     });
 
@@ -61,37 +63,39 @@ const ForgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    const { otp, password, confirmPassword } = req.body;
+    const { otp, NewPassword, NewConfirmPassword } = req.body;
+
     const existingUser = await User.findOne({ otp: otp });
-    console.log(existingUser);
     if (!existingUser) {
-      return res.status(410).json({ message: "Invalid OTP" });
+      return res.status(410).json({ message: "User doesn't exist" });
     }
+
     if (existingUser.otp !== otp) {
       return res.status(412).json({ message: "Invalid OTP" });
     }
-    if (password !== confirmPassword) {
-      return res.status(413).json({ message: "password doesnt match" });
+
+    if (NewPassword === NewConfirmPassword) {
+      const hashPassword = await bcrypt.hash(NewPassword, 10);
+      const hashConfirmPassword = await bcrypt.hash(NewConfirmPassword, 10);
+
+      const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
+        $set: { password: hashPassword, confirmPassword: hashConfirmPassword },
+        $unset: { otp: "" },
+      });
+
+      if (!updatedUser) {
+        return res.status(503).json({ message: "Internal Server Error!" });
+      }
+
+      res.status(208).json({
+        message: "Password changed successfully",
+        otp: otp,
+      });
+    } else {
+      return res.status(413).json({ message: "Password does not match" });
     }
-
-    const hashpasword = await bcrypt.hash(password, 10);
-    const hashConfirmpasword = await bcrypt.hash(confirmPassword, 10);
-
-    const updatedUser = await User.findByIdAndUpdate(existingUser._id, {
-      $set: { password: hashpasword, confirmPassword: hashConfirmpasword },
-      $unset: { otp: "" },
-    });
-
-    if (!updatedUser) {
-      return res.status(503).json({ message: "Internal Server Error" });
-    }
-
-    if (password === confirmPassword) {
-      return res.status(220).json({ message: "new password matched !!" });
-    }
-    res.status(208).json({ message: "Password changed successfully" });
   } catch (error) {
-    // console.log(error);
+    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

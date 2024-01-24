@@ -11,6 +11,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+// import forgetPassword from "./ForgetPassword";
 
 export default function SignIn() {
   const navigate1 = useNavigate();
@@ -20,38 +21,20 @@ export default function SignIn() {
   // const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
   // console.log(email, password);
+  const navigateTo = useNavigate();
 
   const auth = sessionStorage.getItem("users");
   if (auth) {
     navigate1("/");
   }
 
-  // const UserLogin = async () => {
-  //   try {
-  //     const result = await fetch("http://localhost:8080/login-user", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "Application/json" },
-  //       body: JSON.stringify({ email, password }),
-  //     });
-
-  //     let data = await result.json();
-  //     // console.log(data.result.isAdmin);
-
-  //     if (data) {
-  //       if (data.result.isAdmin == false) {
-  //         toast.success(<div>Login Successfully</div>, {
-  //           theme: "colored",
-  //         });
-  //         sessionStorage.setItem("users", JSON.stringify(data.result));
-  //         return navigate("/");
-  //       }
-  //     }
-  //   } catch (error) {}
-  // };
-
   const UserLogin = async () => {
     try {
-      const result = await fetch("http://localhost:8080/login-user", {
+      if (!email.trim()) {
+        setError("Email cannot be empty");
+        return;
+      }
+      const result = await fetch("/api/login-user", {
         method: "POST",
         headers: { "Content-Type": "Application/json" },
         body: JSON.stringify({ email, password }),
@@ -89,32 +72,32 @@ export default function SignIn() {
     }
   };
 
-  // const AdminLogin = async () => {
-  //   try {
-  //     const adminApi = await fetch("http://localhost:8080/admin/login", {
-  //       headers: { "Content-Type": "Application/json" },
-  //       body: JSON.stringify({ email, password }),
-  //     });
-  //     let data = await adminApi.json();
-  //     if (data) {
-  //       toast.success(<div>Login Successfully</div>, {
-  //         theme: "colored",
-  //       });
-  //       sessionStorage.setItem("users", JSON.stringify(data.result));
-  //       return navigate("/");
-  //     } else {
-  //       setError("email or password must be wrong");
-  //     }
+  const fogetPassword = async (e) => {
+    try {
+      e.preventDefault();
+      if (!email.trim()) {
+        setError("Email cannot be empty");
+        return;
+      }
 
-  //     if (data.result.email !== email && data.result.password !== password) {
-  //       setError("Password or email not matched !! ");
-  //     }
-  //     setError("");
-  //   } catch (error) {
-  //     console.error("some thing is wrong", error);
-  //   }
-  // };
+      const forgetAPI = await fetch("/api/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify({ email }),
+      });
 
+      if (forgetAPI) {
+        let result = await forgetAPI.json();
+        console.log(result);
+        toast.info(<div>Please Check your Email !!</div>, {
+          theme: "colored",
+        });
+        navigateTo("/forget/password");
+      }
+    } catch (error) {
+      console.log("An error occurred during forgetpassword click:", error);
+    }
+  };
   return (
     <>
       <MDBContainer
@@ -164,7 +147,7 @@ export default function SignIn() {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                  // required
+                  required
                 />
                 <MDBInput
                   label="Password"
@@ -195,6 +178,18 @@ export default function SignIn() {
                   Dont have an account?
                   <Link
                     to="/sign-up"
+                    className="text-orange-400 hover:text-slate-700"
+                  >
+                    {" "}
+                    Click here...
+                  </Link>
+                </p>
+
+                <p className="text-center  mt-2 text-xs">
+                  Forget password ?
+                  <Link
+                    onClick={fogetPassword}
+                    to="/forget/password"
                     className="text-orange-400 hover:text-slate-700"
                   >
                     {" "}

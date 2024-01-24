@@ -4,7 +4,7 @@ const { sendOTP, signupUser } = require("../Controller/UserSignup");
 
 const userRouter = express.Router();
 
-userRouter.post("/signup-user", signupUser);
-userRouter.post("/activate-User", sendOTP);
+userRouter.post("/api/signup-user", signupUser);
+userRouter.post("/api/activate-User", sendOTP);
 
 module.exports = userRouter;

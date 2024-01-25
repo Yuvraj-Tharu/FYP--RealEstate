@@ -38,7 +38,7 @@ export default function forgetPassword() {
       // console.log("api otp", data);
       if (data) {
         if (data.otp === otp) {
-          toast.success(<div>Login Successfully</div>, {
+          toast.success(<div>Password reset Sucessfully</div>, {
             theme: "colored",
           });
           navigate("/sign-in");

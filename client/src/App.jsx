@@ -12,6 +12,8 @@ import Signup from "./Pages/Signup";
 import SignIn from "./Pages/SignIn";
 import OTPVerify from "./Pages/OTPVerify";
 import ForgetPassword from "./Pages/ForgetPassword";
+import PrivateComponent from "./Components/PrivateComponent";
+import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 
 function App() {
   return (
@@ -20,9 +22,9 @@ function App() {
         <Navbar />
         <ToastContainer />
         <Routes>
-          {/* <Route element={<PrivateComponent />}> */}
-          <Route path="/profile" element={<Profile />} />
-          {/* </Route> */}
+          <Route element={<PrivateComponent />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
 
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -30,7 +32,10 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/verify/otp" element={<OTPVerify />} />
           <Route path="/forget/password" element={<ForgetPassword />} />
-          <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />
+
+          <Route element={<PrivateComponentADmin />}>
+            <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

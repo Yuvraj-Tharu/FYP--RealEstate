@@ -19,16 +19,19 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onTrigger = async () => {
     let response;
 
     try {
+      setLoading(true);
       if (password === confirmPassword) {
         if (password.length < 5) {
           console.warn("Password must be at least 5 characters long");
           setError("Password must be at least 5 characters long");
+          setLoading(false);
           return;
         }
 
@@ -50,20 +53,25 @@ export default function Signup() {
           toast.info(<div>Please Check your Email !!</div>, {
             theme: "colored",
           });
+          setLoading(false);
           return navigate("/verify/otp");
         } else {
           if (result.error && result.error.includes("duplicate key error")) {
             setError("User with this email already exists");
+            setLoading(false);
           } else {
             setError("Signup failed. Please try again. ");
+            setLoading(false);
           }
         }
       } else {
         setError("Password and Confirm Password do not match");
+        setLoading(false);
       }
     } catch (error) {
       console.error("An error occurred during signup:", error);
       setError("An error occurred. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -164,10 +172,11 @@ export default function Signup() {
 
                 <MDBBtn
                   onClick={onTrigger}
+                  disabled={loading}
                   className="w-100 mb-3 bg-orange-400 hover:bg-slate-700"
                   size="md"
                 >
-                  Sign up
+                  {loading ? "Loading..." : " Sign up"}
                 </MDBBtn>
                 {error && (
                   <p className="text-center text-xs text-red-500 mt-2">
@@ -182,7 +191,7 @@ export default function Signup() {
                     className="text-orange-400 hover:text-slate-700"
                   >
                     {" "}
-                    Click here...
+                    {loading ? "wait..." : "Click here..."}
                   </Link>
                 </p>
               </MDBCardBody>

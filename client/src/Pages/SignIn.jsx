@@ -11,17 +11,25 @@ import {
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import forgetPassword from "./ForgetPassword";
+
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   signInStart,
+//   signInSuccess,
+//   signInFailure,
+// } from "../redux/user/userSlice";
 
 export default function SignIn() {
   const navigate1 = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  // const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  // const loading = useSelector((state) => state.user);
   // console.log(email, password);
   const navigateTo = useNavigate();
+  // const dispatch = useDispatch();
 
   const auth = sessionStorage.getItem("users");
   if (auth) {
@@ -29,11 +37,17 @@ export default function SignIn() {
   }
 
   const UserLogin = async () => {
+    setLoading(true);
+    // dispatch(signInStart());
+
     try {
       if (!email.trim()) {
         setError("Email cannot be empty");
+        // dispatch(signInFailure());
+        setLoading(false);
         return;
       }
+
       const result = await fetch("/api/login-user", {
         method: "POST",
         headers: { "Content-Type": "Application/json" },
@@ -48,35 +62,47 @@ export default function SignIn() {
               theme: "colored",
             });
             sessionStorage.setItem("users", JSON.stringify(data.result));
+            setLoading(false);
+            // dispatch(signInFailure());
             return navigate("/");
           } else {
             toast.success(<div>Login Successfully</div>, {
               theme: "colored",
             });
             sessionStorage.setItem("admin", JSON.stringify(data.result));
+            setLoading(false);
+            // dispatch(signInFailure());
             return navigate("/");
           }
         } else {
           setError("User not verrified   ");
+          setLoading(false);
+          // dispatch(signInFailure());
         }
         if (data.result.email !== email && data.result.password !== password) {
           setError("Password or email not matched !! ");
+          setLoading(false);
+          // dispatch(signInFailure());
         }
         setError("");
       } else {
         setError("Invalid email or password");
+        setLoading(false);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
+      setLoading(false);
       setError("Invalid email or password");
     }
   };
 
   const fogetPassword = async (e) => {
     try {
+      setLoading(true);
       e.preventDefault();
       if (!email.trim()) {
         setError("Email cannot be empty");
+        setLoading(false);
         return;
       }
 
@@ -88,14 +114,17 @@ export default function SignIn() {
 
       if (forgetAPI) {
         let result = await forgetAPI.json();
+        setLoading(false);
         console.log(result);
         toast.info(<div>Please Check your Email !!</div>, {
           theme: "colored",
         });
+        setLoading(false);
         navigateTo("/forget/password");
       }
     } catch (error) {
       console.log("An error occurred during forgetpassword click:", error);
+      setLoading(false);
     }
   };
   return (
@@ -162,11 +191,13 @@ export default function SignIn() {
                 />
 
                 <MDBBtn
+                  disabled={loading}
                   onClick={UserLogin}
                   className="w-100 mb-3 bg-orange-400 hover:bg-slate-700"
                   size="md"
                 >
-                  Sign In
+                  {loading ? "Loading ..." : "Sign In"}
+                  {/* Sign In */}
                 </MDBBtn>
                 {error && (
                   <p className="text-center text-xs text-red-500 mt-2">
@@ -188,12 +219,14 @@ export default function SignIn() {
                 <p className="text-center  mt-2 text-xs">
                   Forget password ?
                   <Link
+                    disabled={loading}
                     onClick={fogetPassword}
                     to="/forget/password"
                     className="text-orange-400 hover:text-slate-700"
                   >
                     {" "}
-                    Click here...
+                    {loading ? "wait..." : " Click here..."}
+                    {/* Click here... */}
                   </Link>
                 </p>
               </MDBCardBody>

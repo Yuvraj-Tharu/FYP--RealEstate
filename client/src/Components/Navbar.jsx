@@ -49,7 +49,7 @@ export default function Navbar() {
               </li>
             </Link>
 
-            {isLoggedIn ? (
+            {user ? (
               <>
                 <Link to="/profile">
                   <img
@@ -65,10 +65,38 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link to="/sign-in">
+                {/* <Link to="/sign-in">
                   <li className=" text-slate-600 hover:underline">SignIn</li>
+                </Link> */}
+              </>
+            )}
+
+            {admin ? (
+              <>
+                <Link to="/admin-dash">
+                  <img
+                    className="rounded-full h-7 w-7 object-cover"
+                    src={imgUrl}
+                    alt=""
+                  />
+                </Link>
+
+                <Link to="/log-out" onClick={logout}>
+                  <li className=" text-slate-600 hover:underline">logout</li>
                 </Link>
               </>
+            ) : (
+              <>
+                {/* <Link to="/sign-in">
+                  <li className=" text-slate-600 hover:underline">SignIn</li>
+                </Link> */}
+              </>
+            )}
+
+            {isLoggedIn ? null : (
+              <Link to="/sign-in">
+                <li className=" text-slate-600 hover:underline">SignIn</li>
+              </Link>
             )}
           </ul>
         </div>

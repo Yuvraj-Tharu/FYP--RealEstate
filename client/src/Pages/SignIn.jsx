@@ -12,12 +12,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   signInStart,
-//   signInSuccess,
-//   signInFailure,
-// } from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
 
 export default function SignIn() {
   const navigate1 = useNavigate();
@@ -25,11 +25,11 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  // const loading = useSelector((state) => state.user);
+  // const [loading, setLoading] = useState(false);
   // console.log(email, password);
   const navigateTo = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.user.loading);
 
   const auth = sessionStorage.getItem("users");
   if (auth) {
@@ -37,14 +37,14 @@ export default function SignIn() {
   }
 
   const UserLogin = async () => {
-    setLoading(true);
-    // dispatch(signInStart());
+    // setLoading(true);
+    dispatch(signInStart());
 
     try {
       if (!email.trim()) {
         setError("Email cannot be empty");
-        // dispatch(signInFailure());
-        setLoading(false);
+        dispatch(signInFailure());
+
         return;
       }
 
@@ -56,53 +56,54 @@ export default function SignIn() {
 
       let data = await result.json();
       if (data) {
+        dispatch(signInSuccess(data));
         if (data.result.isVerified == true) {
           if (data.result.isAdmin == false) {
             toast.success(<div>Login Successfully</div>, {
               theme: "colored",
             });
             sessionStorage.setItem("users", JSON.stringify(data.result));
-            setLoading(false);
-            // dispatch(signInFailure());
+
+            dispatch(signInFailure());
             return navigate("/");
           } else {
             toast.success(<div>Login Successfully</div>, {
               theme: "colored",
             });
             sessionStorage.setItem("admin", JSON.stringify(data.result));
-            setLoading(false);
-            // dispatch(signInFailure());
+
+            dispatch(signInFailure());
             return navigate("/");
           }
         } else {
           setError("User not verrified   ");
-          setLoading(false);
-          // dispatch(signInFailure());
+
+          dispatch(signInFailure());
         }
         if (data.result.email !== email && data.result.password !== password) {
           setError("Password or email not matched !! ");
-          setLoading(false);
-          // dispatch(signInFailure());
+
+          dispatch(signInFailure());
         }
         setError("");
       } else {
         setError("Invalid email or password");
-        setLoading(false);
+        dispatch(signInFailure());
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
-      setLoading(false);
+      dispatch(signInFailure());
       setError("Invalid email or password");
     }
   };
 
   const fogetPassword = async (e) => {
     try {
-      setLoading(true);
+      dispatch(signInStart());
       e.preventDefault();
       if (!email.trim()) {
         setError("Email cannot be empty");
-        setLoading(false);
+        dispatch(signInFailure());
         return;
       }
 
@@ -114,17 +115,17 @@ export default function SignIn() {
 
       if (forgetAPI) {
         let result = await forgetAPI.json();
-        setLoading(false);
+        dispatch(signInFailure());
         console.log(result);
         toast.info(<div>Please Check your Email !!</div>, {
           theme: "colored",
         });
-        setLoading(false);
+        dispatch(signInFailure());
         navigateTo("/forget/password");
       }
     } catch (error) {
       console.log("An error occurred during forgetpassword click:", error);
-      setLoading(false);
+      dispatch(signInFailure());
     }
   };
   return (

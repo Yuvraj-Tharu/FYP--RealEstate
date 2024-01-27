@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentUser: null,
-  error: null,
+  // error: null,
   loading: false,
 };
 
@@ -11,6 +11,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     signInStart: (state) => {
+      console.log("signInStart reducer called");
       state.loading = true;
     },
     signInSuccess: (state, action) => {

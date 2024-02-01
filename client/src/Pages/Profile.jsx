@@ -7,14 +7,24 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 export default function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser.result.avatar);
   const fileRef = useRef();
   const [file, setFile] = useState(undefined);
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+  // console.log("sadad", currentUser);
+
+  // console.log(formData);
   // console.log(file);
   // console.log(formData);
   // console.log(filePercentage);
@@ -51,11 +61,46 @@ export default function Profile() {
     );
   };
 
+  const handelchange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // dispatch(updateUserStart());
+      const updateAPI = await fetch(
+        `api/userProfileUpdate/${currentUser.result._id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!updateAPI.ok) {
+        console.log("data update failed");
+      }
+
+      const result = await updateAPI.json();
+      if (!result) {
+        // dispatch(updateUserFailure(error.message));
+        console.log("response not found");
+      } else {
+        console.log("Update successful:", result);
+      }
+
+      dispatch(updateUserSuccess(result));
+    } catch (error) {
+      // dispatch(updateUserFailure(error));
+      console.log("some thing went wrong", error);
+    }
+  };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile page</h1>
 
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handelSubmit} className="flex flex-col gap-4">
         <input
           onChange={(e) => setFile(e.target.files[0])}
           type="file"
@@ -86,23 +131,41 @@ export default function Profile() {
 
         <input
           className="border p-3 rounded-lg"
+          defaultValue={currentUser.result.firstName}
+          onChange={handelchange}
           type="text"
-          id="username"
+          id="firstName"
           placeholder="First Name"
-          required
         />
         <input
           className="border p-3 rounded-lg "
+          defaultValue={currentUser.result.lastName}
+          onChange={handelchange}
           type="text"
+          id="lastName"
           placeholder="Last Name"
-          required
         />
         <input
           className="border p-3 rounded-lg "
+          defaultValue={currentUser.result.email}
+          onChange={handelchange}
           id="email"
           type="email"
           placeholder="Email"
-          required
+        />
+        <input
+          className="border p-3 rounded-lg "
+          onChange={handelchange}
+          id="password"
+          type="password"
+          placeholder="Password"
+        />
+        <input
+          className="border p-3 rounded-lg "
+          id="confirmPassword"
+          onChange={handelchange}
+          type="password"
+          placeholder="Confirm Password"
         />
 
         <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95">

@@ -21,12 +21,20 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  // const [isVerified, setIsVerified] = useState(false);
+
+  // useEffect(() => {
+  //   // Check if user is verified in session storage
+  //   const isUserVerified = sessionStorage.getItem("signup-user");
+  //   if (isUserVerified) {
+  //     setIsVerified(true);
+  //   }
+  // }, []);
 
   const onTrigger = async () => {
-    let response;
-
     try {
       setLoading(true);
+
       if (password === confirmPassword) {
         if (password.length < 5) {
           console.warn("Password must be at least 5 characters long");
@@ -35,7 +43,7 @@ export default function Signup() {
           return;
         }
 
-        response = await fetch("/api/signup-user", {
+        const response = await fetch("/api/signup-user", {
           method: "POST",
           body: JSON.stringify({
             firstName,
@@ -47,30 +55,32 @@ export default function Signup() {
           headers: { "Content-Type": "application/json" },
         });
 
-        if (response) {
+        if (response.ok) {
           const result = await response.json();
-
+          sessionStorage.setItem(
+            "signup-user",
+            JSON.stringify(result.result.email)
+          );
           toast.info(<div>Please Check your Email !!</div>, {
             theme: "colored",
           });
-          setLoading(false);
-          return navigate("/verify/otp");
+          navigate("/verify/otp");
         } else {
+          const result = await response.json();
+
           if (result.error && result.error.includes("duplicate key error")) {
             setError("User with this email already exists");
-            setLoading(false);
           } else {
-            setError("Signup failed. Please try again. ");
-            setLoading(false);
+            setError("Signup failed. Please try again.");
           }
         }
       } else {
         setError("Password and Confirm Password do not match");
-        setLoading(false);
       }
     } catch (error) {
       console.error("An error occurred during signup:", error);
       setError("An error occurred. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -194,6 +204,18 @@ export default function Signup() {
                     {loading ? "wait..." : "Click here..."}
                   </Link>
                 </p>
+                {/* {isVerified && (
+                  <p className="text-center mt-2 text-xs">
+                    Verify your account
+                    <Link
+                      to="/verify/otp"
+                      className="text-orange-400 hover:text-slate-700"
+                    >
+                      {" "}
+                      {loading ? "wait..." : "Click here..."}
+                    </Link>
+                  </p>
+                )} */}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

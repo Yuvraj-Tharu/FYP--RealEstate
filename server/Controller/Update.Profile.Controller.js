@@ -3,8 +3,7 @@ const bcrypt = require("bcrypt");
 
 const updateProfile = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, confirmPassword, avatar } =
-      req.body;
+    const { firstName, lastName, password, confirmPassword, avatar } = req.body;
     const userId = req.params.id;
     const existingUser = await User.findOne({ _id: userId });
 
@@ -25,7 +24,6 @@ const updateProfile = async (req, res) => {
       updateFields.confirmPassword = hashConfirmPassword;
     }
     if (avatar !== undefined) updateFields.avatar = avatar;
-    if (email !== undefined) updateFields.email = email;
 
     const updatedUser = await User.findByIdAndUpdate(
       existingUser._id,
@@ -49,4 +47,19 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { updateProfile };
+const deleteUser = async (req, res) => {
+  try {
+    const userID = req.params.id;
+
+    const existingUser = await User.deleteOne({ _id: userID });
+    if (existingUser) {
+      // console.log(existingUser);
+      return res.status(204).json({ result: "User successfully deleted" });
+    }
+  } catch (error) {
+    console.log("internal server error:", error);
+    res.status(500).json({ message: "internal server error:", error });
+  }
+};
+
+module.exports = { updateProfile, deleteUser };

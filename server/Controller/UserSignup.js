@@ -82,10 +82,14 @@ const sendOTP = async (req, res) => {
 
     if (existingOTP) {
       if (existingOTP.otp === otp) {
-        const UpdateUser = await User.findByIdAndUpdate(existingOTP._id, {
-          $set: { isVerified: true },
-          $unset: { otp: "1" },
-        });
+        const UpdateUser = await User.findByIdAndUpdate(
+          existingOTP._id,
+          {
+            $set: { isVerified: true },
+            $unset: { otp: "1" },
+          },
+          { new: true }
+        );
 
         res.status(200).json({
           message: "User signed up, OTP matched!",

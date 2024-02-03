@@ -2,6 +2,8 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
 export default function Navbar() {
   const navigate = useNavigate();
   const imgUrl =
@@ -10,6 +12,8 @@ export default function Navbar() {
   const user = sessionStorage.getItem("users");
   const admin = sessionStorage.getItem("admin");
   const isLoggedIn = user || admin;
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const logout = () => {
     sessionStorage.clear();
@@ -54,7 +58,7 @@ export default function Navbar() {
                 <Link to="/profile">
                   <img
                     className="rounded-full h-7 w-7 object-cover"
-                    src={imgUrl}
+                    src={imgUrl || currentUser.result.avatar}
                     alt=""
                   />
                 </Link>

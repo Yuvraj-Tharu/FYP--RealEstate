@@ -10,6 +10,7 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
+  // blacklist: ["user", "user.otp"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -16,7 +16,7 @@ import {
   deleteUserSucess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const fileRef = useRef();
@@ -28,7 +28,7 @@ export default function Profile() {
   const { currentUser, loading } = useSelector((state) => state.user);
   const [sucessMessage, setSucessMessage] = useState();
   const [error, setError] = useState();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (file) {
@@ -106,31 +106,20 @@ export default function Profile() {
   const deleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const deleteAPI = await fetch(
+      let deleteAPI = await fetch(
         `/api/userProfileDelete/${currentUser.result._id}`,
         {
           method: "DELETE",
-          headers: { "Content-Type": "application/json" },
         }
       );
 
-      if (deleteAPI.ok) {
-        // Check if the response body is not empty
-        const result =
-          deleteAPI.headers.get("content-length") > 0
-            ? await deleteAPI.json()
-            : null;
-
-        if (!result) {
-          dispatch(deleteUserFailure("Failed to delete user."));
-          return;
-        }
-
-        // navigate("/sign-in");
-        dispatch(deleteUserSucess(result));
-      } else {
-        dispatch(deleteUserFailure("Failed to delete user."));
+      deleteAPI = await deleteAPI.json();
+      if (!deleteAPI) {
+        return dispatch(deleteUserFailure());
       }
+      dispatch(deleteUserSucess(deleteAPI));
+      sessionStorage.clear();
+      navigate("/sign-in");
     } catch (error) {
       console.log("something went wrong:", error);
       dispatch(deleteUserFailure(error.message));

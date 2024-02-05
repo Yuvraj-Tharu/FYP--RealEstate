@@ -47,18 +47,42 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// const deleteUser = async (req, res) => {
+//   try {
+//     const userID = req.params.id;
+
+//     const existingUser = await User.deleteOne({ _id: userID });
+//     if (existingUser) {
+//       // console.log(existingUser);
+//       return res.status(204).json({ result: "User successfully deleted" });
+//     }
+//   } catch (error) {
+//     console.log("internal server error:", error);
+//     res.status(500).json({ message: "internal server error:", error });
+//   }
+// };
+
 const deleteUser = async (req, res) => {
   try {
     const userID = req.params.id;
 
-    const existingUser = await User.deleteOne({ _id: userID });
-    if (existingUser) {
-      // console.log(existingUser);
-      return res.status(204).json({ result: "User successfully deleted" });
+    const existingUser = await User.findById(userID);
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    const deletedUser = { ...existingUser._doc };
+
+    await User.deleteOne({ _id: userID });
+
+    // console.log("data deleted:", deletedUser);
+    return res
+      .status(200)
+      .json({ result: "User successfully deleted", deletedUser });
   } catch (error) {
-    console.log("internal server error:", error);
-    res.status(500).json({ message: "internal server error:", error });
+    console.log("Internal server error:", error);
+    res.status(500).json({ message: "Internal server error:", error });
   }
 };
 

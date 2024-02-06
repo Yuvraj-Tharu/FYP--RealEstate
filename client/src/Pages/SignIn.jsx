@@ -29,7 +29,8 @@ export default function SignIn() {
   // console.log(email, password);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.user.loading);
+  // const loading = useSelector((state) => state.user.loading);
+  const { loading } = useSelector((state) => state.user);
 
   const auth = sessionStorage.getItem("users");
   if (auth) {

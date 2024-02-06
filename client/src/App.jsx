@@ -14,6 +14,7 @@ import OTPVerify from "./Pages/OTPVerify";
 import ForgetPassword from "./Pages/ForgetPassword";
 import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
+import CreateListiing from "./Pages/CreateListiing";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route element={<PrivateComponent />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/createListing" element={<CreateListiing />} />
           </Route>
 
           <Route path="/" element={<Home />} />

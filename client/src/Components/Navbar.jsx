@@ -56,17 +56,18 @@ export default function Navbar() {
 
             {user ? (
               <>
+                <Link to="/createListing">
+                  <li className=" text-slate-600 hover:underline">
+                    Add Property
+                  </li>
+                </Link>
                 <Link to="/profile">
                   <img
                     className="rounded-full h-7 w-7 object-cover"
-                    src={imgUrl || currentUser.result.avatar}
+                    src={currentUser.result.avatar || imgUrl}
                     alt=""
                   />
                 </Link>
-
-                {/* <Link to="/log-out" onClick={logout}>
-                  <li className=" text-slate-600 hover:underline">logout</li>
-                </Link> */}
               </>
             ) : (
               <>

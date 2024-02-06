@@ -15,6 +15,7 @@ import {
   deleteUserStart,
   deleteUserSucess,
   SignOutUserStart,
+  SignOutUserSucess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -140,11 +141,13 @@ export default function Profile() {
 
       sessionStorage.clear();
       localStorage.clear();
+      console.log("Local storage cleared.");
 
       navigate("/sign-in");
       toast.success(<div>Sign out sucessMessage</div>, {
         theme: "colored",
       });
+      dispatch(SignOutUserSucess());
     } catch (error) {
       console.log(error);
     }

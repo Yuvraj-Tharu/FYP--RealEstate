@@ -19,6 +19,7 @@ export default function Navbar() {
     sessionStorage.clear();
     toast.success(<div>Logout Sucessfully!! </div>, {
       theme: "colored",
+      autoClose: 1000,
     });
     navigate("/");
   };
@@ -63,9 +64,9 @@ export default function Navbar() {
                   />
                 </Link>
 
-                <Link to="/log-out" onClick={logout}>
+                {/* <Link to="/log-out" onClick={logout}>
                   <li className=" text-slate-600 hover:underline">logout</li>
-                </Link>
+                </Link> */}
               </>
             ) : (
               <>

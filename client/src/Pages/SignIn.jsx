@@ -61,6 +61,7 @@ export default function SignIn() {
           if (data.result.isAdmin == false) {
             toast.success(<div>Login Successfully</div>, {
               theme: "colored",
+              autoClose: 1000,
             });
             sessionStorage.setItem("users", JSON.stringify(data.result));
 
@@ -69,6 +70,7 @@ export default function SignIn() {
           } else {
             toast.success(<div>Login Successfully</div>, {
               theme: "colored",
+              autoClose: 1000,
             });
             sessionStorage.setItem("admin", JSON.stringify(data.result));
 
@@ -119,6 +121,7 @@ export default function SignIn() {
         console.log(result);
         toast.info(<div>Please Check your Email !!</div>, {
           theme: "colored",
+          autoClose: 1000,
         });
         dispatch(signInFailure());
         navigateTo("/forget/password");

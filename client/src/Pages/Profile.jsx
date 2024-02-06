@@ -14,9 +14,12 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSucess,
+  SignOutUserStart,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "../assets/Style/Profile-Style.css";
 
 export default function Profile() {
   const fileRef = useRef();
@@ -119,107 +122,137 @@ export default function Profile() {
       }
       dispatch(deleteUserSucess(deleteAPI));
       sessionStorage.clear();
+
       navigate("/sign-in");
+      toast.success(<div>Delete User Sucessfully</div>, {
+        theme: "colored",
+        autoClose: 1000,
+      });
     } catch (error) {
       console.log("something went wrong:", error);
       dispatch(deleteUserFailure(error.message));
     }
   };
 
+  const signOut = async () => {
+    try {
+      dispatch(SignOutUserStart());
+
+      sessionStorage.clear();
+      localStorage.clear();
+
+      navigate("/sign-in");
+      toast.success(<div>Sign out sucessMessage</div>, {
+        theme: "colored",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Profile page</h1>
+    <div className="blur-background">
+      <div className="bg-slate-50 bg-opacity-40 rounded-xl shadow-md p-6 mx-auto max-w-2xl mt-5 mb-4">
+        <h1 className="text-3xl font-semibold text-center mb-3">
+          Profile Page
+        </h1>
 
-      <form onSubmit={handelSubmit} className="flex flex-col gap-4">
-        <input
-          onChange={(e) => setFile(e.target.files[0])}
-          type="file"
-          ref={fileRef}
-          hidden
-          accept="image/*"
-        />
-        <img
-          onClick={() => fileRef.current.click()}
-          src={formData.avatar || currentUser.result.avatar}
-          alt=""
-          className="rounded-full h-24 w-24 object-cover self-center mt-2"
-        />
+        <form onSubmit={handelSubmit} className="flex flex-col gap-3">
+          <input
+            onChange={(e) => setFile(e.target.files[0])}
+            type="file"
+            ref={fileRef}
+            hidden
+            accept="image/*"
+          />
+          <img
+            onClick={() => fileRef.current.click()}
+            src={formData.avatar || currentUser.result.avatar}
+            alt=""
+            className="rounded-full h-24 w-24 object-cover self-center mt-2"
+          />
 
-        <p className="text-sm self-center">
-          {fileUploadError ? (
-            <span className="text-red-700">
-              Error image upload (image must be less than 2 mb)
-            </span>
-          ) : filePercentage > 0 && filePercentage < 100 ? (
-            <span className="text-green-600">{`uploading ${filePercentage}%`}</span>
-          ) : filePercentage === 100 ? (
-            <span className="text-green-600">Image successfully uploaded</span>
-          ) : (
-            ""
+          <div className="text-sm self-center">
+            {fileUploadError ? (
+              <span className="text-red-700">
+                Error uploading image (must be less than 2 MB)
+              </span>
+            ) : filePercentage > 0 && filePercentage < 100 ? (
+              <span className="text-green-600">{`Uploading ${filePercentage}%`}</span>
+            ) : filePercentage === 100 ? (
+              <span className="text-green-600">
+                Image successfully uploaded
+              </span>
+            ) : (
+              ""
+            )}
+          </div>
+
+          <input
+            className="border p-3 rounded-lg "
+            defaultValue={currentUser.result.firstName}
+            onChange={handelchange}
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+          />
+          <input
+            className="border p-3 rounded-lg "
+            defaultValue={currentUser.result.lastName}
+            onChange={handelchange}
+            type="text"
+            id="lastName"
+            placeholder="Last Name"
+          />
+          <input
+            className="border p-3 rounded-lg  "
+            defaultValue={currentUser.result.email}
+            onChange={handelchange}
+            id="email"
+            type="email"
+            placeholder="Email"
+            readOnly={true}
+          />
+          <input
+            className="border p-3 rounded-lg "
+            onChange={handelchange}
+            id="password"
+            type="password"
+            placeholder="Password"
+          />
+          <input
+            className="border p-3 rounded-lg "
+            id="confirmPassword"
+            onChange={handelchange}
+            type="password"
+            placeholder="Confirm Password"
+          />
+
+          <button
+            disabled={loading}
+            className="bg-orange-400 text-white rounded-lg p-3 uppercase hover:bg-slate-700"
+          >
+            {loading ? "Loading..." : "Update"}
+          </button>
+
+          {error && (
+            <p className="text-center text-xs text-red-700 mt-1">{error}</p>
           )}
-        </p>
+          {sucessMessage && (
+            <p className="text-center text-xs text-green-600 mt-1">
+              {sucessMessage}
+            </p>
+          )}
+        </form>
 
-        <input
-          className="border p-3 rounded-lg "
-          defaultValue={currentUser.result.firstName}
-          onChange={handelchange}
-          type="text"
-          id="firstName"
-          placeholder="First Name"
-        />
-        <input
-          className="border p-3 rounded-lg "
-          defaultValue={currentUser.result.lastName}
-          onChange={handelchange}
-          type="text"
-          id="lastName"
-          placeholder="Last Name"
-        />
-        <input
-          className="border p-3 rounded-lg  "
-          defaultValue={currentUser.result.email}
-          onChange={handelchange}
-          id="email"
-          type="email"
-          placeholder="Email"
-          readOnly={true}
-        />
-        <input
-          className="border p-3 rounded-lg "
-          onChange={handelchange}
-          id="password"
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          className="border p-3 rounded-lg "
-          id="confirmPassword"
-          onChange={handelchange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-
-        <button
-          disabled={loading}
-          className="bg-orange-400 text-white rounded-lg p-3 uppercase hover:bg-slate-700"
-        >
-          {loading ? "Loading..." : "update"}
-        </button>
-        {error && (
-          <p className="text-center text-xs text-red-700 mt-1">{error}</p>
-        )}
-        {sucessMessage && (
-          <p className="text-center text-xs text-green-600 mt-1">
-            {sucessMessage}
-          </p>
-        )}
-      </form>
-
-      <div className="flex justify-between mt-5">
-        <span onClick={deleteUser} className="text-red-600 cursor-pointer">
-          Delete Account
-        </span>
-        <span className="text-red-600 cursor-pointer">Sign out</span>
+        <div className="flex justify-between mt-5">
+          <span onClick={deleteUser} className="text-red-600 cursor-pointer">
+            Delete Account
+          </span>
+          <span onClick={signOut} className="text-red-600 cursor-pointer">
+            Sign out
+          </span>
+        </div>
       </div>
     </div>
   );

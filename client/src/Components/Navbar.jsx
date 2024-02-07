@@ -42,7 +42,7 @@ export default function Navbar() {
             />
             <FaSearch className="text-slate-600" />
           </form>
-          <ul className="flex gap-4">
+          <ul className="flex gap-4 ">
             <Link to="/">
               <li className="hiddem sm:inline text-slate-600 hover:underline">
                 Home

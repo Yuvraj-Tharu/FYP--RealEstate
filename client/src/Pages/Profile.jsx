@@ -155,12 +155,12 @@ export default function Profile() {
 
   return (
     <div className="blur-background">
-      <div className="bg-slate-50 bg-opacity-40 rounded-xl shadow-md p-6 mx-auto max-w-2xl mt-5 mb-4">
+      <div className="bg-slate-50 bg-opacity-40 rounded-xl shadow-md p-6 mx-auto max-w-xl mt-4 mb-4">
         <h1 className="text-3xl font-semibold text-center mb-3">
           Profile Page
         </h1>
 
-        <form onSubmit={handelSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handelSubmit} className="flex flex-col gap-3 ">
           <input
             onChange={(e) => setFile(e.target.files[0])}
             type="file"
@@ -172,7 +172,7 @@ export default function Profile() {
             onClick={() => fileRef.current.click()}
             src={formData.avatar || currentUser.result.avatar}
             alt=""
-            className="rounded-full h-24 w-24 object-cover self-center mt-2"
+            className="rounded-full h-24 w-24 object-cover self-center mt-0"
           />
 
           <div className="text-sm self-center">
@@ -192,7 +192,7 @@ export default function Profile() {
           </div>
 
           <input
-            className="border p-3 rounded-lg "
+            className="border p-3 rounded-lg   "
             defaultValue={currentUser.result.firstName}
             onChange={handelchange}
             type="text"
@@ -248,8 +248,8 @@ export default function Profile() {
           )}
         </form>
 
-        <div className="flex justify-between mt-5">
-          <span onClick={deleteUser} className="text-red-600 cursor-pointer">
+        <div className="flex justify-between mt-3">
+          <span onClick={deleteUser} className="text-red-600 cursor-pointer ">
             Delete Account
           </span>
           <span onClick={signOut} className="text-red-600 cursor-pointer">

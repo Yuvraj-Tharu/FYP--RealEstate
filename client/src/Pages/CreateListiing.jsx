@@ -118,6 +118,13 @@ export default function CreateListiing() {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
+      if (+formData.regularPrice < +formData.discountPrice) {
+        return setError("Discount price must be lower than regular price");
+      }
+
+      if (formData.imageUrl < 1) {
+        return setError("Image must be upload atleast one");
+      }
       setLoding(true);
       setError(false);
       const api = await fetch("/api/usersListing", {
@@ -130,6 +137,7 @@ export default function CreateListiing() {
       });
 
       const data = await api.json();
+      console.log("data------", data);
       setLoding(false);
       if (!data) {
         setError("data is not found");
@@ -269,24 +277,24 @@ export default function CreateListiing() {
                 type="number"
                 id="bedrooms"
                 min={1}
-                max={10}
-                required
+                max={11}
                 className="p-3  text-gray-700 border rounded-lg"
                 onChange={submit}
-                value={formData.bathrooms}
+                value={formData.bedrooms}
+                required
               />
               <p>Beds</p>
             </div>
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                id="bathroom"
+                id="bathrooms"
                 min={1}
-                max={10}
-                required
+                max={11}
                 className="p-3  text-gray-700 border rounded-lg"
                 onChange={submit}
                 value={formData.bathrooms}
+                required
               />
               <p>Bath</p>
             </div>
@@ -311,7 +319,7 @@ export default function CreateListiing() {
                 type="number"
                 id="discountPrice"
                 min={1}
-                max={10}
+                max={100000000}
                 required
                 className="p-3  text-gray-700 border rounded-lg"
                 onChange={submit}

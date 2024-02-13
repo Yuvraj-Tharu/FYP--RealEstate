@@ -7,14 +7,30 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { useSelector } from "react-redux";
 
 export default function CreateListiing() {
   const [file, setFile] = useState([]);
-  const [filePercentage, setFilePercentage] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [imageUploadError, setImageUploadError] = useState(false);
+  const [error, setError] = useState(false);
+  const [loding, setLoding] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
+
+  // console.log(currentUser.result._id, "sdsadsad");
   const [formData, setFormData] = useState({
     imageUrl: [],
+    title: "",
+    description: "",
+    address: "",
+    type: "sale",
+    bedrooms: 1,
+    bathrooms: 1,
+    regularPrice: 0,
+    discountPrice: 0,
+    offer: false,
+    parking: false,
+    furnished: false,
   });
   console.log(formData);
 
@@ -57,8 +73,6 @@ export default function CreateListiing() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          // setFilePercentage(Math.round(progress));
-          console.log(progress);
         },
         (error) => {
           reject(error);
@@ -78,6 +92,53 @@ export default function CreateListiing() {
       imageUrl: formData.imageUrl.filter((_, i) => i !== index),
     });
   };
+
+  const submit = (e) => {
+    if (e.target.id === "rent" || e.target.id === "sale") {
+      setFormData({ ...formData, type: e.target.id });
+    }
+
+    if (
+      e.target.id === "parking" ||
+      e.target.id === "furnished" ||
+      e.target.id === "offer"
+    ) {
+      setFormData({ ...formData, [e.target.id]: e.target.checked });
+    }
+
+    if (
+      e.target.type === "number" ||
+      e.target.type === "text" ||
+      e.target.type === "textarea"
+    ) {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+  };
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    try {
+      setLoding(true);
+      setError(false);
+      const api = await fetch("/api/usersListing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser.result._id,
+        }),
+      });
+
+      const data = await api.json();
+      setLoding(false);
+      if (!data) {
+        setError("data is not found");
+      }
+    } catch (error) {
+      setError("internal error, please try again");
+      setLoding(false);
+    }
+  };
   return (
     <motion.main
       className="p-3 max-w-4xl mx-auto"
@@ -94,7 +155,7 @@ export default function CreateListiing() {
         Create Listing
       </motion.h1>
       <motion.form
-        action=""
+        onSubmit={submitForm}
         className="flex flex-col sm:flex-row gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -114,6 +175,8 @@ export default function CreateListiing() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.8 }}
+            value={formData.title}
+            onChange={submit}
           />
           <motion.textarea
             className="appearance-none block  bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -123,6 +186,8 @@ export default function CreateListiing() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1 }}
+            value={formData.description}
+            onChange={submit}
           />
           <motion.input
             className="appearance-none block  bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -132,6 +197,8 @@ export default function CreateListiing() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.2 }}
+            value={formData.address}
+            onChange={submit}
           />
 
           <motion.div
@@ -141,23 +208,53 @@ export default function CreateListiing() {
             transition={{ duration: 0.5, delay: 1.4 }}
           >
             <div className="flex gap-2">
-              <input type="checkbox" id="sale" className="w-5" />
-              <span>sell</span>
+              <input
+                type="checkbox"
+                id="sale"
+                className="w-5"
+                onChange={submit}
+                checked={formData.type === "sale"}
+              />
+              <span>sale</span>
             </div>
             <div className="flex gap-2">
-              <input type="checkbox" id="Rent" className="w-5" />
+              <input
+                type="checkbox"
+                id="rent"
+                className="w-5"
+                onChange={submit}
+                checked={formData.type === "rent"}
+              />
               <span>Rent</span>
             </div>
             <div className="flex gap-2">
-              <input type="checkbox" id="Parking" className="w-5" />
+              <input
+                type="checkbox"
+                id="parking"
+                className="w-5"
+                onChange={submit}
+                checked={formData.parking}
+              />
               <span>Parking</span>
             </div>
             <div className="flex gap-2">
-              <input type="checkbox" id="Furnished" className="w-5" />
+              <input
+                type="checkbox"
+                id="furnished"
+                className="w-5"
+                onChange={submit}
+                checked={formData.furnished}
+              />
               <span>Furnished</span>
             </div>
             <div className="flex gap-2">
-              <input type="checkbox" id="Offer" className="w-5" />
+              <input
+                type="checkbox"
+                id="offer"
+                className="w-5"
+                onChange={submit}
+                checked={formData.offer}
+              />
               <span>Offer</span>
             </div>
           </motion.div>
@@ -175,6 +272,8 @@ export default function CreateListiing() {
                 max={10}
                 required
                 className="p-3  text-gray-700 border rounded-lg"
+                onChange={submit}
+                value={formData.bathrooms}
               />
               <p>Beds</p>
             </div>
@@ -186,6 +285,8 @@ export default function CreateListiing() {
                 max={10}
                 required
                 className="p-3  text-gray-700 border rounded-lg"
+                onChange={submit}
+                value={formData.bathrooms}
               />
               <p>Bath</p>
             </div>
@@ -194,9 +295,11 @@ export default function CreateListiing() {
                 type="number"
                 id="regularPrice"
                 min={1}
-                max={10}
+                max={1000000000000}
                 required
                 className="p-3  text-gray-700 border rounded-lg"
+                onChange={submit}
+                value={formData.regularPrice}
               />
               <div className="flex flex-col items-center">
                 <p>Regular Price</p>
@@ -211,6 +314,8 @@ export default function CreateListiing() {
                 max={10}
                 required
                 className="p-3  text-gray-700 border rounded-lg"
+                onChange={submit}
+                value={formData.discountPrice}
               />
 
               <div className="flex flex-col items-center">
@@ -290,9 +395,13 @@ export default function CreateListiing() {
                 </button>
               </div>
             ))}
-          <button className="p-3 bg-slate-700 text-white rounded-lg my-3 ">
-            Create Listing
+          <button
+            disabled={loding}
+            className="p-3 bg-slate-700 text-white rounded-lg my-3 "
+          >
+            {loding ? "Creating..." : "Create Listing"}
           </button>
+          {error && <p className="text-red-700 text-sm">{error}</p>}
         </motion.div>
       </motion.form>
     </motion.main>

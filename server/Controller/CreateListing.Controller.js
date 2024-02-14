@@ -11,4 +11,17 @@ const UserListing = async (req, res) => {
   }
 };
 
-module.exports = { UserListing };
+const getUserListing = async (req, res) => {
+  if (req.params.id) {
+    try {
+      const listings = await createListing.find({ userRef: req.params.id });
+      res.status(200).json(listings);
+    } catch (error) {
+      res.status(404).json({ message: "something went wrong" });
+    }
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+};
+
+module.exports = { UserListing, getUserListing };

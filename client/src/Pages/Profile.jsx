@@ -146,6 +146,7 @@ export default function Profile() {
       navigate("/sign-in");
       toast.success(<div>Sign out sucessMessage</div>, {
         theme: "colored",
+        autoClose: 1000,
       });
       dispatch(SignOutUserSucess());
     } catch (error) {

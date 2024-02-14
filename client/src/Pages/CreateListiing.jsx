@@ -8,6 +8,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListiing() {
   const [file, setFile] = useState([]);
@@ -16,6 +17,7 @@ export default function CreateListiing() {
   const [error, setError] = useState(false);
   const [loding, setLoding] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   // console.log(currentUser.result._id, "sdsadsad");
   const [formData, setFormData] = useState({
@@ -32,7 +34,7 @@ export default function CreateListiing() {
     parking: false,
     furnished: false,
   });
-  console.log(formData);
+  // console.log(formData);
 
   const imageUpload = (e) => {
     setUploading(true);
@@ -137,11 +139,12 @@ export default function CreateListiing() {
       });
 
       const data = await api.json();
-      console.log("data------", data);
+      // console.log("data------", data);
       setLoding(false);
       if (!data) {
         setError("data is not found");
       }
+      navigate(`/listing/${data.result._id}`);
     } catch (error) {
       setError("internal error, please try again");
       setLoding(false);
@@ -185,6 +188,7 @@ export default function CreateListiing() {
             transition={{ duration: 0.5, delay: 0.8 }}
             value={formData.title}
             onChange={submit}
+            required
           />
           <motion.textarea
             className="appearance-none block  bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -196,6 +200,7 @@ export default function CreateListiing() {
             transition={{ duration: 0.5, delay: 1 }}
             value={formData.description}
             onChange={submit}
+            required
           />
           <motion.input
             className="appearance-none block  bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -207,6 +212,7 @@ export default function CreateListiing() {
             transition={{ duration: 0.5, delay: 1.2 }}
             value={formData.address}
             onChange={submit}
+            required
           />
 
           <motion.div
@@ -304,33 +310,34 @@ export default function CreateListiing() {
                 id="regularPrice"
                 min={1}
                 max={1000000000000}
-                required
                 className="p-3  text-gray-700 border rounded-lg"
                 onChange={submit}
                 value={formData.regularPrice}
+                required
               />
               <div className="flex flex-col items-center">
                 <p>Regular Price</p>
                 <span className="text-xs">(Rs / months)</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                id="discountPrice"
-                min={1}
-                max={100000000}
-                required
-                className="p-3  text-gray-700 border rounded-lg"
-                onChange={submit}
-                value={formData.discountPrice}
-              />
+            {formData.offer && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  id="discountPrice"
+                  min={0}
+                  max={100000000}
+                  className="p-3  text-gray-700 border rounded-lg"
+                  onChange={submit}
+                  value={formData.discountPrice}
+                />
 
-              <div className="flex flex-col items-center">
-                <p>Discounted Price</p>
-                <span className="text-xs">(Rs / months)</span>
+                <div className="flex flex-col items-center">
+                  <p>Discounted Price</p>
+                  <span className="text-xs">(Rs / months)</span>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
         </motion.div>
 
@@ -404,8 +411,8 @@ export default function CreateListiing() {
               </div>
             ))}
           <button
-            disabled={loding}
-            className="p-3 bg-slate-700 text-white rounded-lg my-3 "
+            disabled={loding || uploading}
+            className="p-3 bg-slate-700 text-white rounded-lg my-3 disabled:opacity-65 "
           >
             {loding ? "Creating..." : "Create Listing"}
           </button>

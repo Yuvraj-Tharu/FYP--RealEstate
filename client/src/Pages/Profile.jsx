@@ -155,21 +155,6 @@ export default function Profile() {
     }
   };
 
-  const showlisting = async () => {
-    try {
-      const api = await fetch(`/api/listing/${currentUser.result._id}`);
-      let result = await api.json();
-      if (!result) {
-        return setListingError(true);
-      }
-      setUserListing(result);
-      // console.log("data ");
-    } catch (error) {
-      console.log("some thing went wrong", error);
-      setListingError(true);
-    }
-  };
-
   return (
     <div className="blur-background">
       <div className="bg-slate-50 bg-opacity-40 rounded-xl shadow-md p-6 mx-auto max-w-xl mt-4 mb-4">

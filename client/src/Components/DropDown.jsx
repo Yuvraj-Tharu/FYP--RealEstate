@@ -28,13 +28,16 @@ export default function DropDown() {
             Add Property
           </motion.li>
         </Link>
-        <motion.li
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="text-slate-600 hover:underline"
-        >
-          Show Listing
-        </motion.li>
+
+        <Link to="/showUserlisting">
+          <motion.li
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="text-slate-600 hover:underline"
+          >
+            Show Listing
+          </motion.li>
+        </Link>
       </motion.ul>
     </motion.div>
   );

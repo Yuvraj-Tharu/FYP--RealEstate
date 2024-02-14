@@ -15,7 +15,7 @@ import ForgetPassword from "./Pages/ForgetPassword";
 import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 import CreateListiing from "./Pages/CreateListiing";
-
+import ShowListing from "./Pages/showListing";
 function App() {
   return (
     <div>
@@ -26,6 +26,7 @@ function App() {
           <Route element={<PrivateComponent />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/createListing" element={<CreateListiing />} />
+            <Route path="/showUserlisting" element={<ShowListing />} />
           </Route>
 
           <Route path="/" element={<Home />} />

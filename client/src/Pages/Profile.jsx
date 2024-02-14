@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -151,6 +152,21 @@ export default function Profile() {
       dispatch(SignOutUserSucess());
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const showlisting = async () => {
+    try {
+      const api = await fetch(`/api/listing/${currentUser.result._id}`);
+      let result = await api.json();
+      if (!result) {
+        return setListingError(true);
+      }
+      setUserListing(result);
+      // console.log("data ");
+    } catch (error) {
+      console.log("some thing went wrong", error);
+      setListingError(true);
     }
   };
 

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import DropDown from "./DropDown";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ export default function Navbar() {
 
   const user = sessionStorage.getItem("users");
   const admin = sessionStorage.getItem("admin");
+  const [openProfile, setOpenProfile] = useState(false);
   const isLoggedIn = user || admin;
 
   const { currentUser } = useSelector((state) => state.user);
@@ -56,11 +59,6 @@ export default function Navbar() {
 
             {user ? (
               <>
-                <Link to="/createListing">
-                  <li className=" text-slate-600 hover:underline">
-                    Add Property
-                  </li>
-                </Link>
                 <Link to="/profile">
                   <img
                     className="rounded-full h-7 w-7 object-cover"
@@ -68,13 +66,13 @@ export default function Navbar() {
                     alt=""
                   />
                 </Link>
+                <Link onClick={() => setOpenProfile((prev) => !prev)}>
+                  <SettingsSuggestIcon />
+                </Link>
+                {openProfile && <DropDown />}
               </>
             ) : (
-              <>
-                {/* <Link to="/sign-in">
-                  <li className=" text-slate-600 hover:underline">SignIn</li>
-                </Link> */}
-              </>
+              <></>
             )}
 
             {admin ? (
@@ -92,11 +90,7 @@ export default function Navbar() {
                 </Link>
               </>
             ) : (
-              <>
-                {/* <Link to="/sign-in">
-                  <li className=" text-slate-600 hover:underline">SignIn</li>
-                </Link> */}
-              </>
+              <></>
             )}
 
             {isLoggedIn ? null : (

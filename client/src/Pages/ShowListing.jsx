@@ -12,6 +12,7 @@ export default function ShowListing() {
   useEffect(() => {
     showlisting();
   }, []);
+
   const showlisting = async () => {
     try {
       const api = await fetch(`/api/listing/${currentUser.result._id}`);
@@ -27,7 +28,21 @@ export default function ShowListing() {
     }
   };
 
-  const deleteListing = async () => {};
+  const deleteListing = async (id) => {
+    try {
+      let result = await fetch(`/api/deleteListing/${id}`, {
+        method: "DELETE",
+      });
+
+      result = await result.json();
+
+      if (result) {
+        showlisting();
+      }
+    } catch (error) {
+      console.log("some thing went wrong", error);
+    }
+  };
   return (
     <div className="flex flex-col gap-2 mx-6">
       <h1 className="text-center  my-7 text-3xl font-semibold">
@@ -69,12 +84,17 @@ export default function ShowListing() {
                 <td>{listing.discountPrice}</td>
 
                 <td className="flex flex-col  items-center">
-                  <button onClick={deleteListing} className="text-red-700">
+                  <button
+                    onClick={() => {
+                      deleteListing(listing._id);
+                    }}
+                    className="text-red-700"
+                  >
                     Delete
                   </button>
-                  <button onClick={deleteListing} className="text-green-700">
-                    Edit
-                  </button>
+                  <Link to={`/updateListing/${listing._id}`}>
+                    <button className="text-green-700">Edit</button>
+                  </Link>
                 </td>
               </tr>
             ))}

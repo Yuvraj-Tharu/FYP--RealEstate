@@ -16,6 +16,8 @@ import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 import CreateListiing from "./Pages/CreateListiing";
 import ShowListing from "./Pages/showListing";
+import UpdateListing from "./Pages/UpdateListing";
+
 function App() {
   return (
     <div>
@@ -27,6 +29,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/createListing" element={<CreateListiing />} />
             <Route path="/showUserlisting" element={<ShowListing />} />
+            <Route path="/updateListing/:id" element={<UpdateListing />} />
           </Route>
 
           <Route path="/" element={<Home />} />

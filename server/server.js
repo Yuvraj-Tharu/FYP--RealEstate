@@ -11,6 +11,7 @@ const UserProfileUpdateRouter = require("./Routes/userProfile.routes");
 const createListingRouter = require("./Routes/createListing.routes");
 // const getListingRouter = require("./Routes/createListing.routes");
 const deleteRouter = require("./Routes/deleteListing.routes");
+
 app.use(express.json());
 app.use(cors());
 

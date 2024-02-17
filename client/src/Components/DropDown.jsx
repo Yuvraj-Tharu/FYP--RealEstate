@@ -10,7 +10,7 @@ export default function DropDown() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="flex flex-col DropDownProfile bg-slate-200 shadow-md"
+      className="flex flex-col DropDownProfile bg-slate-200 shadow-md z-50" // Add z-50 class here
     >
       <motion.ul
         initial={{ opacity: 0, y: -20 }}

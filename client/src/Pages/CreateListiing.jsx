@@ -139,6 +139,7 @@ export default function CreateListiing() {
       });
 
       const data = await api.json();
+
       // console.log("data------", data);
       setLoding(false);
       if (!data) {

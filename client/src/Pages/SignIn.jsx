@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import "../assets/Style/Signup-Style.css";
 import {
   MDBBtn,
@@ -32,10 +33,17 @@ export default function SignIn() {
   // const loading = useSelector((state) => state.user.loading);
   const { loading } = useSelector((state) => state.user);
 
-  const auth = sessionStorage.getItem("users");
-  if (auth) {
-    navigate1("/");
-  }
+  // const auth = sessionStorage.getItem("users");
+  // if (auth) {
+  //   navigate1("/");
+  // }
+
+  useEffect(() => {
+    const auth = sessionStorage.getItem("users");
+    if (auth) {
+      navigate1("/");
+    }
+  }, [navigate1]);
 
   const UserLogin = async () => {
     // setLoading(true);

@@ -66,10 +66,14 @@ export default function Navbar() {
                     alt=""
                   />
                 </Link>
-                <Link onClick={() => setOpenProfile((prev) => !prev)}>
-                  <SettingsSuggestIcon />
-                </Link>
-                {openProfile && <DropDown />}
+                <div>
+                  <Link>
+                    <SettingsSuggestIcon
+                      onClick={() => setOpenProfile((prev) => !prev)}
+                    />
+                  </Link>
+                  {openProfile && <DropDown />}
+                </div>
               </>
             ) : (
               <></>

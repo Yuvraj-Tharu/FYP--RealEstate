@@ -121,11 +121,13 @@ export default function UpdateListiing() {
     e.preventDefault();
     try {
       if (+formData.regularPrice < +formData.discountPrice) {
-        return setError("Discount price must be lower than regular price");
+        setError("Discount price must be lower than regular price");
+        return;
       }
 
       if (formData.imageUrl < 1) {
-        return setError("Image must be upload atleast one");
+        setError("Image must be upload atleast one");
+        return;
       }
       setLoding(true);
       setError(false);
@@ -139,14 +141,17 @@ export default function UpdateListiing() {
       });
 
       const data = await api.json();
+      // console.log(data._id, "sdsd");
       // console.log("data------", data);
       setLoding(false);
       if (!data) {
         setError("data is not found");
+        return;
       }
-      navigate(`/listing/${data.result._id}`);
+      navigate(`/listing/${data._id}`);
     } catch (error) {
-      setError("internal error, please try again");
+      setError("internal error, please try again", error);
+      console.log(error);
       setLoding(false);
     }
   };

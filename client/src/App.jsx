@@ -16,8 +16,8 @@ import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 import CreateListiing from "./Pages/CreateListiing";
 import ShowListing from "./Pages/showListing";
-import UpdateListing from "./Pages/UpdateListing";
-
+import UpdateListiing from "./Pages/updateListing";
+import Listing from "./Pages/Listing";
 function App() {
   return (
     <div>
@@ -29,7 +29,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/createListing" element={<CreateListiing />} />
             <Route path="/showUserlisting" element={<ShowListing />} />
-            <Route path="/updateListing/:id" element={<UpdateListing />} />
+            <Route path="/updateListing/:id" element={<UpdateListiing />} />
           </Route>
 
           <Route path="/" element={<Home />} />
@@ -38,6 +38,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/verify/otp" element={<OTPVerify />} />
           <Route path="/forget/password" element={<ForgetPassword />} />
+          <Route path="/listing/:id" element={<Listing />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />

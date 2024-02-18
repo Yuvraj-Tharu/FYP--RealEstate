@@ -15,6 +15,7 @@ import {
   FaShare,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import Contact from "../Components/Contact";
 
 export default function Listing() {
   const params = useParams();
@@ -23,6 +24,9 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const [contact, setContact] = useState(false);
+
+  // console.log("current", currentUser.result._id);
   SwiperCore.use([Navigation]);
   useEffect(() => {
     showData();
@@ -51,8 +55,6 @@ export default function Listing() {
       setError(true);
     }
   };
-
-  console.log(listing);
 
   return (
     <main>
@@ -144,6 +146,19 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
+
+            {currentUser &&
+              listing.userRef !== currentUser.result._id &&
+              !contact && (
+                <button
+                  onClick={() => setContact(true)}
+                  className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
+                >
+                  Contact Land Owner
+                </button>
+              )}
+
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}

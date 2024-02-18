@@ -12,6 +12,8 @@ const createListingRouter = require("./Routes/createListing.routes");
 // const getListingRouter = require("./Routes/createListing.routes");
 const deleteRouter = require("./Routes/deleteListing.routes");
 
+const getUserRouter = require("./Routes/getUser.routes");
+
 app.use(express.json());
 app.use(cors());
 
@@ -26,6 +28,8 @@ app.use("/", createListingRouter);
 // app.use("/", getListingRouter);
 
 app.use("/", deleteRouter);
+
+app.use("/", getUserRouter);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);

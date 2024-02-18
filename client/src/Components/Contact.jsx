@@ -25,8 +25,6 @@ export default function Contact({ listing }) {
     }
   };
 
-  console.log(message);
-  const Handel = () => {};
   return (
     <>
       {owner && (

@@ -6,7 +6,7 @@ export default function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState([]);
-  console.log(listing);
+  const [showMore, setShowMore] = useState(false);
   const [sidebar, setSidebar] = useState({
     serachTerm: "",
     type: "all",
@@ -80,11 +80,17 @@ export default function Search() {
     }
     const fetchData = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       let result = await fetch(`/api/searchListing?${searchQuery}`);
-      result = await result.json();
+      let data = await result.json();
       //   console.log("result", result);
-      setListing(result);
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
+      setListing(data);
       setLoading(false);
     };
     fetchData();
@@ -102,6 +108,20 @@ export default function Search() {
     urlPrams.set("order", sidebar.order);
     const searchQuery = urlPrams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListing = listing.length;
+    const startIndex = numberOfListing;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/searchListing?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListing([...listing, ...data]);
   };
   return (
     <div className="flex flex-col md:flex-row ">
@@ -226,6 +246,15 @@ export default function Search() {
               <ListingItem key={listing._id} listing={listing} />
             ))}
         </div>
+
+        {showMore && (
+          <button
+            onClick={onShowMoreClick}
+            className="text-sm text-green-700 hover:underline p-7"
+          >
+            Show more
+          </button>
+        )}
       </div>
     </div>
   );

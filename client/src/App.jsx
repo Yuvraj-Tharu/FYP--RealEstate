@@ -18,6 +18,7 @@ import CreateListiing from "./Pages/CreateListiing";
 import ShowListing from "./Pages/showListing";
 import UpdateListiing from "./Pages/updateListing";
 import Listing from "./Pages/Listing";
+import Search from "./Pages/Search";
 function App() {
   return (
     <div>
@@ -39,6 +40,7 @@ function App() {
           <Route path="/verify/otp" element={<OTPVerify />} />
           <Route path="/forget/password" element={<ForgetPassword />} />
           <Route path="/listing/:id" element={<Listing />} />
+          <Route path="/search" element={<Search />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />

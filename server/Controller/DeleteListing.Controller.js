@@ -1,6 +1,5 @@
 const Listing = require("../Models/userListingSchema");
 
-
 const deleteListing = async (req, res) => {
   try {
     const data = await Listing.deleteOne({ _id: req.params.id });
@@ -45,7 +44,5 @@ const updateListing = async (req, res) => {
     res.status(405).json({ message: "sth wrong", error });
   }
 };
-
-
 
 module.exports = { deleteListing, getListing, updateListing };

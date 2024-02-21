@@ -54,7 +54,9 @@ export default function CreateListiing() {
           setUploading(false);
         })
         .catch((error) => {
-          setImageUploadError("image upload failed");
+          setImageUploadError(
+            "image upload failed (image must be 10 mb max per image)"
+          );
           setUploading(false);
         });
     } else {
@@ -68,8 +70,9 @@ export default function CreateListiing() {
       const storage = getStorage(app);
       const fileName = new Date().getTime() + file.name;
       const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      // const customChunkSize = 7 * 1024 * 1024;
 
+      const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -310,7 +313,6 @@ export default function CreateListiing() {
                 type="number"
                 id="regularPrice"
                 min={1}
-                max={1000000000000}
                 className="p-3  text-gray-700 border rounded-lg"
                 onChange={submit}
                 value={formData.regularPrice}
@@ -327,14 +329,14 @@ export default function CreateListiing() {
                   type="number"
                   id="discountPrice"
                   min={0}
-                  max={100000000}
-                  className="p-3  text-gray-700 border rounded-lg"
+                  max={100}
+                  className="p-3  text-gray-700 border rounded-lg "
                   onChange={submit}
                   value={formData.discountPrice}
                 />
 
                 <div className="flex flex-col items-center">
-                  <p>Discounted Price</p>
+                  <p>Discounte %</p>
                   <span className="text-xs">(Rs / months)</span>
                 </div>
               </div>

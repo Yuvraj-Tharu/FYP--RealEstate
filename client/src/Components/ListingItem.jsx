@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdLocationOn } from "react-icons/md";
+import { MdLocationOn, MdBathtub } from "react-icons/md";
+import { FaBed } from "react-icons/fa";
 
 export default function ListingItem({ listing }) {
   return (
@@ -35,17 +36,19 @@ export default function ListingItem({ listing }) {
             {listing.type === "rent" && "/month"}
           </p>
 
-          <div className="text-slate-700 flex gap-4">
-            <div className="font-bold text-xs">
+          <div className="text-green-700 flex gap-2">
+            <div className="font-bold text-xs flex gap-1">
+              <FaBed className="text-lg flex text-green-700" />
               {listing.bedrooms > 1
-                ? `${listing.bedrooms}beds`
-                : `${listing.bedrooms}bedrooms`}
+                ? `${listing.bedrooms} beds`
+                : `${listing.bedrooms} bedrooms`}
             </div>
 
-            <div className="font-bold text-xs">
+            <div className="font-bold text-xs flex gap-1">
+              <MdBathtub className="text-sm md-1 text-green-700" />
               {listing.bathrooms > 1
-                ? `${listing.bathrooms}bath`
-                : `${listing.bathrooms}bathrooms`}
+                ? `${listing.bathrooms} bath`
+                : `${listing.bathrooms} bathrooms`}
             </div>
           </div>
         </div>

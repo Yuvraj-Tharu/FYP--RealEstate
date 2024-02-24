@@ -96,7 +96,11 @@ export default function UpdateListiing() {
   };
 
   const submit = (e) => {
-    if (e.target.id === "rent" || e.target.id === "sale") {
+    if (
+      e.target.id === "rent" ||
+      e.target.id === "sale" ||
+      e.target.id === "land"
+    ) {
       setFormData({ ...formData, type: e.target.id });
     }
 
@@ -265,6 +269,16 @@ export default function UpdateListiing() {
                 checked={formData.type === "rent"}
               />
               <span>Rent</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="land"
+                className="w-5"
+                onChange={submit}
+                checked={formData.type === "land"}
+              />
+              <span>Land</span>
             </div>
             <div className="flex gap-2">
               <input

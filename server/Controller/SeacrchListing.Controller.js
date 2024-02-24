@@ -36,6 +36,7 @@ const searchListing = async (req, res, next) => {
         furnished,
         parking,
         type,
+        isVerified: true,
       })
       .sort({ [sort]: order })
       .limit(limit)

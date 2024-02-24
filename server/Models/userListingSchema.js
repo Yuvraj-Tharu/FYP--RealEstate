@@ -57,6 +57,9 @@ const ListingSchema = new Schema(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

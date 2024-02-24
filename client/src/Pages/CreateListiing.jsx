@@ -99,7 +99,11 @@ export default function CreateListiing() {
   };
 
   const submit = (e) => {
-    if (e.target.id === "rent" || e.target.id === "sale") {
+    if (
+      e.target.id === "rent" ||
+      e.target.id === "sale" ||
+      e.target.id === "land"
+    ) {
       setFormData({ ...formData, type: e.target.id });
     }
 
@@ -151,6 +155,7 @@ export default function CreateListiing() {
       navigate(`/listing/${data.result._id}`);
     } catch (error) {
       setError("internal error, please try again");
+      console.log(error);
       setLoding(false);
     }
   };
@@ -248,23 +253,42 @@ export default function CreateListiing() {
             <div className="flex gap-2">
               <input
                 type="checkbox"
-                id="parking"
+                id="land"
                 className="w-5"
                 onChange={submit}
-                checked={formData.parking}
+                checked={formData.type === "land"}
               />
-              <span>Parking</span>
+              <span>Land</span>
             </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="furnished"
-                className="w-5"
-                onChange={submit}
-                checked={formData.furnished}
-              />
-              <span>Furnished</span>
-            </div>
+
+            {formData.type === "rent" || formData.type === "sale" ? (
+              <>
+                {" "}
+                <div className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    id="parking"
+                    className="w-5"
+                    onChange={submit}
+                    checked={formData.parking}
+                  />
+                  <span>Parking</span>
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    id="furnished"
+                    className="w-5"
+                    onChange={submit}
+                    checked={formData.furnished}
+                  />
+                  <span>Furnished</span>
+                </div>{" "}
+              </>
+            ) : (
+              <></>
+            )}
+
             <div className="flex gap-2">
               <input
                 type="checkbox"
@@ -276,38 +300,47 @@ export default function CreateListiing() {
               <span>Offer</span>
             </div>
           </motion.div>
+
           <motion.div
             className="flex flex-wrap gap-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.6 }}
           >
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                id="bedrooms"
-                min={1}
-                max={11}
-                className="p-3  text-gray-700 border rounded-lg"
-                onChange={submit}
-                value={formData.bedrooms}
-                required
-              />
-              <p>Beds</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                id="bathrooms"
-                min={1}
-                max={11}
-                className="p-3  text-gray-700 border rounded-lg"
-                onChange={submit}
-                value={formData.bathrooms}
-                required
-              />
-              <p>Bath</p>
-            </div>
+            {formData.type === "sale" || formData.type === "rent" ? (
+              <>
+                {" "}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    id="bedrooms"
+                    min={1}
+                    max={11}
+                    className="p-3  text-gray-700 border rounded-lg"
+                    onChange={submit}
+                    value={formData.bedrooms}
+                    required
+                  />
+                  <p>Beds</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    id="bathrooms"
+                    min={1}
+                    max={11}
+                    className="p-3  text-gray-700 border rounded-lg"
+                    onChange={submit}
+                    value={formData.bathrooms}
+                    required
+                  />
+                  <p>Bath</p>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+
             <div className="flex items-center gap-2">
               <input
                 type="number"

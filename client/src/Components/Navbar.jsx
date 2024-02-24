@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -43,6 +43,13 @@ export default function Navbar() {
       setSearchTerm(searchTermFromUrl);
     }
   }, [location.search]);
+
+  // window.addEventListener("click", (e) => {
+  //   if (e.target !== closeRef.current) {
+  //     setOpenProfile(false);
+  //     console.log(openProfile);
+  //   }
+  // });
 
   return (
     <div>
@@ -91,10 +98,12 @@ export default function Navbar() {
                     alt=""
                   />
                 </Link>
+
                 <div>
                   <Link>
                     <SettingsSuggestIcon
                       onClick={() => setOpenProfile((prev) => !prev)}
+                      // onClick={() => setOpenProfile(true)}
                     />
                   </Link>
                   {openProfile && <DropDown />}

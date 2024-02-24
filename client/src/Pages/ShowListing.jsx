@@ -8,6 +8,7 @@ export default function ShowListing() {
   const [listingError, setListingError] = useState(false);
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+  // console.log(userListing);
 
   useEffect(() => {
     showlisting();
@@ -21,7 +22,7 @@ export default function ShowListing() {
         return setListingError(true);
       }
       setUserListing(result);
-      console.log("data ", result);
+      // console.log("data ", result);
     } catch (error) {
       console.log("some thing went wrong", error);
       setListingError(true);
@@ -43,6 +44,7 @@ export default function ShowListing() {
       console.log("some thing went wrong", error);
     }
   };
+
   return (
     <div className="flex flex-col gap-2 mx-6">
       <h1 className="text-center  my-7 text-3xl font-semibold">
@@ -57,7 +59,8 @@ export default function ShowListing() {
             <th>Image</th>
             <th>Address</th>
             <th>Regular Price</th>
-            <th>Discount Price</th>
+            <th>Discount %</th>
+            <th>Verify</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -82,6 +85,7 @@ export default function ShowListing() {
                 <td>{listing.address}</td>
                 <td>{listing.regularPrice}</td>
                 <td>{listing.discountPrice}</td>
+                <td>{listing.isVerified === true ? "True" : "False"}</td>
 
                 <td className="flex flex-col  items-center">
                   <button

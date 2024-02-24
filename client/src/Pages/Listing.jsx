@@ -97,16 +97,23 @@ export default function Listing() {
           )}
 
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
-            <p className="text-2xl font-semibold ">
+            <p className="text-2xl font-semibold  gap-4 ">
               {listing.title} - Rs{" "}
-              {/* {listing.offer
-                ? listing.discountPrice.toLocaleString("en-US")
-                : listing.regularPrice.toLocaleString("en-US")} */}
               {listing.offer
-                ? +listing.regularPrice.toLocaleString("en-US") -
-                  +listing.discountPrice.toLocaleString("en-US")
-                : listing.regularPrice.toLocaleString("en-US")}
+                ? (
+                    +listing.regularPrice - +listing.discountPrice
+                  ).toLocaleString("en-RS")
+                : listing.regularPrice.toLocaleString("en-RS")}
+              {listing.offer && (
+                <p className="flex gap-1">
+                  <span className="text-sm">Regular Price</span>
+                  <span className="line-through text-sm">
+                    Rs {listing.regularPrice}
+                  </span>
+                </p>
+              )}
               {listing.type === "rent" && " / month"}
+              {listing.type === "land" && " / Aana"}
             </p>
             <p className="flex items-center mt-6 gap-2 text-slate-600  text-sm">
               <FaMapMarkerAlt className="text-green-700" />
@@ -120,8 +127,6 @@ export default function Listing() {
 
               {listing.offer && (
                 <p className="bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
-                  {/* Rs {+listing.regularPrice - +listing.discountPrice} OFF Rs{" "} */}
-                  {/* Rs {listing.discountPrice} OFF */}
                   Rs. {+listing.regularPrice * (listing.discountPrice / 100)}
                   <span> OFF</span>
                 </p>
@@ -131,28 +136,32 @@ export default function Listing() {
               <span className="font-semibold text-black">Description - </span>
               {listing.description}
             </p>
-            <ul className="text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6">
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaBed className="text-lg" />
-                {listing.bedrooms > 1
-                  ? `${listing.bedrooms}beds`
-                  : `${listing.bedrooms}bed`}
-              </li>
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaBath className="text-lg" />
-                {listing.bathrooms > 1
-                  ? `${listing.bathrooms}baths`
-                  : `${listing.bathrooms}bath`}
-              </li>
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaParking className="text-lg" />
-                {listing.parking ? "Parking spot" : "No Parking"}
-              </li>
-              <li className="flex items-center gap-1 whitespace-nowrap ">
-                <FaChair className="text-lg" />
-                {listing.furnished ? "Furnished" : "Unfurnished"}
-              </li>
-            </ul>
+            {listing.type === "rent" || listing.type === "sale" ? (
+              <ul className="text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6">
+                <li className="flex items-center gap-1 whitespace-nowrap ">
+                  <FaBed className="text-lg" />
+                  {listing.bedrooms > 1
+                    ? `${listing.bedrooms}beds`
+                    : `${listing.bedrooms}bed`}
+                </li>
+                <li className="flex items-center gap-1 whitespace-nowrap ">
+                  <FaBath className="text-lg" />
+                  {listing.bathrooms > 1
+                    ? `${listing.bathrooms}baths`
+                    : `${listing.bathrooms}bath`}
+                </li>
+                <li className="flex items-center gap-1 whitespace-nowrap ">
+                  <FaParking className="text-lg" />
+                  {listing.parking ? "Parking spot" : "No Parking"}
+                </li>
+                <li className="flex items-center gap-1 whitespace-nowrap ">
+                  <FaChair className="text-lg" />
+                  {listing.furnished ? "Furnished" : "Unfurnished"}
+                </li>
+              </ul>
+            ) : (
+              <></>
+            )}
 
             {currentUser &&
               listing.userRef !== currentUser.result._id &&

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Navigation } from "swiper/modules";
-// import SwiperCore from "swiper";
-// import "swiper/css";
+
 import ListingItem from "../Components/ListingItem";
 
 export default function Home() {
@@ -11,7 +8,10 @@ export default function Home() {
   const [offerListing, setOfferListing] = useState([]);
   const [saleListing, setSaleListing] = useState([]);
   const [rentListing, setrentListing] = useState([]);
-  // SwiperCore.use([Navigation]);
+  const [landListing, setLandListing] = useState([]);
+  console.log(offerListing);
+
+  console.log(offerListing);
 
   const videos = [
     "/videos/video1.mp4",
@@ -31,7 +31,7 @@ export default function Home() {
 
   const fetchOfferData = async () => {
     try {
-      let fetchData = await fetch("/api/searchListing/?offer=true&limit=4");
+      let fetchData = await fetch("/api/searchListing/?offer=true&limit=3");
       fetchData = await fetchData.json();
       setOfferListing(fetchData);
       fetchRentData();
@@ -43,7 +43,7 @@ export default function Home() {
 
   const fetchRentData = async () => {
     try {
-      let fetchData = await fetch("/api/searchListing/?type=rent&limit=4");
+      let fetchData = await fetch("/api/searchListing/?type=rent&limit=3");
       fetchData = await fetchData.json();
       setrentListing(fetchData);
       fetchSaleData();
@@ -54,9 +54,20 @@ export default function Home() {
 
   const fetchSaleData = async () => {
     try {
-      let fetchData = await fetch("/api/searchListing/?type=sale&limit=4");
+      let fetchData = await fetch("/api/searchListing/?type=sale&limit=3");
       fetchData = await fetchData.json();
       setSaleListing(fetchData);
+      fetchLandData();
+    } catch (error) {
+      console.log("internal error: " + error);
+    }
+  };
+
+  const fetchLandData = async () => {
+    try {
+      let fetchData = await fetch("/api/searchListing/?type=land&limit=3");
+      fetchData = await fetchData.json();
+      setLandListing(fetchData);
     } catch (error) {
       console.log("internal error: " + error);
     }
@@ -94,32 +105,16 @@ export default function Home() {
           Let's get started ..
         </Link>
       </div>
-      {/* <Swiper navigation>
-        {offerListing &&
-          offerListing.length > 0 &&
-          offerListing.map((listing) => (
-            <SwiperSlide>
-              <div
-                style={{
-                  background: `url(${listing.imageUrl[0]}) center no-repeat`,
-                  backgroundSize: "cover",
-                }}
-                className="h-[550px]"
-                key={listing._id}
-              ></div>
-            </SwiperSlide>
-          ))}{" "}
-      </Swiper> */}
 
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
         {offerListing && offerListing.length > 0 && (
           <div>
             <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-700">
+              <h2 className="text-2xl font-semibold text-slate-700 ">
                 Recent Offer
               </h2>
               <Link
-                className="text-sm text-blue-500 hover:underline"
+                className="text-sm text-blue-500  hover:underline"
                 to={"/search?offer=true"}
               >
                 Show more Offers
@@ -135,13 +130,13 @@ export default function Home() {
         )}
         {saleListing && saleListing.length > 0 && (
           <div>
-            <div className="my-3">
+            <div className="my-3 ">
               <h2 className="text-2xl font-semibold text-slate-700">
                 Recent Places for Sale
               </h2>
               <Link
                 className="text-sm text-blue-500 hover:underline"
-                to={"/search?type='sale'"}
+                to={"/search?type=sale"}
               >
                 Show more Places for Sale
               </Link>
@@ -156,13 +151,13 @@ export default function Home() {
         )}
         {rentListing && rentListing.length > 0 && (
           <div>
-            <div className="my-3">
+            <div className="my-3 ">
               <h2 className="text-2xl font-semibold text-slate-700">
                 Recent Places for Rent
               </h2>
               <Link
                 className="text-sm text-blue-500 hover:underline"
-                to={"/search?type='rent'"}
+                to={"/search?type=rent"}
               >
                 Show more Places for Rent
               </Link>
@@ -170,6 +165,28 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4">
               {rentListing.map((listing) => (
+                <ListingItem listing={listing} key={listing._id} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {landListing && landListing.length > 0 && (
+          <div>
+            <div className="my-3 ">
+              <h2 className="text-2xl font-semibold text-slate-700 ">
+                Recent Places for Land
+              </h2>
+              <Link
+                className="text-sm text-blue-500 hover:underline"
+                to={"/search?type=rent"}
+              >
+                Show more Places for Land
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              {landListing.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>

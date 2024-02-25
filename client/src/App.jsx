@@ -19,6 +19,7 @@ import ShowListing from "./Pages/showListing";
 import UpdateListiing from "./Pages/updateListing";
 import Listing from "./Pages/Listing";
 import Search from "./Pages/Search";
+import AdminPage from "./Pages/AdminPage";
 function App() {
   return (
     <div>
@@ -43,7 +44,7 @@ function App() {
           <Route path="/search" element={<Search />} />
 
           <Route element={<PrivateComponentADmin />}>
-            <Route path="/admin-dash" element={<h1>Admin dash board</h1>} />
+            <Route path="/admin-dash" element={<AdminPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,22 +1,42 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/Sidebar";
 import "../../assets/Style/table.css";
 
 export default function Approve() {
   const [data, setData] = useState();
+  const navigate = useNavigate();
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     showData();
   }, []);
 
   const showData = async () => {
-    let result = await fetch(`/api/admin-approve`);
+    let result = await fetch("/api/admin-approve");
     result = await result.json();
     setData(result.listings);
   };
 
+  const approveListing = async (id) => {
+    try {
+      let result = await fetch(`/api/admin-verify/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      result = await result.json();
+      if (result) {
+        showData();
+      }
+      console.log("dsds", result);
+      navigate("/approve-user/Property");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="grid grid-cols-3 ">
@@ -47,22 +67,30 @@ export default function Approve() {
                   <tr key={data._id}>
                     <td>{index + 1}</td>
                     <td>{data.title}</td>
-                    <td>{data.imageUrl}</td>
+                    <td>
+                      <Link>
+                        <img
+                          className="h-16 w-16 object-contain rouned-lg items-center "
+                          src={data.imageUrl[0]}
+                          alt=""
+                        />
+                      </Link>
+                    </td>
                     <td>{data.address}</td>
                     <td>{data.regularPrice}</td>
                     <td>{data.discountPrice}</td>
                     <td>{data.isVerified === false ? "false" : "true"}</td>
                     <td className="flex flex-col  items-center">
-                      <button
-                        onClick={() => {
-                          deleteListing(listing._id);
-                        }}
-                        className="text-red-700"
-                      >
-                        Cancel
-                      </button>
+                      <button className="text-red-700">Cancel</button>
                       <Link>
-                        <button className="text-green-700">Approce</button>
+                        <button
+                          onClick={() => {
+                            approveListing(data._id);
+                          }}
+                          className="text-green-700"
+                        >
+                          Approved
+                        </button>
                       </Link>
                     </td>
                   </tr>

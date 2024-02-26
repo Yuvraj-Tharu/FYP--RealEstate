@@ -3,7 +3,7 @@ const approve = require("../Models/userListingSchema");
 const adminAprove = async (req, res) => {
   try {
     const listings = await approve.find({ isVerified: false });
-    console.log(listings);
+
     if (listings.length > 0) {
       return res.status(200).json({ message: "Success", listings });
     } else {
@@ -15,4 +15,24 @@ const adminAprove = async (req, res) => {
   }
 };
 
-module.exports = { adminAprove };
+const adminVerify = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    const itemToVerify = await approve.findByIdAndUpdate(
+      itemId,
+      { isVerified: true },
+      { new: true }
+    );
+
+    if (!itemToVerify) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json(itemToVerify);
+  } catch (error) {
+    console.error("Error while verifying item:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { adminAprove, adminVerify };

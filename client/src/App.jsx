@@ -20,6 +20,7 @@ import UpdateListiing from "./Pages/updateListing";
 import Listing from "./Pages/Listing";
 import Search from "./Pages/Search";
 import AdminPage from "./Pages/AdminPage";
+import Approve from "./Pages/adminpages/Approve";
 function App() {
   return (
     <div>
@@ -45,6 +46,7 @@ function App() {
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
+            <Route path="/approve-user/Property" element={<Approve />} />
           </Route>
         </Routes>
       </BrowserRouter>

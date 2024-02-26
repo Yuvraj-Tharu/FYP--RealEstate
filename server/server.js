@@ -15,6 +15,9 @@ const deleteRouter = require("./Routes/deleteListing.routes");
 const getUserRouter = require("./Routes/getUser.routes");
 const searchRoutes = require("./Routes/searchListing.routes");
 
+// ?
+const AdminRouter = require("./Routes/Admin.Routes");
+
 app.use(express.json());
 app.use(cors());
 
@@ -32,6 +35,8 @@ app.use("/", deleteRouter);
 
 app.use("/", getUserRouter);
 app.use("/", searchRoutes);
+
+app.use("/", AdminRouter);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);

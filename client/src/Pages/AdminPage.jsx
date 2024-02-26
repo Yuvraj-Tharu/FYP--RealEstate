@@ -13,9 +13,9 @@ export default function AdminPage() {
 
         <div className="col-span-2 bg-white p-8 items-center ml-[-200px]">
           <h1 className="text-3xl font-semibold mb-4 text-slate-600">
-            Dashboard
+            Dashboard Details
           </h1>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-6">
             <div className="flex flex-col gap-1">
               <h1 className="font-semibold ">Total Property listing</h1>
 

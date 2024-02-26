@@ -12,7 +12,10 @@ export default function Sidebar() {
           <div className="p-4">
             <ul className="space-y-2">
               <li>
-                <Link className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded ">
+                <Link
+                  to="/admin-dash"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded "
+                >
                   <h1 className="flex gap-1">
                     <MdSpaceDashboard />
                     Dashboard
@@ -20,7 +23,10 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li>
-                <Link className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded">
+                <Link
+                  to="/customers"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
                   <h1 className="flex gap-1">
                     <FaUsers />
                     Customers
@@ -28,7 +34,10 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li>
-                <Link className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded">
+                <Link
+                  to="/add-adminProperty"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
                   <h1 className="flex gap-1">
                     <FaHouseChimney />
                     Property
@@ -36,7 +45,10 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li>
-                <Link className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded">
+                <Link
+                  to="/approve-user/Property"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
                   <h1 className="flex gap-1">
                     <FaBuildingUser />
                     Approve Properties

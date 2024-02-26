@@ -78,19 +78,18 @@ export default function Navbar() {
             </button>
           </form>
           <ul className="flex gap-4 ">
-            <Link to="/">
-              <li className="hiddem sm:inline text-slate-600 hover:underline">
-                Home
-              </li>
-            </Link>
-            <Link to="/about">
-              <li className="hiddem sm:inline text-slate-600 hover:underline">
-                About
-              </li>
-            </Link>
-
             {user ? (
               <>
+                <Link to="/">
+                  <li className="hiddem sm:inline text-slate-600 hover:underline">
+                    Home
+                  </li>
+                </Link>
+                <Link to="/about">
+                  <li className="hiddem sm:inline text-slate-600 hover:underline">
+                    About
+                  </li>
+                </Link>
                 <Link to="/profile">
                   <img
                     className="rounded-full h-7 w-7 object-cover"

@@ -21,6 +21,7 @@ import Listing from "./Pages/Listing";
 import Search from "./Pages/Search";
 import AdminPage from "./Pages/AdminPage";
 import Approve from "./Pages/adminpages/Approve";
+import ShowCurrentUser from "./Pages/adminpages/ShowCurrentUser";
 function App() {
   return (
     <div>
@@ -47,6 +48,7 @@ function App() {
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
             <Route path="/approve-user/Property" element={<Approve />} />
+            <Route path="/showAllCurrent-User/details" element={<ShowCurrentUser/>} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -44,14 +44,14 @@ export default function Approve() {
           <Sidebar />
         </div>
 
-        <div id="customers" className="mt-4  col-span-2 ">
+        <div id="customers" className="mt-4  ">
           <h1 className="font-semibold text-slate-700 text-3xl mb-3 my-4 ">
             Approve User Property Listing
           </h1>
-          <table className="table-auto ">
+          <table className="">
             <thead>
-              <tr className="">
-                <th className="b">S.N</th>
+              <tr>
+                <th className="">S.N</th>
                 <th>Title</th>
                 <th>Image</th>
                 <th>Address</th>
@@ -59,7 +59,7 @@ export default function Approve() {
                 <th>Discount %</th>
                 <th>Status</th>
                 <th>View Details</th>
-                <th>Action</th>
+                <th className="">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -90,18 +90,17 @@ export default function Approve() {
                         </button>
                       </Link>
                     </td>
-                    <td className="flex flex-col  items-center">
+                    <td className="">
                       <button className="text-red-700">Cancel</button>
-                      <Link>
-                        <button
-                          onClick={() => {
-                            approveListing(data._id);
-                          }}
-                          className="text-green-700"
-                        >
-                          Approved
-                        </button>
-                      </Link>
+
+                      <button
+                        onClick={() => {
+                          approveListing(data._id);
+                        }}
+                        className="text-green-700 "
+                      >
+                        Approved
+                      </button>
                     </td>
                   </tr>
                 ))}

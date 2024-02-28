@@ -24,7 +24,7 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
-                  to="/customers"
+                  to="/showAllCurrent-User/details"
                   className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
                 >
                   <h1 className="flex gap-1">
@@ -58,7 +58,6 @@ export default function Sidebar() {
             </ul>
           </div>
         </div>
-        <div className="flex-grow bg-gray-100">{/* Main content area */}</div>
       </div>
     </>
   );

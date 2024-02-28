@@ -57,7 +57,8 @@ export default function Approve() {
                 <th>Address</th>
                 <th>Regular Price</th>
                 <th>Discount %</th>
-                <th>Verify</th>
+                <th>Status</th>
+                <th>View Details</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -68,7 +69,7 @@ export default function Approve() {
                     <td>{index + 1}</td>
                     <td>{data.title}</td>
                     <td>
-                      <Link>
+                      <Link to={`/listing/${data._id}`}>
                         <img
                           className="h-16 w-16 object-contain rouned-lg items-center "
                           src={data.imageUrl[0]}
@@ -79,7 +80,16 @@ export default function Approve() {
                     <td>{data.address}</td>
                     <td>{data.regularPrice}</td>
                     <td>{data.discountPrice}</td>
-                    <td>{data.isVerified === false ? "false" : "true"}</td>
+                    <td>
+                      {data.isVerified === false ? "Not Verify" : "Verify"}
+                    </td>
+                    <td>
+                      <Link to={`/listing/${data._id}`}>
+                        <button className="text-green-700 hover:underline">
+                          Click here
+                        </button>
+                      </Link>
+                    </td>
                     <td className="flex flex-col  items-center">
                       <button className="text-red-700">Cancel</button>
                       <Link>

@@ -15,7 +15,7 @@ import ForgetPassword from "./Pages/ForgetPassword";
 import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 import CreateListiing from "./Pages/CreateListiing";
-import ShowListing from "./Pages/showListing";
+import ShowListing from "./Pages/ShowListing";
 import UpdateListiing from "./Pages/updateListing";
 import Listing from "./Pages/Listing";
 import Search from "./Pages/Search";

@@ -163,7 +163,7 @@ export default function Listing() {
               <></>
             )}
 
-            {currentUser &&
+            {/* {currentUser &&
               listing.userRef !== currentUser.result._id &&
               !contact && (
                 <button
@@ -174,7 +174,7 @@ export default function Listing() {
                 </button>
               )}
 
-            {contact && <Contact listing={listing} />}
+            {contact && <Contact listing={listing} />} */}
           </div>
         </div>
       )}

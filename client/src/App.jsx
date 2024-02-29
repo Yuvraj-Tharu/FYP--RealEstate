@@ -48,7 +48,10 @@ function App() {
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
             <Route path="/approve-user/Property" element={<Approve />} />
-            <Route path="/showAllCurrent-User/details" element={<ShowCurrentUser/>} />
+            <Route
+              path="/showAllCurrent-User/details"
+              element={<ShowCurrentUser />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -19,15 +19,6 @@ export default function Navbar() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const logout = () => {
-    sessionStorage.clear();
-    toast.success(<div>Logout Sucessfully!! </div>, {
-      theme: "colored",
-      autoClose: 1000,
-    });
-    navigate("/");
-  };
-
   const handelSubmit = async (e) => {
     e.preventDefault();
     const urlPrams = new URLSearchParams(window.location.search);
@@ -122,10 +113,10 @@ export default function Navbar() {
                     alt=""
                   />
                 </Link>
-
+                {/* 
                 <Link to="/log-out" onClick={logout}>
                   <li className=" text-slate-600 hover:underline">logout</li>
-                </Link>
+                </Link> */}
               </>
             ) : (
               <></>

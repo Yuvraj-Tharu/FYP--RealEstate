@@ -61,6 +61,7 @@ export default function ShowListing() {
             <th>Regular Price</th>
             <th>Discount %</th>
             <th>Verify</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -86,8 +87,9 @@ export default function ShowListing() {
                 <td>{listing.regularPrice}</td>
                 <td>{listing.discountPrice}</td>
                 <td>{listing.isVerified === true ? "True" : "False"}</td>
+                <td>{listing.isCanceled === true && "Not approved "}</td>
 
-                <td className="flex flex-col  items-center">
+                <td className="flex flex-col  items-center gap-3">
                   <button
                     onClick={() => {
                       deleteListing(listing._id);
@@ -97,7 +99,9 @@ export default function ShowListing() {
                     Delete
                   </button>
                   <Link to={`/updateListing/${listing._id}`}>
-                    <button className="text-green-700">Edit</button>
+                    <button className="text-green-700 ">
+                      {listing.isCanceled === true ? "Edit Now" : "Edit"}
+                    </button>
                   </Link>
                 </td>
               </tr>

@@ -22,6 +22,7 @@ import Search from "./Pages/Search";
 import AdminPage from "./Pages/AdminPage";
 import Approve from "./Pages/adminpages/Approve";
 import ShowCurrentUser from "./Pages/adminpages/ShowCurrentUser";
+import ShowProperty from "./Pages/adminpages/ShowProperty";
 function App() {
   return (
     <div>
@@ -48,6 +49,7 @@ function App() {
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
             <Route path="/approve-user/Property" element={<Approve />} />
+            <Route path="/show-adminProperty" element={<ShowProperty />} />
             <Route
               path="/showAllCurrent-User/details"
               element={<ShowCurrentUser />}

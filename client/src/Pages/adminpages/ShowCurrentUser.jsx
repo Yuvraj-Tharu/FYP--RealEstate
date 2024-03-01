@@ -23,12 +23,12 @@ export default function ShowCurrentUser() {
 
   return (
     <>
-      <div className="grid grid-cols-3 ">
-        <div className=" mr-[586px] h-full">
+      <div className="flex ">
+        <div className="  h-full">
           <Sidebar />
         </div>
 
-        <div id="customers" className="mt-4  ">
+        <div id="customers" className="p-4 grow flex flex-col text-center ">
           <h1 className="font-semibold text-slate-700 text-3xl mb-3 my-4  ">
             Users
           </h1>
@@ -54,7 +54,7 @@ export default function ShowCurrentUser() {
                     <td>{data.lastName}</td>
                     <td>{data.email}</td>
                     <td>
-                      <img src={data.avatar} alt="" />
+                      <img className="h-24 w-24" src={data.avatar} alt="" />
                     </td>
 
                     <td>{data.isVerified === true ? "Yes" : "No"}</td>

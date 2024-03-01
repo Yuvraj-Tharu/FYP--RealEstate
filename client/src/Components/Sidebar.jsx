@@ -1,10 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { FaHouseChimney, FaBuildingUser } from "react-icons/fa6";
+import { IoIosLogOut } from "react-icons/io";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { BsFillHouseAddFill } from "react-icons/bs";
 
+import { SignOutUserSucess } from "../redux/user/userSlice";
 export default function Sidebar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logout = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    toast.success(<div>Logout Sucessfully!! </div>, {
+      theme: "colored",
+      autoClose: 1000,
+    });
+    dispatch(SignOutUserSucess());
+    navigate("/");
+  };
   return (
     <>
       <div className="flex h-screen">
@@ -35,12 +52,23 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
-                  to="/add-adminProperty"
+                  to="/show-adminProperty"
                   className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
                 >
                   <h1 className="flex gap-1">
                     <FaHouseChimney />
-                    Property
+                    Show Property
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/add-adminProperty"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <BsFillHouseAddFill />
+                    Add Property
                   </h1>
                 </Link>
               </li>
@@ -52,6 +80,18 @@ export default function Sidebar() {
                   <h1 className="flex gap-1">
                     <FaBuildingUser />
                     Approve Properties
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/"}
+                  onClick={logout}
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <IoIosLogOut />
+                    Log out
                   </h1>
                 </Link>
               </li>

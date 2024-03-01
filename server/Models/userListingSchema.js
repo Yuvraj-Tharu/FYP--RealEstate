@@ -61,6 +61,10 @@ const ListingSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isCanceled: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

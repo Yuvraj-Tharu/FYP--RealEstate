@@ -20,7 +20,6 @@ const getListing = async (req, res) => {
       res.status(400).json({ message: "data not found" });
     }
 
-    // console.log(data);
     res.status(200).json({ message: "Show listing data sucessfully", data });
   } catch (error) {
     res
@@ -35,9 +34,13 @@ const updateListing = async (req, res) => {
     if (!check) {
       res.status(402).json({ message: "user not found" });
     }
-    const api = await Listing.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const api = await Listing.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, isVerified: false },
+      {
+        new: true,
+      }
+    );
 
     res.send(api);
   } catch (error) {

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/Sidebar";
 import "../../assets/Style/table.css";
+import { toast } from "react-toastify";
 
 export default function Approve() {
   const [data, setData] = useState();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   // console.log(data);
 
@@ -14,9 +16,18 @@ export default function Approve() {
   }, []);
 
   const showData = async () => {
-    let result = await fetch("/api/admin-approve");
-    result = await result.json();
-    setData(result.listings);
+    try {
+      let result = await fetch("/api/admin-approve");
+      if (result) {
+        result = await result.json();
+      } else {
+        setMessage("No verify  Found");
+      }
+
+      setData(result.listings);
+    } catch (error) {
+      console.log("sth went wrong", error);
+    }
   };
 
   const approveListing = async (id) => {
@@ -31,23 +42,46 @@ export default function Approve() {
       if (result) {
         showData();
       }
-      console.log("dsds", result);
+      // console.log("dsds", result);
       navigate("/approve-user/Property");
     } catch (error) {
       console.log(error);
     }
   };
+
+  const notApproveListing = async (id) => {
+    try {
+      let result = await fetch(`/api/admin-cancel/${id}`, {
+        method: "PUT",
+      });
+
+      result = await result.json();
+      if (result) {
+        showData();
+      }
+      if (result.isCanceled === true) {
+        toast.info(<div>Not Approved user Listing</div>, {
+          theme: "colored",
+          autoClose: 1000,
+        });
+      }
+      navigate("/approve-user/Property");
+    } catch (error) {
+      console.log("sth went wrong with the server", error);
+    }
+  };
   return (
     <>
-      <div className="grid grid-cols-3 ">
-        <div className=" mr-[586px] h-full">
+      <div className="flex">
+        <div className="h-full">
           <Sidebar />
         </div>
 
-        <div id="customers" className="mt-4  ">
+        <div id="customers" className="p-4 grow flex flex-col text-center ">
           <h1 className="font-semibold text-slate-700 text-3xl mb-3 my-4 ">
             Approve User Property Listing
           </h1>
+          {message && <p className="text-red-700 text-sm">{error}</p>}
           <table className="">
             <thead>
               <tr>
@@ -90,8 +124,15 @@ export default function Approve() {
                         </button>
                       </Link>
                     </td>
-                    <td className="">
-                      <button className="text-red-700">Cancel</button>
+                    <td className="flex flex-col gap-3">
+                      <button
+                        onClick={() => {
+                          notApproveListing(data._id);
+                        }}
+                        className="text-red-700"
+                      >
+                        {data.isCanceled === false ? "Cancel" : "Cancelled"}
+                      </button>
 
                       <button
                         onClick={() => {

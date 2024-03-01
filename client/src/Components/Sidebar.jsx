@@ -85,6 +85,17 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
+                  to="/showAdminProperty"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <FaBuildingUser />
+                    Show Property
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
                   to={"/"}
                   onClick={logout}
                   className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"

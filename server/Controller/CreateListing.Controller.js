@@ -1,5 +1,5 @@
 const createListing = require("../Models/userListingSchema");
-
+//Create User Listing
 const UserListing = async (req, res) => {
   try {
     const { isVerified, ...rest } = req.body;
@@ -15,12 +15,13 @@ const UserListing = async (req, res) => {
   }
 };
 
+//show User Listing Function
 const getUserListing = async (req, res) => {
   if (req.params.id) {
     try {
       const listings = await createListing.find({ userRef: req.params.id });
-      console.log(listings);
-      res.status(200).json(listings);
+
+      return res.status(200).json(listings);
     } catch (error) {
       res.status(404).json({ message: "something went wrong" });
     }

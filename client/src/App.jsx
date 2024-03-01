@@ -23,6 +23,10 @@ import AdminPage from "./Pages/AdminPage";
 import Approve from "./Pages/adminpages/Approve";
 import ShowCurrentUser from "./Pages/adminpages/ShowCurrentUser";
 import ShowProperty from "./Pages/adminpages/ShowProperty";
+import AdminListing from "./Pages/adminpages/AdminListing";
+import AdminsingleListing from "./Pages/adminpages/AdminSingleListing";
+import ShowAdminListing from "./Pages/adminpages/ShowAdminListing";
+import UpdateAdminListiing from "./Pages/adminpages/UpdateAdminListing";
 function App() {
   return (
     <div>
@@ -50,9 +54,20 @@ function App() {
             <Route path="/admin-dash" element={<AdminPage />} />
             <Route path="/approve-user/Property" element={<Approve />} />
             <Route path="/show-adminProperty" element={<ShowProperty />} />
+            <Route path="/add-adminProperty" element={<AdminListing />} />
+            <Route
+              path="/admin-showSingleListing/:id"
+              element={<AdminsingleListing />}
+            />
+            <Route path="/showAdminProperty" element={<ShowAdminListing />} />
             <Route
               path="/showAllCurrent-User/details"
               element={<ShowCurrentUser />}
+            />
+
+            <Route
+              path="/updateAdminListing/:id"
+              element={<UpdateAdminListiing />}
             />
           </Route>
         </Routes>

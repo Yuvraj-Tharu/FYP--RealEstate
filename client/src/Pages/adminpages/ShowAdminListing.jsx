@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import "../assets/Style/table.css";
+import "../../assets/Style/table.css";
 
-export default function ShowListing() {
+export default function ShowAdminListing() {
   const [userListing, setUserListing] = useState([]);
   const [listingError, setListingError] = useState(false);
   const dispatch = useDispatch();
@@ -16,7 +16,9 @@ export default function ShowListing() {
 
   const showlisting = async () => {
     try {
-      const api = await fetch(`/api/listing/${currentUser.result._id}`);
+      const api = await fetch(
+        `/api/showAdminListing/${currentUser.result._id}`
+      );
       let result = await api.json();
       if (!result) {
         return setListingError(true);
@@ -31,7 +33,7 @@ export default function ShowListing() {
 
   const deleteListing = async (id) => {
     try {
-      let result = await fetch(`/api/deleteListing/${id}`, {
+      let result = await fetch(`/api/deleteAdminListing/${id}`, {
         method: "DELETE",
       });
 
@@ -60,8 +62,7 @@ export default function ShowListing() {
             <th>Address</th>
             <th>Regular Price</th>
             <th>Discount %</th>
-            <th>Verify</th>
-            <th>Status</th>
+
             <th>Action</th>
           </tr>
         </thead>
@@ -74,7 +75,7 @@ export default function ShowListing() {
                 <td>{listing.title}</td>
                 <td>
                   {" "}
-                  <Link to={`/listing/${listing._id}`}>
+                  <Link to={`/admin-showSingleListing/${listing._id}`}>
                     <img
                       className="h-16 w-16 object-contain rouned-lg items-center "
                       src={listing.imageUrl[0]}
@@ -86,10 +87,6 @@ export default function ShowListing() {
                 <td>{listing.address}</td>
                 <td>{listing.regularPrice}</td>
                 <td>{listing.discountPrice}</td>
-                <td>
-                  {listing.isVerified === true ? "Approved" : "Not Approved"}
-                </td>
-                <td>{listing.isCanceled === true && "verify Cancel "}</td>
 
                 <td className="flex flex-col  items-center gap-3">
                   <button
@@ -100,10 +97,8 @@ export default function ShowListing() {
                   >
                     Delete
                   </button>
-                  <Link to={`/updateListing/${listing._id}`}>
-                    <button className="text-green-700 ">
-                      {listing.isCanceled === true ? "Edit Now" : "Edit"}
-                    </button>
+                  <Link to={`/updateAdminListing/${listing._id}`}>
+                    <button className="text-green-700 ">Edit</button>
                   </Link>
                 </td>
               </tr>

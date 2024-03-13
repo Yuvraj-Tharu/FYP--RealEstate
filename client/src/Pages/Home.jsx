@@ -9,9 +9,11 @@ export default function Home() {
   const [saleListing, setSaleListing] = useState([]);
   const [rentListing, setrentListing] = useState([]);
   const [landListing, setLandListing] = useState([]);
-  console.log(offerListing);
 
-  console.log(offerListing);
+  const [adminofferListing, setAdminOfferListing] = useState([]);
+  const [adminsaleListing, setAdminSaleListing] = useState([]);
+  const [adminrentListing, setAdminrentListing] = useState([]);
+  const [adminlandListing, setAdminLandListing] = useState([]);
 
   const videos = [
     "/videos/video1.mp4",
@@ -33,7 +35,8 @@ export default function Home() {
     try {
       let fetchData = await fetch("/api/searchListing/?offer=true&limit=3");
       fetchData = await fetchData.json();
-      setOfferListing(fetchData);
+      setOfferListing(fetchData.listing);
+      setAdminOfferListing(fetchData.listing1);
       fetchRentData();
       // console.log(fetchData);
     } catch (error) {
@@ -45,7 +48,8 @@ export default function Home() {
     try {
       let fetchData = await fetch("/api/searchListing/?type=rent&limit=3");
       fetchData = await fetchData.json();
-      setrentListing(fetchData);
+      setrentListing(fetchData.listing);
+      setAdminrentListing(fetchData.listing1);
       fetchSaleData();
     } catch (error) {
       console.log("internal error: " + error);
@@ -56,7 +60,8 @@ export default function Home() {
     try {
       let fetchData = await fetch("/api/searchListing/?type=sale&limit=3");
       fetchData = await fetchData.json();
-      setSaleListing(fetchData);
+      setSaleListing(fetchData.listing);
+      setAdminSaleListing(fetchData.listing1);
       fetchLandData();
     } catch (error) {
       console.log("internal error: " + error);
@@ -67,7 +72,8 @@ export default function Home() {
     try {
       let fetchData = await fetch("/api/searchListing/?type=land&limit=3");
       fetchData = await fetchData.json();
-      setLandListing(fetchData);
+      setLandListing(fetchData.listing);
+      setAdminLandListing(fetchData.listing1);
     } catch (error) {
       console.log("internal error: " + error);
     }
@@ -125,9 +131,17 @@ export default function Home() {
               {offerListing.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
+              {adminofferListing && adminofferListing.length > 0 && (
+                <div className="flex flex-wrap gap-4">
+                  {adminofferListing.map((listing) => (
+                    <ListingItem listing={listing} key={listing._id} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
+
         {saleListing && saleListing.length > 0 && (
           <div>
             <div className="my-3 ">
@@ -146,6 +160,13 @@ export default function Home() {
               {saleListing.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
+              {adminsaleListing && adminsaleListing.length > 0 && (
+                <div className="flex flex-wrap gap-4">
+                  {adminsaleListing.map((listing) => (
+                    <ListingItem listing={listing} key={listing._id} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -167,6 +188,13 @@ export default function Home() {
               {rentListing.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
+              {adminrentListing && adminrentListing.length > 0 && (
+                <div className="flex flex-wrap gap-4">
+                  {adminrentListing.map((listing) => (
+                    <ListingItem listing={listing} key={listing._id} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -189,6 +217,13 @@ export default function Home() {
               {landListing.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
+              {adminlandListing && adminlandListing.length > 0 && (
+                <div className="flex flex-wrap gap-4">
+                  {adminlandListing.map((listing) => (
+                    <ListingItem listing={listing} key={listing._id} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}

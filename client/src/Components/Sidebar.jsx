@@ -50,17 +50,7 @@ export default function Sidebar() {
                   </h1>
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/show-adminProperty"
-                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
-                >
-                  <h1 className="flex gap-1">
-                    <FaHouseChimney />
-                    Show Property
-                  </h1>
-                </Link>
-              </li>
+
               <li>
                 <Link
                   to="/add-adminProperty"
@@ -69,17 +59,6 @@ export default function Sidebar() {
                   <h1 className="flex gap-1">
                     <BsFillHouseAddFill />
                     Add Property
-                  </h1>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/approve-user/Property"
-                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
-                >
-                  <h1 className="flex gap-1">
-                    <FaBuildingUser />
-                    Approve Properties
                   </h1>
                 </Link>
               </li>
@@ -94,6 +73,18 @@ export default function Sidebar() {
                   </h1>
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/approve-user/Property"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <FaBuildingUser />
+                    Approve Properties
+                  </h1>
+                </Link>
+              </li>
+
               <li>
                 <Link
                   to={"/"}

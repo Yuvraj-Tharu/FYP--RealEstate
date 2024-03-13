@@ -15,6 +15,7 @@ const {
   updateAdminListing,
   getAdminListing,
 } = require("../adminController/AdminListing");
+const { AdminSearchListing } = require("../adminController/AdminSearch");
 
 AdminRouter.get("/api/admin-approve", adminAprove);
 AdminRouter.put("/api/admin-verify/:id", adminVerify);
@@ -27,6 +28,7 @@ AdminRouter.get("/api/showAdminListing/:id", showAdminListing);
 AdminRouter.delete("/api/deleteAdminListing/:id", deleteAdminListing);
 AdminRouter.put("/api/updateAdminListing/:id", updateAdminListing);
 AdminRouter.get("/api/getAdminListing/:id", getAdminListing);
+AdminRouter.get("/api/adminSearchListing", AdminSearchListing);
 
 //Create Listing
 

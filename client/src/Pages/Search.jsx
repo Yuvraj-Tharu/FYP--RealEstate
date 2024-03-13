@@ -6,6 +6,7 @@ export default function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState([]);
+  const [listing1, setListing1] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const [sidebar, setSidebar] = useState({
     serachTerm: "",
@@ -16,6 +17,8 @@ export default function Search() {
     sort: "createdAt",
     order: "desc",
   });
+
+  // console.log(sidebar);
 
   const handelChange = (e) => {
     if (
@@ -91,7 +94,8 @@ export default function Search() {
       } else {
         setShowMore(false);
       }
-      setListing(data);
+      setListing(data.listing); //user
+      setListing1(data.listing1); //admin data
       setLoading(false);
     };
     fetchData();
@@ -119,6 +123,7 @@ export default function Search() {
     const searchQuery = urlParams.toString();
     const res = await fetch(`/api/searchListing?${searchQuery}`);
     const data = await res.json();
+
     if (data.length < 9) {
       setShowMore(false);
     }
@@ -255,6 +260,11 @@ export default function Search() {
           {!loading &&
             listing &&
             listing.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+          {!loading &&
+            listing1 &&
+            listing1.map((listing) => (
               <ListingItem key={listing._id} listing={listing} />
             ))}
         </div>

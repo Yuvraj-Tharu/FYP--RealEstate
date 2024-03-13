@@ -1,7 +1,6 @@
-const listingData = require("../Models/userListingSchema");
-const listingData1 = require("../Models/adminLIstingSchema");
+const listingData = require("../Models/adminLIstingSchema");
 
-const searchListing = async (req, res, next) => {
+const AdminSearchListing = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -37,29 +36,16 @@ const searchListing = async (req, res, next) => {
         furnished,
         parking,
         type,
-        isVerified: true,
       })
       .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
 
-    const listing1 = await listingData1
-      .find({
-        title: { $regex: searchTerm, $options: "i" },
-        offer,
-        furnished,
-        parking,
-        type,
-      })
-      .sort({ [sort]: order })
-      .limit(limit)
-      .skip(startIndex);
-
-    return res.status(200).json({ listing, listing1 });
+    return res.status(200).json(listing);
   } catch (error) {
     console.log("something went wrong", error);
     res.status(500).json({ message: "Something went wrong", error });
   }
 };
 
-module.exports = { searchListing };
+module.exports = { AdminSearchListing };

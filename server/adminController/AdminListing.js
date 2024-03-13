@@ -1,4 +1,5 @@
 const Listing = require("../Models/adminLIstingSchema");
+// const Listing = require("../Models/userListingSchema");
 
 const createListing = async (req, res) => {
   try {

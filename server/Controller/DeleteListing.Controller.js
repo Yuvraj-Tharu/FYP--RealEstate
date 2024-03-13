@@ -1,4 +1,5 @@
 const Listing = require("../Models/userListingSchema");
+const Listing1 = require("../Models/adminLIstingSchema");
 
 const deleteListing = async (req, res) => {
   try {
@@ -11,18 +12,17 @@ const deleteListing = async (req, res) => {
     res.status(402).json({ message: "Error deleting", error });
   }
 };
-//Display the single UserListing
+//Display the single UserListing Data
 const getListing = async (req, res) => {
   try {
     let data = await Listing.findOne({ _id: req.params.id });
+    let data1 = await Listing1.findOne({ _id: req.params.id });
 
-    if (!data) {
-      return res.status(400).json({ message: "data not found" });
-    }
+    // if (!data && !data1) {
+    //   return res.status(400).json({ message: "data not found" });
+    // }
 
-    return res
-      .status(200)
-      .json({ message: "Show listing data sucessfully", data });
+    return res.status(200).json({ data, data1 });
   } catch (error) {
     return res
       .status(405)

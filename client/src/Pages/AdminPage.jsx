@@ -4,6 +4,8 @@ import Sidebar from "../Components/Sidebar";
 export default function AdminPage() {
   const [userData, setUserData] = useState([]);
   const [property, setProperty] = useState([]);
+  const [AdminProperty, setAdminProperty] = useState([]);
+  console.log(property);
 
   useEffect(() => {
     showUserData();
@@ -27,7 +29,8 @@ export default function AdminPage() {
       let result = await fetch("/api/CountListing");
       if (result) {
         result = await result.json();
-        setProperty(result);
+        setProperty(result.data);
+        setAdminProperty(result.admindata);
       }
     } catch (error) {
       console.log("sth went wrong with the server: " + error);
@@ -51,7 +54,9 @@ export default function AdminPage() {
               <h1 className="font-semibold ">Total Property listing</h1>
 
               <div className="bg-slate-600 p-4 rounded-lg shadow-xl shadow-slate-600">
-                <h1 className="text-white">{property.length}</h1>
+                <h1 className="text-white">
+                  {property.length + AdminProperty.length}
+                </h1>
               </div>
             </div>
             <div className="flex flex-col gap-1">
@@ -59,7 +64,8 @@ export default function AdminPage() {
 
               <div className="bg-slate-600 p-4 rounded-lg shadow-xl shadow-slate-600">
                 <h1 className="text-white">
-                  {property.filter((data) => data.type === "sale").length}
+                  {property.filter((data) => data.type === "sale").length +
+                    AdminProperty.filter((data) => data.type === "sale").length}
                 </h1>
               </div>
             </div>
@@ -68,7 +74,8 @@ export default function AdminPage() {
 
               <div className="bg-slate-600 p-4 rounded-lg shadow-xl shadow-slate-600">
                 <h1 className="text-white">
-                  {property.filter((data) => data.type === "rent").length}
+                  {property.filter((data) => data.type === "rent").length +
+                    AdminProperty.filter((data) => data.type === "rent").length}
                 </h1>
               </div>
             </div>
@@ -77,7 +84,8 @@ export default function AdminPage() {
 
               <div className="bg-slate-600 p-4 rounded-lg shadow-xl shadow-slate-600">
                 <h1 className="text-white">
-                  {property.filter((data) => data.type === "land").length}
+                  {property.filter((data) => data.type === "land").length +
+                    AdminProperty.filter((data) => data.type === "land").length}
                 </h1>
               </div>
             </div>

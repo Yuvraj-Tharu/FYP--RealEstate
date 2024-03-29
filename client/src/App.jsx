@@ -1,7 +1,8 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
@@ -26,12 +27,18 @@ import AdminListing from "./Pages/adminpages/AdminListing";
 import AdminsingleListing from "./Pages/adminpages/AdminSingleListing";
 import ShowAdminListing from "./Pages/adminpages/ShowAdminListing";
 import UpdateAdminListiing from "./Pages/adminpages/UpdateAdminListing";
+import ReplyChat from "./Pages/ReplyChat";
+import Chat from "./Pages/ChatPage/Chat";
+import { BiSolidMessageRoundedDots } from "react-icons/bi";
+
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Navbar />
+
         <ToastContainer />
+
         <Routes>
           <Route element={<PrivateComponent />}>
             <Route path="/profile" element={<Profile />} />
@@ -41,6 +48,7 @@ function App() {
           </Route>
 
           <Route path="/" element={<Home />} />
+
           <Route path="/about" element={<About />} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<SignIn />} />
@@ -48,6 +56,9 @@ function App() {
           <Route path="/forget/password" element={<ForgetPassword />} />
           <Route path="/listing/:id" element={<Listing />} />
           <Route path="/search" element={<Search />} />
+          {/* <Route path="/conversatation" element={<ChatApp />} /> */}
+          <Route path="/conversatation" element={<ReplyChat />} />
+          <Route path="/chat" element={<Chat />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
@@ -70,6 +81,10 @@ function App() {
             />
           </Route>
         </Routes>
+
+        <Link className="text-6xl flex flex-row-reverse" to="/chat">
+          <BiSolidMessageRoundedDots className="hover:opacity-90" />
+        </Link>
       </BrowserRouter>
     </div>
   );

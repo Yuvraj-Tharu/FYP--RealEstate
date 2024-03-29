@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Contact({ listing }) {
+export default function Contact({ listing1 }) {
   const [owner, setOwner] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -9,10 +9,10 @@ export default function Contact({ listing }) {
 
   useEffect(() => {
     fetchOwner();
-  }, [listing.userRef]);
+  }, [listing1.userRef]);
   const fetchOwner = async () => {
     try {
-      let result = await fetch(`/api/getUser/${listing.userRef}`);
+      let result = await fetch(`/api/getUser/${listing1.userRef}`);
       if (!result) {
         console.log("result not found");
       }
@@ -32,7 +32,7 @@ export default function Contact({ listing }) {
           <p>
             Contact <span className="font-semibold">{owner.firstName}</span>{" "}
             <span className="font-bold">{owner.lastName}</span> for{" "}
-            <span className="font-bold">{listing.title.toLowerCase()}</span>
+            <span className="font-bold">{listing1.title.toLowerCase()}</span>
           </p>
 
           <textarea
@@ -47,7 +47,7 @@ export default function Contact({ listing }) {
 
           <Link
             className="bg-slate-700 p-3 my-2 text-white text-center uppercase rounded-lg hover:opacity-90"
-            to={`mailto:${owner.email} ? subject=Regarding ${listing.title}&body=${message}`}
+            to={`mailto:${owner.email} ? subject=Regarding ${listing1.title}&body=${message}`}
           >
             Send Message
           </Link>

@@ -45,9 +45,6 @@ export default function AdminsingleListing() {
       result = await result.json();
       //   console.log(result);
       setListing(result.data);
-
-      // console.log(result);
-
       setError(false);
       setLoding(false);
     } catch (error) {

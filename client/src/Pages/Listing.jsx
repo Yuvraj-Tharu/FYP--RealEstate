@@ -15,7 +15,7 @@ import {
   FaShare,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import Contact from "../Components/Contact";
+import { useNavigate } from "react-router-dom";
 
 export default function Listing() {
   const params = useParams();
@@ -25,10 +25,10 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
-  const [contact, setContact] = useState(false);
-  // console.log("sss", listing);
-  // console.log("ss1s", listing1);
-  // console.log("current", currentUser.result._id);
+
+  console.log("adminListing", listing1);
+  const navigate = useNavigate();
+
   SwiperCore.use([Navigation]);
   useEffect(() => {
     showData();
@@ -45,17 +45,35 @@ export default function Listing() {
         return;
       }
       result = await result.json();
-      // console.log(result.data);
       setListing(result.data);
       setListing1(result.data1);
-
-      // console.log(result);
 
       setError(false);
       setLoding(false);
     } catch (error) {
       setLoding(false);
       setError(true);
+    }
+  };
+
+  const createUser = async (userRef) => {
+    try {
+      const userData = {
+        senderId: currentUser.result._id,
+        receiverId: userRef,
+      };
+      let result = await fetch("/api/chat", {
+        method: "Post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      result = await result.json();
+      if (result) {
+        navigate("/chat");
+      }
+    } catch (error) {
+      console.log("sth went wrong", error);
     }
   };
 
@@ -166,18 +184,14 @@ export default function Listing() {
               <></>
             )}
 
-            {currentUser &&
-              listing.userRef !== currentUser.result._id &&
-              !contact && (
-                <button
-                  onClick={() => setContact(true)}
-                  className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
-                >
-                  Contact Land Owner
-                </button>
-              )}
-
-            {contact && <Contact listing={listing} />}
+            {currentUser && listing.userRef !== currentUser.result._id && (
+              <button
+                onClick={() => createUser(listing.userRef)}
+                className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
+              >
+                Contact Land Owner
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -282,18 +296,14 @@ export default function Listing() {
               <></>
             )}
 
-            {currentUser &&
-              listing1.userRef !== currentUser.result._id &&
-              !contact && (
-                <button
-                  onClick={() => setContact(true)}
-                  className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
-                >
-                  Contact Land Owner
-                </button>
-              )}
-
-            {contact && <Contact listing={listing} />}
+            {currentUser && listing1.userRef !== currentUser.result._id && (
+              <button
+                onClick={() => createUser(listing1.userRef)}
+                className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
+              >
+                Contact Land Owner
+              </button>
+            )}
           </div>
         </div>
       )}

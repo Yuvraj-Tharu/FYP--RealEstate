@@ -80,6 +80,7 @@ export default function Navbar() {
                 About
               </li>
             </Link>
+
             {user ? (
               <>
                 <Link to="/profile">
@@ -123,9 +124,11 @@ export default function Navbar() {
             )}
 
             {isLoggedIn ? null : (
-              <Link to="/sign-in">
-                <li className=" text-slate-600 hover:underline">SignIn</li>
-              </Link>
+              <>
+                <Link to="/sign-in">
+                  <li className=" text-slate-600 hover:underline">SignIn</li>
+                </Link>
+              </>
             )}
           </ul>
         </div>

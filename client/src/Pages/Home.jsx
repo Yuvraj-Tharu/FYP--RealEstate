@@ -112,6 +112,10 @@ export default function Home() {
         </Link>
       </div>
 
+      {/* <Link className="text-6xl flex flex-row-reverse" to="/chat">
+        <BiSolidMessageAltEdit />
+      </Link> */}
+
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
         {offerListing && offerListing.length > 0 && (
           <div>
@@ -156,7 +160,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 ">
               {saleListing.map((listing) => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
@@ -207,7 +211,7 @@ export default function Home() {
               </h2>
               <Link
                 className="text-sm text-blue-500 hover:underline"
-                to={"/search?type=rent"}
+                to={"/search?type=land"}
               >
                 Show more Places for Land
               </Link>

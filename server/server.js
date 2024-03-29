@@ -15,8 +15,12 @@ const deleteRouter = require("./Routes/deleteListing.routes");
 const getUserRouter = require("./Routes/getUser.routes");
 const searchRoutes = require("./Routes/searchListing.routes");
 
+const MessageRouter = require("./Routes/Message.Routes");
+
 // ?
 const AdminRouter = require("./Routes/Admin.Routes");
+
+const MsgRoutes = require("./Routes/Msg.Routes");
 
 app.use(express.json());
 app.use(cors());
@@ -37,6 +41,10 @@ app.use("/", getUserRouter);
 app.use("/", searchRoutes);
 
 app.use("/", AdminRouter);
+
+app.use("/", MessageRouter);
+
+app.use("/", MsgRoutes);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);

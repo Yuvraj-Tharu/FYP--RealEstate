@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import DropDown from "./DropDown";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+import { BiSolidMessageRoundedDots } from "react-icons/bi";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -91,15 +92,23 @@ export default function Navbar() {
                   />
                 </Link>
 
-                <div>
+                <div className="">
                   <Link>
                     <SettingsSuggestIcon
                       onClick={() => setOpenProfile((prev) => !prev)}
                       // onClick={() => setOpenProfile(true)}
                     />
                   </Link>
-                  {openProfile && <DropDown />}
+                  {openProfile && (
+                    <div className="absolute mt-[-54px] w-48 bg-white rounded-lg shadow-lg z-10">
+                      <DropDown />
+                    </div>
+                  )}
                 </div>
+
+                <Link className="text-2xl mt-1 " to="/chat">
+                  <BiSolidMessageRoundedDots className="hover:opacity-90" />
+                </Link>
               </>
             ) : (
               <></>
@@ -114,10 +123,9 @@ export default function Navbar() {
                     alt=""
                   />
                 </Link>
-                {/* 
-                <Link to="/log-out" onClick={logout}>
-                  <li className=" text-slate-600 hover:underline">logout</li>
-                </Link> */}
+                <Link className="text-2xl mt-1 " to="/chat">
+                  <BiSolidMessageRoundedDots className="hover:opacity-90" />
+                </Link>
               </>
             ) : (
               <></>

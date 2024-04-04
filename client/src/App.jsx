@@ -27,9 +27,9 @@ import AdminListing from "./Pages/adminpages/AdminListing";
 import AdminsingleListing from "./Pages/adminpages/AdminSingleListing";
 import ShowAdminListing from "./Pages/adminpages/ShowAdminListing";
 import UpdateAdminListiing from "./Pages/adminpages/UpdateAdminListing";
-import ReplyChat from "./Pages/ReplyChat";
+
 import Chat from "./Pages/ChatPage/Chat";
-import { BiSolidMessageRoundedDots } from "react-icons/bi";
+import EmiCalculator from "./Pages/EmiCalculator";
 
 function App() {
   return (
@@ -56,9 +56,9 @@ function App() {
           <Route path="/forget/password" element={<ForgetPassword />} />
           <Route path="/listing/:id" element={<Listing />} />
           <Route path="/search" element={<Search />} />
-          {/* <Route path="/conversatation" element={<ChatApp />} /> */}
-          <Route path="/conversatation" element={<ReplyChat />} />
+
           <Route path="/chat" element={<Chat />} />
+          <Route path="/emiCalculator" element={<EmiCalculator />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
@@ -81,10 +81,6 @@ function App() {
             />
           </Route>
         </Routes>
-
-        <Link className="text-6xl flex flex-row-reverse" to="/chat">
-          <BiSolidMessageRoundedDots className="hover:opacity-90" />
-        </Link>
       </BrowserRouter>
     </div>
   );

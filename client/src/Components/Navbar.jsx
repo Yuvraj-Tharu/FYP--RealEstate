@@ -81,6 +81,11 @@ export default function Navbar() {
                 About
               </li>
             </Link>
+            <Link to="/emiCalculator">
+              <li className="hiddem sm:inline text-slate-600 hover:underline">
+                EMI Converter
+              </li>
+            </Link>
 
             {user ? (
               <>

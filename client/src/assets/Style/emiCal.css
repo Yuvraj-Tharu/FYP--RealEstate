@@ -1,13 +1,4 @@
-/* .loan-calculator {
-    font-family: "Roboto", sans-serif;
-    width: 600px;
-    margin: 24px auto;
-    background: #fff;
-    box-shadow: 0 12px 50px -11px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    color: #14213d;
-    overflow: hidden;
-  } */
+
   
   .loan-calculator,
   .loan-calculator * {
@@ -48,7 +39,7 @@
   }
   
   .loan-calculator .result .left {
-    width: 100%;
+    width: 30%;
     padding: 8px 32px;
   }
   
@@ -87,6 +78,7 @@
   
   .loan-calculator .right {
     width: 50%;
+    height: 50%;
   }
   
   @media (max-width: 650px) {

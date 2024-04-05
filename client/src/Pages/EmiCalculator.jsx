@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/Style/emiCal.css";
+import Chart from "chart.js/auto";
 
 export default function EmiCalculator() {
   const [loanAmount, setLoanAmount] = useState("");
@@ -8,6 +9,44 @@ export default function EmiCalculator() {
   const [emi, setEmi] = useState(0);
   const [totalInterest, setTotalInterest] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [myChart, setMyChart] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (myChart) {
+      updateChart();
+    } else {
+      displayChart();
+    }
+  }, [totalInterest, loanAmount]);
+
+  const displayChart = () => {
+    const ctx = document.getElementById("myChart").getContext("2d");
+    const chart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["Total Interest", "Principal Loan Amount"],
+        datasets: [
+          {
+            data: [parseFloat(totalInterest), parseFloat(loanAmount)],
+            backgroundColor: ["#e63946", "#334155"],
+            borderWidth: 0,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+      },
+    });
+    setMyChart(chart);
+  };
+
+  const updateChart = () => {
+    myChart.data.datasets[0].data[0] = parseFloat(totalInterest);
+    myChart.data.datasets[0].data[1] = parseFloat(loanAmount);
+    myChart.update();
+  };
 
   const calculateEmi = () => {
     const principle = parseFloat(loanAmount);
@@ -19,29 +58,29 @@ export default function EmiCalculator() {
       (Math.pow(1 + rate, time) - 1);
     setEmi(emiValue.toFixed(2));
 
-    const totalInterestPayable = emiValue * time - principle;
-    setTotalInterest(totalInterestPayable.toFixed(2));
-
     const totalPayment = emiValue * time;
     setTotalAmount(totalPayment.toFixed(2));
+
+    const totalInterestPayable = totalPayment - principle;
+    setTotalInterest(totalInterestPayable.toFixed(2));
   };
 
   return (
     <>
       <div className="loan-calculator ">
-        <div className="top p-10 bg-slate-700 text-white   ">
+        <div className="top p-10 bg-slate-700 text-white">
           <h2 className="font-semibold text-2xl text-center mb-4">
             EMI Calculator
           </h2>
 
           <form action="#">
-            <div className="group ">
+            <div className="group">
               <div className="title">Amount</div>
               <input
                 value={loanAmount}
                 type="number"
                 onChange={(e) => setLoanAmount(e.target.value)}
-                className=" text-black p-2 w-full rounded-lg"
+                className="text-black p-2 w-full rounded-lg"
               />
             </div>
 
@@ -51,7 +90,7 @@ export default function EmiCalculator() {
                 value={interestRate}
                 onChange={(e) => setInterestRate(e.target.value)}
                 type="number"
-                className=" text-black p-2 w-full rounded-lg"
+                className="text-black p-2 w-full rounded-lg"
               />
             </div>
 
@@ -61,15 +100,15 @@ export default function EmiCalculator() {
                 value={loanTerm}
                 onChange={(e) => setLoanTerm(e.target.value)}
                 type="number"
-                className=" text-black p-2 w-full rounded-lg"
+                className="text-black p-2 w-full rounded-lg"
               />
             </div>
           </form>
         </div>
 
-        <div className="result ">
+        <div className="result">
           <div className="left">
-            <div className="loan-emi ">
+            <div className="loan-emi">
               <h3>Loan EMI</h3>
               <div className="value">{emi}</div>
             </div>
@@ -85,16 +124,23 @@ export default function EmiCalculator() {
             </div>
 
             <button
-              className="calculate-btn bg-slate-700 "
+              className="calculate-btn bg-slate-700"
               onClick={calculateEmi}
             >
               Calculate
             </button>
           </div>
 
-          {/* <div className="right">
-            <canvas id="myChart" width="400" height="400"></canvas>
-          </div> */}
+          <div className="right">
+            {loading ? (
+              <div>Loading chart...</div>
+            ) : (
+              <canvas
+                id="myChart"
+                style={{ width: "400px", height: "400px" }}
+              ></canvas>
+            )}
+          </div>
         </div>
       </div>
     </>

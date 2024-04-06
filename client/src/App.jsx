@@ -30,6 +30,7 @@ import UpdateAdminListiing from "./Pages/adminpages/UpdateAdminListing";
 
 import Chat from "./Pages/ChatPage/Chat";
 import EmiCalculator from "./Pages/EmiCalculator";
+import AuctionListing from "./AuctionComponent/AuctionListing";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
 
           <Route path="/chat" element={<Chat />} />
           <Route path="/emiCalculator" element={<EmiCalculator />} />
+          <Route path="/auction" element={<AuctionListing />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />

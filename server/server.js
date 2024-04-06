@@ -21,7 +21,7 @@ const MessageRouter = require("./Routes/Message.Routes");
 const AdminRouter = require("./Routes/Admin.Routes");
 
 const MsgRoutes = require("./Routes/Msg.Routes");
-
+const auctionRoutes = require("./Routes/Auction.Routes");
 app.use(express.json());
 app.use(cors());
 
@@ -45,6 +45,7 @@ app.use("/", AdminRouter);
 app.use("/", MessageRouter);
 
 app.use("/", MsgRoutes);
+app.use("/", auctionRoutes);
 
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);

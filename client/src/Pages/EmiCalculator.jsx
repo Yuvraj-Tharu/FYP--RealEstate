@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../assets/Style/emiCal.css";
 import Chart from "chart.js/auto";
+import { motion } from "framer-motion";
 
 export default function EmiCalculator() {
   const [loanAmount, setLoanAmount] = useState("");
@@ -40,6 +41,7 @@ export default function EmiCalculator() {
       },
     });
     setMyChart(chart);
+    // setLoading(true);
   };
 
   const updateChart = () => {
@@ -68,7 +70,12 @@ export default function EmiCalculator() {
   return (
     <>
       <div className="loan-calculator ">
-        <div className="top p-10 bg-slate-700 text-white">
+        <motion.div
+          className="top p-10 bg-slate-700 text-white"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2 className="font-semibold text-2xl text-center mb-4">
             EMI Calculator
           </h2>
@@ -104,9 +111,14 @@ export default function EmiCalculator() {
               />
             </div>
           </form>
-        </div>
+        </motion.div>
 
-        <div className="result">
+        <motion.div
+          className="result"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="left">
             <div className="loan-emi">
               <h3>Loan EMI</h3>
@@ -135,13 +147,16 @@ export default function EmiCalculator() {
             {loading ? (
               <div>Loading chart...</div>
             ) : (
-              <canvas
+              <motion.canvas
                 id="myChart"
                 style={{ width: "400px", height: "400px" }}
-              ></canvas>
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              ></motion.canvas>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </>
   );

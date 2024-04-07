@@ -49,6 +49,14 @@ const auctionSchemaCreate = new mongoose.Schema(
     //   required: true,
     //   min: 1,
     // },
+    startTime: {
+      type: Date,
+      default: Date.now,
+    },
+    endTime: {
+      type: Date,
+      required: true,
+    },
 
     isVerified: {
       type: Boolean,

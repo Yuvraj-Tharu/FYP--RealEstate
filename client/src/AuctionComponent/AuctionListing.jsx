@@ -29,7 +29,7 @@ export default function AuctionListiing() {
     parking: false,
     imageUrl: [],
     MinimumPrice: 0,
-    time: "00:00",
+    endTime: "",
   });
   // console.log(formData);
 
@@ -102,7 +102,8 @@ export default function AuctionListiing() {
     if (
       e.target.type === "number" ||
       e.target.type === "text" ||
-      e.target.type === "textarea"
+      e.target.type === "textarea" ||
+      e.target.type === "datetime-local"
     ) {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     }
@@ -136,7 +137,7 @@ export default function AuctionListiing() {
       if (!data) {
         setError("data is not found");
       }
-      // navigate(`/listing/${data.result._id}`);
+      navigate(`/auctionSingleListing/${data.auction._id}`);
     } catch (error) {
       setError("internal error, please try again");
       console.log(error);
@@ -283,20 +284,18 @@ export default function AuctionListiing() {
                 <p>Minimum Price</p>
                 <span className="text-xs">(Rs / months)</span>
               </div>
-
-              {/* <input
-                type="time"
-                id="time"
-                min="00:00"
-                max="23:59"
-                className="p-3  text-gray-700 border rounded-lg"
-                onChange={submit}
-                value={formData.time}
-                required
-              />
-              <div className="flex flex-col items-center">
-                <p>Duration</p>
-              </div> */}
+            </div>
+            <input
+              type="datetime-local"
+              id="endTime"
+              name="endTime"
+              className="p-3  text-gray-700 border rounded-lg"
+              onChange={submit}
+              value={formData.endTime}
+              required
+            />
+            <div className="flex flex-col items-center">
+              <p>Duration</p>
             </div>
           </motion.div>
         </motion.div>

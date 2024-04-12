@@ -112,10 +112,6 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* <Link className="text-6xl flex flex-row-reverse" to="/chat">
-        <BiSolidMessageAltEdit />
-      </Link> */}
-
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
         {offerListing && offerListing.length > 0 && (
           <div>

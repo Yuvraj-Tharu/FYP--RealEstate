@@ -86,6 +86,11 @@ export default function Navbar() {
                 EMI Converter
               </li>
             </Link>
+            <Link to="/auctionDetails">
+              <li className="hiddem sm:inline text-slate-600 hover:underline">
+                Auction
+              </li>
+            </Link>
 
             {user ? (
               <>

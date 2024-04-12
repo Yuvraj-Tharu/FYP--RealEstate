@@ -32,8 +32,8 @@ import Chat from "./Pages/ChatPage/Chat";
 import EmiCalculator from "./Pages/EmiCalculator";
 import AuctionListing from "./AuctionComponent/AuctionListing";
 import ShowSingleAuctionListing from "./AuctionComponent/ShowSingleAuctionListing";
-import CreateAuction from "./AuctionComponent/create";
-
+import AuctionItem from "./AuctionComponent/AuctionItem";
+import AuctionCard from "./AuctionComponent/AuctionCard";
 function App() {
   return (
     <div>
@@ -64,10 +64,10 @@ function App() {
           <Route path="/emiCalculator" element={<EmiCalculator />} />
           <Route path="/auction" element={<AuctionListing />} />
           <Route
-            path="auctionSingleListing/:id"
+            path="/auctionDetails/auctionSingleListing/:id"
             element={<ShowSingleAuctionListing />}
           />
-          <Route path="/createa" element={<CreateAuction />} />
+          <Route path="/auctionDetails" element={<AuctionCard />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />

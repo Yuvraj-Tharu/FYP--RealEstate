@@ -107,10 +107,6 @@ export default function AuctionListiing() {
     ) {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     }
-
-    // if (e.target.id === "time") {
-    //   setFormData({ ...formData, time: e.target.value });
-    // }
   };
 
   const submitForm = async (e) => {
@@ -137,7 +133,7 @@ export default function AuctionListiing() {
       if (!data) {
         setError("data is not found");
       }
-      navigate(`/auctionSingleListing/${data.auction._id}`);
+      navigate(`/auctionDetails/auctionSingleListing/${data.auction._id}`);
     } catch (error) {
       setError("internal error, please try again");
       console.log(error);

@@ -4,13 +4,11 @@ const participate = async (req, res) => {
   try {
     const { userDetails, auctionId, bidAmount } = req.body;
 
-    // Check if the user has already participated in this auction
     const existingParticipation = await AuctionParticipate.findOne({
       userDetails,
       auctionId,
     });
 
-    // If participation exists, return a 400 response
     if (existingParticipation) {
       return res
         .status(400)

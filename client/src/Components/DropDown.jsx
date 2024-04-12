@@ -38,6 +38,15 @@ export default function DropDown() {
             Show Listing
           </motion.li>
         </Link>
+        <Link to="/emiCalculator">
+          <motion.li
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="text-slate-600 hover:underline"
+          >
+            Emi calculator
+          </motion.li>
+        </Link>
       </motion.ul>
     </motion.div>
   );

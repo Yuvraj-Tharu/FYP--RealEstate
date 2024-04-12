@@ -81,11 +81,7 @@ export default function Navbar() {
                 About
               </li>
             </Link>
-            <Link to="/emiCalculator">
-              <li className="hiddem sm:inline text-slate-600 hover:underline">
-                EMI Converter
-              </li>
-            </Link>
+
             <Link to="/auctionDetails">
               <li className="hiddem sm:inline text-slate-600 hover:underline">
                 Auction
@@ -126,6 +122,11 @@ export default function Navbar() {
 
             {admin ? (
               <>
+                {/* <Link to="/emiCalculator">
+                  <li className="hiddem sm:inline text-slate-600 hover:underline">
+                    EMI Converter
+                  </li>
+                </Link> */}
                 <Link to="/admin-dash">
                   <img
                     className="rounded-full h-7 w-7 object-cover"

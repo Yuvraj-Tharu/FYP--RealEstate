@@ -7,6 +7,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { BsFillHouseAddFill } from "react-icons/bs";
+import { FaCalculator } from "react-icons/fa6";
 
 import { SignOutUserSucess } from "../redux/user/userSlice";
 export default function Sidebar() {
@@ -36,6 +37,17 @@ export default function Sidebar() {
                   <h1 className="flex gap-1">
                     <MdSpaceDashboard />
                     Dashboard
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/emiCalculator"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <FaCalculator />
+                    EMI calculator
                   </h1>
                 </Link>
               </li>

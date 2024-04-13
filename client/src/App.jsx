@@ -32,8 +32,11 @@ import Chat from "./Pages/ChatPage/Chat";
 import EmiCalculator from "./Pages/EmiCalculator";
 import AuctionListing from "./AuctionComponent/AuctionListing";
 import ShowSingleAuctionListing from "./AuctionComponent/ShowSingleAuctionListing";
-import AuctionItem from "./AuctionComponent/AuctionItem";
+// import AuctionItem from "./AuctionComponent/AuctionItem";
 import AuctionCard from "./AuctionComponent/AuctionCard";
+import ShowAuctionTable from "./AuctionComponent/ShowAuctionTable";
+import UpdateAuction from "./AuctionComponent/UpdateAuction";
+
 function App() {
   return (
     <div>
@@ -63,6 +66,8 @@ function App() {
           <Route path="/chat" element={<Chat />} />
           <Route path="/emiCalculator" element={<EmiCalculator />} />
           <Route path="/auction" element={<AuctionListing />} />
+          <Route path="/show/auction" element={<ShowAuctionTable />} />
+          <Route path="/updateAuctionListing/:id" element={<UpdateAuction />} />
           <Route
             path="/auctionDetails/auctionSingleListing/:id"
             element={<ShowSingleAuctionListing />}

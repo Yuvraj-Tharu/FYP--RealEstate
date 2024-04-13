@@ -166,7 +166,6 @@ export default function UpdateAdminListiing() {
 
   const displayListing = async () => {
     try {
-      console.log(params.id);
       let result = await fetch(`/api/getAdminListing/${params.id}`);
 
       result = await result.json();
@@ -176,7 +175,9 @@ export default function UpdateAdminListiing() {
       }
 
       setFormData(result.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log("sth went wrong, please try again", error);
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { BsFillHouseAddFill } from "react-icons/bs";
 import { FaCalculator } from "react-icons/fa6";
+import { RiAuctionFill, RiAuctionLine } from "react-icons/ri";
 
 import { SignOutUserSucess } from "../redux/user/userSlice";
 export default function Sidebar() {
@@ -40,6 +41,29 @@ export default function Sidebar() {
                   </h1>
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/auction"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <RiAuctionFill />
+                    Auction
+                  </h1>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/show/auction"
+                  className="block text-gray-300 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  <h1 className="flex gap-1">
+                    <RiAuctionLine />
+                    Show Auction
+                  </h1>
+                </Link>
+              </li>
+
               <li>
                 <Link
                   to="/emiCalculator"

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -11,7 +12,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
 
-export default function AuctionListiing() {
+export default function UpdateAuction() {
   const [file, setFile] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [imageUploadError, setImageUploadError] = useState(false);
@@ -19,6 +20,7 @@ export default function AuctionListiing() {
   const [loding, setLoding] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const params = useParams();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -32,7 +34,7 @@ export default function AuctionListiing() {
     MinimumPrice: 0,
     endTime: "",
   });
-  // console.log(formData);
+  //   console.log(formData);
 
   const imageUpload = (e) => {
     setUploading(true);
@@ -118,8 +120,8 @@ export default function AuctionListiing() {
       }
       setLoding(true);
       setError(false);
-      const api = await fetch("/api/createAuction", {
-        method: "POST",
+      const api = await fetch(`/api/updateAuctionListing/${params.id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
@@ -128,19 +130,45 @@ export default function AuctionListiing() {
       });
 
       const data = await api.json();
-      console.log("data", data);
 
       setLoding(false);
       if (!data) {
         setError("data is not found");
       }
-      navigate(`/auctionDetails/auctionSingleListing/${data.auction._id}`);
+      navigate(`/auctionDetails/auctionSingleListing/${data._id}`);
     } catch (error) {
       setError("internal error, please try again");
       console.log(error);
       setLoding(false);
     }
   };
+
+  useEffect(() => {
+    displayListing();
+  }, []);
+
+  const displayListing = async () => {
+    try {
+      let result = await fetch(`/api/showSingleAuction/${params.id}`);
+      result = await result.json();
+
+      if (!result) {
+        console.log("result is not found");
+      }
+
+      const formattedEndTime = result.result.endTime
+        ? new Date(result.result.endTime)
+            .toLocaleString("sv", { timeZone: "UTC" })
+            .slice(0, 16)
+        : "";
+
+      // Update the state with the formatted endTime value
+      setFormData({ ...result.result, endTime: formattedEndTime });
+    } catch (error) {
+      console.log("sth went wrong", error);
+    }
+  };
+
   return (
     <div className="flex">
       <div className="h-full">
@@ -158,7 +186,7 @@ export default function AuctionListiing() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Create Auction
+          Update Auction
         </motion.h1>
         <motion.form
           onSubmit={submitForm}
@@ -374,7 +402,7 @@ export default function AuctionListiing() {
               disabled={loding || uploading}
               className="p-3 bg-slate-700 text-white rounded-lg my-3 disabled:opacity-65 "
             >
-              {loding ? "Creating..." : "Create Auction"}
+              {loding ? "Creating..." : "Update Auction"}
             </button>
             {error && <p className="text-red-700 text-sm">{error}</p>}
           </motion.div>

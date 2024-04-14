@@ -74,4 +74,24 @@ const participate = async (req, res) => {
   }
 };
 
-module.exports = { participate };
+const getHighestBidder = async (req, res) => {
+  try {
+    const highestBidAuction = await AuctionParticipate.findOne({})
+      .sort({ bidAmount: -1 })
+      .populate("userDetails")
+      .limit(1);
+
+    if (!highestBidAuction) {
+      return res.status(404).json({ error: "No bids found" });
+    }
+
+    const { userDetails, bidAmount } = highestBidAuction;
+
+    return res.status(200).json({ userDetails, bidAmount });
+  } catch (error) {
+    console.error("Error getting highest bidder:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { participate, getHighestBidder };

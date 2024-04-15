@@ -23,5 +23,5 @@ auctionRoutes.delete("/api/deleteAuctionListing/:id", deleteAuctionListing);
 auctionRoutes.put("/api/updateAuctionListing/:id", updateAuctionListing);
 
 auctionRoutes.post("/api/participate", participate);
-auctionRoutes.get("/api/getwinner", getHighestBidder);
+auctionRoutes.get("/api/getwinner/:auctionId", getHighestBidder);
 module.exports = auctionRoutes;

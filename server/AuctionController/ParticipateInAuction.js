@@ -34,23 +34,19 @@
 
 const AuctionParticipate = require("../Models/AuctionParticipateSchema");
 
-// Maximum number of bids allowed per minute per user
 const MAX_BIDS_PER_MINUTE = 1;
 
-// Maintain a map to track user bids with timestamps
 const userBidTimestamps = new Map();
 
 const participate = async (req, res) => {
   try {
     const { userDetails, auctionId, bidAmount } = req.body;
 
-    // Check if the user has reached the bid limit
     const currentTime = Date.now();
     if (userBidTimestamps.has(userDetails)) {
       const lastBidTime = userBidTimestamps.get(userDetails);
       const timeDifference = currentTime - lastBidTime;
       if (timeDifference < 60000) {
-        // 60,000 milliseconds = 1 minute
         return res
           .status(429)
           .json({ error: "Too many requests. Please try again later." });
@@ -76,7 +72,8 @@ const participate = async (req, res) => {
 
 const getHighestBidder = async (req, res) => {
   try {
-    const highestBidAuction = await AuctionParticipate.findOne({})
+    const { auctionId } = req.params;
+    const highestBidAuction = await AuctionParticipate.findOne({ auctionId })
       .sort({ bidAmount: -1 })
       .populate("userDetails")
       .limit(1);

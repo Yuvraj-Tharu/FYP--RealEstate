@@ -23,6 +23,7 @@ export default function ShowSingleAuctionListing() {
   const [copied, setCopied] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
+  const [winner, SetWinner] = useState();
   const navigate = useNavigate();
 
   SwiperCore.use([Navigation]);
@@ -75,7 +76,21 @@ export default function ShowSingleAuctionListing() {
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
       setRemainingTime({ hours, minutes, seconds });
     } else {
+      AuctionWinner();
       setRemainingTime(null);
+    }
+  };
+
+  const AuctionWinner = async () => {
+    try {
+      let result = await fetch(`/api/getwinner/${params.id}`);
+      if (!result) {
+        console.log("result is not found");
+      }
+      result = await result.json();
+      console.log("ss", result);
+    } catch (error) {
+      console.log("internal error", error);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
@@ -24,9 +24,16 @@ export default function ShowSingleAuctionListing() {
   const [remainingTime, setRemainingTime] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
   const [winner, SetWinner] = useState();
+  const [bidAmount, setBidAmount] = useState("");
   const navigate = useNavigate();
-
+  const [userDetails, setUserDetails] = useState("");
+  const [auctionId, setAuctionId] = useState("");
+  const [highestBid, SetHighestBid] = useState("");
+  const [auctionError, setAuctionError] = useState(false);
   SwiperCore.use([Navigation]);
+
+  console.log(winner);
+  console.log(highestBid);
 
   useEffect(() => {
     showData();
@@ -57,6 +64,8 @@ export default function ShowSingleAuctionListing() {
       }
       result = await result.json();
       setListing(result.result);
+      setUserDetails(result.result.userRef);
+      setAuctionId(result.result._id);
       setError(false);
       setLoading(false);
     } catch (error) {
@@ -88,6 +97,8 @@ export default function ShowSingleAuctionListing() {
         console.log("result is not found");
       }
       result = await result.json();
+      SetWinner(result.userDetails);
+      SetHighestBid(result.bidAmount);
       console.log("ss", result);
     } catch (error) {
       console.log("internal error", error);
@@ -96,6 +107,28 @@ export default function ShowSingleAuctionListing() {
 
   const formatTime = (time) => {
     return time < 10 ? `0${time}` : time;
+  };
+
+  const ParticipateInAuction = async () => {
+    try {
+      setAuctionError(false);
+      let result = await fetch(`/api/participate/${params.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userDetails, auctionId, bidAmount }),
+      });
+      if (!result.ok) {
+        setAuctionError(true);
+      } else {
+        setAuctionError(false);
+
+        const data = await result.json();
+        // console.log(data);
+      }
+    } catch (error) {
+      console.log("Internal error", error);
+      setAuctionError(true);
+    }
   };
 
   return (
@@ -187,6 +220,49 @@ export default function ShowSingleAuctionListing() {
                 </p>
               </div>
             )}
+
+            {currentUser &&
+              listing.userRef !== currentUser.result._id &&
+              remainingTime !== null && (
+                <input
+                  type="number"
+                  className=" mt-2 appearance-none block  bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="title"
+                  placeholder="Enter Bid Amount ..."
+                  value={bidAmount}
+                  onChange={(e) => setBidAmount(e.target.value)}
+                  required
+                />
+              )}
+            {currentUser &&
+              listing.userRef !== currentUser.result._id &&
+              winner && (
+                <div className="text-4xl font-semibold text-green-900">
+                  Winner : {winner.firstName} {winner.lastName}
+                  <br />
+                  Amount Bid :{highestBid}
+                </div>
+              )}
+
+            {currentUser &&
+              listing.userRef !== currentUser.result._id &&
+              remainingTime !== null && (
+                <>
+                  <button
+                    onClick={ParticipateInAuction}
+                    className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3 text-center"
+                  >
+                    Join Auction
+                  </button>
+
+                  {auctionError && (
+                    <p className="text-sm mt-1 text-red-700 text-center">
+                      You have already participated! Please wait 1 minute before
+                      bidding again.
+                    </p>
+                  )}
+                </>
+              )}
           </div>
         </div>
       )}

@@ -31,7 +31,7 @@
 // };
 
 // module.exports = { participate };
-
+const Auction = require("../Models/AuctionListingSchema");
 const AuctionParticipate = require("../Models/AuctionParticipateSchema");
 
 const MAX_BIDS_PER_MINUTE = 1;
@@ -41,7 +41,16 @@ const userBidTimestamps = new Map();
 const participate = async (req, res) => {
   try {
     const { userDetails, auctionId, bidAmount } = req.body;
+    const auctionListing = await Auction.findOne({ _id: req.params.id });
+    if (!auctionListing) {
+      return res.status(404).json({ error: "Auction not found" });
+    }
 
+    if (bidAmount <= auctionListing.MinimumPrice) {
+      return res
+        .status(400)
+        .json({ error: "Bid amount must be higher than the minimum bid" });
+    }
     const currentTime = Date.now();
     if (userBidTimestamps.has(userDetails)) {
       const lastBidTime = userBidTimestamps.get(userDetails);
@@ -53,7 +62,6 @@ const participate = async (req, res) => {
       }
     }
 
-    // Save the bid and update the timestamp
     userBidTimestamps.set(userDetails, currentTime);
 
     const participation = new AuctionParticipate({

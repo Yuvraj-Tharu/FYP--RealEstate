@@ -22,6 +22,6 @@ auctionRoutes.get("/api/showuniqueAuction/:id", displayUniqueSingleList);
 auctionRoutes.delete("/api/deleteAuctionListing/:id", deleteAuctionListing);
 auctionRoutes.put("/api/updateAuctionListing/:id", updateAuctionListing);
 
-auctionRoutes.post("/api/participate", participate);
+auctionRoutes.post("/api/participate/:id", participate);
 auctionRoutes.get("/api/getwinner/:auctionId", getHighestBidder);
 module.exports = auctionRoutes;

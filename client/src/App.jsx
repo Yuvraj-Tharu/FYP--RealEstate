@@ -36,6 +36,7 @@ import ShowSingleAuctionListing from "./AuctionComponent/ShowSingleAuctionListin
 import AuctionCard from "./AuctionComponent/AuctionCard";
 import ShowAuctionTable from "./AuctionComponent/ShowAuctionTable";
 import UpdateAuction from "./AuctionComponent/UpdateAuction";
+import UserParticipate from "./AuctionComponent/UserParticipate";
 
 function App() {
   return (
@@ -51,6 +52,10 @@ function App() {
             <Route path="/createListing" element={<CreateListiing />} />
             <Route path="/showUserlisting" element={<ShowListing />} />
             <Route path="/updateListing/:id" element={<UpdateListiing />} />
+            <Route
+              path="/user/auction/participate"
+              element={<UserParticipate />}
+            />
           </Route>
 
           <Route path="/" element={<Home />} />
@@ -65,9 +70,6 @@ function App() {
 
           <Route path="/chat" element={<Chat />} />
           <Route path="/emiCalculator" element={<EmiCalculator />} />
-          <Route path="/auction" element={<AuctionListing />} />
-          <Route path="/show/auction" element={<ShowAuctionTable />} />
-          <Route path="/updateAuctionListing/:id" element={<UpdateAuction />} />
           <Route
             path="/auctionDetails/auctionSingleListing/:id"
             element={<ShowSingleAuctionListing />}
@@ -77,6 +79,12 @@ function App() {
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />
             <Route path="/approve-user/Property" element={<Approve />} />
+            <Route path="/auction" element={<AuctionListing />} />
+            <Route path="/show/auction" element={<ShowAuctionTable />} />
+            <Route
+              path="/updateAuctionListing/:id"
+              element={<UpdateAuction />}
+            />
 
             <Route path="/add-adminProperty" element={<AdminListing />} />
             <Route

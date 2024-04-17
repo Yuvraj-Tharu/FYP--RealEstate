@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { toast } from "react-toastify";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import {
@@ -118,16 +119,34 @@ export default function ShowSingleAuctionListing() {
         body: JSON.stringify({ userDetails, auctionId, bidAmount }),
       });
       if (!result.ok) {
-        setAuctionError(true);
+        const errorMessage = await result.json();
+        if (
+          errorMessage.error === "Too many requests. Please try again later."
+        ) {
+          setAuctionError(
+            "You have already participated! Please wait 1 minute before bidding again."
+          );
+        } else if (
+          errorMessage.error ===
+          "Bid amount must be higher than the minimum bid"
+        ) {
+          setAuctionError("Bid amount must be higher than the minimum bid.");
+        } else {
+          setAuctionError(
+            "An error occurred while participating in the auction."
+          );
+        }
       } else {
         setAuctionError(false);
-
         const data = await result.json();
-        // console.log(data);
+        toast.success(<div>Bidding Sucessfully</div>, {
+          theme: "colored",
+          autoClose: 1000,
+        });
       }
     } catch (error) {
       console.log("Internal error", error);
-      setAuctionError(true);
+      setAuctionError("An internal error occurred. Please try again later.");
     }
   };
 
@@ -257,8 +276,7 @@ export default function ShowSingleAuctionListing() {
 
                   {auctionError && (
                     <p className="text-sm mt-1 text-red-700 text-center">
-                      You have already participated! Please wait 1 minute before
-                      bidding again.
+                      {auctionError}
                     </p>
                   )}
                 </>

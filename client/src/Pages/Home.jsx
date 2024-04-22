@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import ListingItem from "../Components/ListingItem";
-
+import NewContainer from "./NewContainer";
 export default function Home() {
   const [videoSource, setVideoSource] = useState(0);
   const [offerListing, setOfferListing] = useState([]);
@@ -80,39 +80,153 @@ export default function Home() {
   };
 
   return (
-    <div className="">
-      <div className="relative my-2 h-[500px] overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          className="absolute top-[207px] left-0 w-full h-[647px] object-cover transform -translate-y-1/2 "
-          src={videos[videoSource]}
-          onClick={changeVideo}
-        ></video>
+    <div className="bg-[#FFFFFF] ">
+      <div className="shape mt-10  ">
+        {/* <div className="shape-1 bg-slate-700  "></div> */}
+        <div className="shape-2  bg-slate-700    "></div>
+        <div className="shape-3  bg-slate-700   "></div>
       </div>
-      <div className="absolute top-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-        <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
+
+      <NewContainer />
+      <div className="p-4 min-h[100vh] mt-4">
+        <div className="relative my-2 h-[500px] overflow-hidden z-20 rounded-xl p-5">
+          <video
+            autoPlay
+            loop
+            muted
+            className="absolute top-[207px] left-0 w-full h-[647px] object-cover transform -translate-y-1/2 rounded-xl  "
+            src={videos[videoSource]}
+            onClick={changeVideo}
+          ></video>
+        </div>
+        <div className="movingText whitespace-nowrap overflow-x-auto uppercase mt-10">
+          <div className="con whitespace-nowrap inline-block">
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              Opening doors{" "}
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block">
+              {" "}
+            </div>{" "}
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              To your dreams
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              one key at a time
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+          </div>
+          <div className="con whitespace-nowrap inline-block">
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              Opening doors{" "}
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              To your dreams
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              one key at a time
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+          </div>
+          <div className="con whitespace-nowrap inline-block">
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              Opening doors{" "}
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              To your dreams
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+            <h1 className="text-8xl font-semibold inline-block">
+              one key at a time
+            </h1>
+            &nbsp; &nbsp;&nbsp;
+            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
+            &nbsp; &nbsp;&nbsp;
+          </div>
+        </div>
+
+        <div className="bottom h-[60vh] w-full  flex items-center justify-between p-[2vw] relative z-30 ">
+          <h1 className="text-5xl w-[50%] relative z-10 ">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus vel
+            velit aspernatur consequatur aliquam sequi! Dicta ducimus in
+            veritatis molestias. Expedita odit velit officiis praesenti
+          </h1>
+          <div className="bottom-2 w-[20%] ">
+            {" "}
+            <img
+              className="w-full rounded-xl"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZhPxmbPhuLNbh2nNmh24-smTWxFzlqZTZW4eTGpGfSQ&s"
+              alt=""
+            />
+            <p className="font-medium ">
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam
+              deleniti tempora itaque obcaecati, nostrum natus impedit unde
+              doloremque molestiae sed. Reiciendis nostrum vero totam hic.
+              Mollitia maxime sapiente nisi repudiandae.
+            </p>
+          </div>
+          <div className="z-0 ">
+            <div className="Box1 h-[24vw] w-24vw] bg-gradient-to-r from-slate-700 to-gray-800 absolute rounded-full left-[35%]  blur-[20px] z-0 opacity-80"></div>
+            <div className="Box2 h-[24vw] w-[24vw] bg-gradient-to-r from-slate-700 to-gray-800 absolute rounded-full left-[35%]  blur-[20px] z-0 opacity-75"></div>
+          </div>
+        </div>
+
+        {/* <div className="top-0 "> */}
+        {/* </div> */}
+      </div>
+
+      <div className="absolute top-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center ">
+        <h1 className="text-slate-700  font-bold text-3xl lg:text-6xl">
           Find your next <span className="text-slate-500">perfect</span>
           <br /> place with ease
         </h1>
-        <div className="text-gray-400 text-xs sm:text-sm">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium
-          error perferendis deserunt officia, accusamus magni aut doloribus in
-          ad, facilis ut odit. A possimus, dolorem perspiciatis dolore sunt
-          harum soluta?
+        <div className="shape  opacity-75  ">
+          {/* <div className="shape-1 bg-slate-700  "></div> */}
+          <div className="shape-2  bg-slate-700  w-[35vh] h-[35vh]   "></div>
+          <div className="shape-3  bg-slate-700  w-[35vh] h-[35vh]  "></div>
+        </div>
+        <div className="text-slate-600 font-semibold text-xs sm:text-sm absolute">
+          Embark on a journey with us as we unlock the door to your dreams, one
+          home at a time. Experience the transformative power of real estate,
+          where each property becomes a chapter in the story of your life, and
+          every key symbolizes new beginnings and endless possibilities. Let us
+          guide you through this exciting adventure, turning your aspirations
+          into reality, one door at a time.
           <br />
           we have wide range of property
+          <br />
+          <Link
+            to={"/search"}
+            className=" text-xs sm:text-sm text-blue-50 font-bold hover:text-blue-50 "
+          >
+            Let's get started ..
+          </Link>
         </div>
-        <Link
-          to={"/search"}
-          className="text-xs sm:text-sm text-blue-50 font-bold"
-        >
-          Let's get started ..
-        </Link>
       </div>
 
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10 z-50">
         {offerListing && offerListing.length > 0 && (
           <div>
             <div className="my-3">

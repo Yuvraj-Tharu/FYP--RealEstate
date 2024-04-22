@@ -16,6 +16,7 @@ export default function Navbar() {
   const admin = sessionStorage.getItem("admin");
   const [openProfile, setOpenProfile] = useState(false);
   const isLoggedIn = user || admin;
+  // console.log(openProfile);
 
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,14 +38,14 @@ export default function Navbar() {
   }, [location.search]);
 
   // window.addEventListener("click", (e) => {
-  //   if (e.target !== closeRef.current) {
+  //   if (e.target !== closeRef) {
   //     setOpenProfile(false);
-  //     console.log(openProfile);
+  //     console.log("sssss", openProfile);
   //   }
   // });
 
   return (
-    <div>
+    <div className="z-30">
       <header className="bg-slate-200 shadow-md">
         <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
           <Link to="/">
@@ -105,7 +106,7 @@ export default function Navbar() {
                       // onClick={() => setOpenProfile(true)}
                     />
                   </Link>
-                  {openProfile && (
+                  {openProfile && openProfile === true && (
                     <div className="absolute mt-[-54px] w-48 bg-white rounded-lg shadow-lg z-10">
                       <DropDown />
                     </div>

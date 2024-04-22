@@ -19,7 +19,10 @@ export default function DropDown() {
         transition={{ duration: 0.3, delay: 0.1 }}
         className="flex flex-col gap-4"
       >
-        <Link to="/createListing">
+        <Link
+          to="/createListing"
+          onClick={() => setOpenProfile((prev) => prev)}
+        >
           <motion.li
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -29,7 +32,10 @@ export default function DropDown() {
           </motion.li>
         </Link>
 
-        <Link to="/showUserlisting">
+        <Link
+          to="/showUserlisting"
+          onClick={() => setOpenProfile((prev) => prev)}
+        >
           <motion.li
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -38,7 +44,10 @@ export default function DropDown() {
             Show Listing
           </motion.li>
         </Link>
-        <Link to="/emiCalculator">
+        <Link
+          to="/emiCalculator"
+          onClick={() => setOpenProfile((prev) => prev)}
+        >
           <motion.li
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -29,24 +29,25 @@ export default function ListingItem({ listing }) {
           <p className="text-sm text-gray-600 line-clamp-2">
             {listing.description}
           </p>
-          <p className="text-slate-500 mt-2 font-semibold flex gap-14">
+          <p className="text-slate-500 mt-2 font-semibold  text-xs flex gap-4">
             Rs{" "}
             {listing.offer
-              ? (+listing.regularPrice - +listing.discountPrice).toLocaleString(
-                  "en-RS"
-                )
+              ? (
+                  +listing.regularPrice -
+                  +listing.regularPrice * (listing.discountPrice / 100)
+                ).toLocaleString("en-RS")
               : listing.regularPrice.toLocaleString("en-RS")}
+            {listing.type === "rent" && "/month"}
             {listing.offer && (
               <p className="text-xs">
-                <span className="text-sm line-through">Regular Price: </span>
+                <span className="text-xs line-through ">Regular Price: </span>
                 <span className="line-through text-sm">
-                  Rs {listing.regularPrice}
+                  Rs{listing.regularPrice}
                 </span>
               </p>
             )}
+            {listing.type === "land" && "/Aana"}
           </p>
-
-          {listing.type === "rent" && "/month"}
 
           <div className="text-green-700 flex gap-2">
             <div className="font-bold text-xs flex gap-1">

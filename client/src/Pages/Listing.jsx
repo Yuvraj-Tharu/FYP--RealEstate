@@ -122,7 +122,8 @@ export default function Listing() {
               {listing.title} - Rs{" "}
               {listing.offer
                 ? (
-                    +listing.regularPrice - +listing.discountPrice
+                    +listing.regularPrice -
+                    +listing.regularPrice * (listing.discountPrice / 100)
                   ).toLocaleString("en-RS")
                 : listing.regularPrice.toLocaleString("en-RS")}
               {listing.offer && (
@@ -234,7 +235,8 @@ export default function Listing() {
               {listing1.title} - Rs{" "}
               {listing1.offer
                 ? (
-                    +listing1.regularPrice - +listing1.discountPrice
+                    +listing1.regularPrice *
+                    (listing1.discountPrice / 100)
                   ).toLocaleString("en-RS")
                 : listing1.regularPrice.toLocaleString("en-RS")}
               {listing1.offer && (

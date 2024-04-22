@@ -37,6 +37,7 @@ import AuctionCard from "./AuctionComponent/AuctionCard";
 import ShowAuctionTable from "./AuctionComponent/ShowAuctionTable";
 import UpdateAuction from "./AuctionComponent/UpdateAuction";
 import UserParticipate from "./AuctionComponent/UserParticipate";
+import NewContainer from "./Pages/NewContainer";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           </Route>
 
           <Route path="/" element={<Home />} />
+          <Route path="/n" element={<NewContainer />} />
 
           <Route path="/about" element={<About />} />
           <Route path="/sign-up" element={<Signup />} />

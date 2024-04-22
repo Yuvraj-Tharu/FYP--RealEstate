@@ -21,3 +21,127 @@
     width: 100%;
     height: 100%;
 }
+
+.shape{
+    position: absolute;
+    width: 30vw ;
+    height: 30vw;
+    right: 0;
+
+
+}
+
+.shape-1{
+   
+    height: 20vw;
+    width: 30vw;
+    border-top-left-radius:50% ;
+    border-bottom-left-radius:50% ;
+    filter: blur(15px);
+position: absolute;
+
+
+}
+.shape-2{
+    position: absolute;
+   
+    height: 20vw;
+    width: 20vw;
+    border-radius: 50%;
+    filter: blur(25px);
+    animation-name: animi2;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+
+}
+.shape-3{
+    position: absolute;
+    overflow: hidden;
+   
+    height: 20vw;
+    width: 20vw;
+    border-radius: 50%;
+    filter: blur(20px);
+    background: linear-gradient(#334054,#394b67ac);
+    animation-name: animi1;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes animi1 {
+    from {
+        transform: translate(40%,-2%);
+    }
+    to{
+        transform: translate(0%,10%);
+    }
+    
+}
+
+@keyframes animi2 {
+    from {
+        transform: translate(5%,-5%);
+    }
+    to{
+        transform: translate(-20%,20%);
+    }
+    
+}
+
+.movingText::-webkit-scrollbar{
+    display: none;
+
+}
+.con{
+    animation-name: moving1;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+}
+
+
+@keyframes moving1 {
+    from{
+        transform: translateX(0)
+    }to{
+        transform: translate(-100%);
+
+    }
+    
+}
+
+.Box1{
+    animation-name: animi3;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+.Box2{
+    animation-name: animi3;
+    animation-duration: 5s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count: infinite;
+}
+@keyframes animi3 {
+    from
+    {
+        transform: translate(10%,-10%)skew(0);
+    }to{
+        transform: translate(-10%,10%)skew(-10deg);
+    }
+}
+
+/* 
+@keyframes animi4 {
+    from
+    {
+        transform: translate(40%,-20%)skew(0);
+    }to{
+        transform: translate(30%,30%)skew(-12deg);
+    }
+} */

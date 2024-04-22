@@ -33,8 +33,8 @@ export default function ShowSingleAuctionListing() {
   const [auctionError, setAuctionError] = useState(false);
   SwiperCore.use([Navigation]);
 
-  console.log(winner);
-  console.log(highestBid);
+  // console.log(winner);
+  // console.log(highestBid);
 
   useEffect(() => {
     showData();

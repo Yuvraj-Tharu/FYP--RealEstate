@@ -8,14 +8,14 @@ export default function About() {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="py-10 px-4 max-w-6xl mx-auto flex flex-col-reverse items-center sm:flex-row"
+        className="py-10 px-20 max-w-6xl mx-auto flex flex-col-reverse items-center sm:flex-row"
       >
         <div className="sm:w-1/2 sm:pr-8 mb-8 sm:mb-0 ml-[-6cm]">
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-2xl font-bold mb-4 text-slate-800"
+            className="text-xl font-bold mb-4 text-slate-800"
           >
             About HamroSampati Estate
           </motion.h1>

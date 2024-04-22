@@ -18,7 +18,7 @@ export default function Search() {
     order: "desc",
   });
 
-  // console.log(sidebar);
+  console.log(sidebar);
 
   const handelChange = (e) => {
     if (

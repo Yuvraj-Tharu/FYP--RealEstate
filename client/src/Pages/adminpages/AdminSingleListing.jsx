@@ -98,7 +98,8 @@ export default function AdminsingleListing() {
               {listing.title} - Rs{" "}
               {listing.offer
                 ? (
-                    +listing.regularPrice - +listing.discountPrice
+                    +listing.regularPrice *
+                    (listing.discountPrice / 100)
                   ).toLocaleString("en-RS")
                 : listing.regularPrice.toLocaleString("en-RS")}
               {listing.offer && (

@@ -20,7 +20,7 @@ export default function NewContainer() {
           <div className="shape-2 w-[20vw] h-[20vw] bg-slate-600 rounded-tl-[20vh ] "></div>
         </div>
         <div className="shape absolute left-0 top-2 bottom-0 z-0 mx-0 opacity-75">
-          <div className="shape-3 w-[20vw] h-[20vw] bg-slate-700 "></div>
+          <div className="shape-3 w-[20vw] h-[20vw] bg-slate-700 opacity-75 "></div>
         </div>
       </div>
     </>

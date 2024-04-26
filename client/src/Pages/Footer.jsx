@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { IoIosArrowDropupCircle } from "react-icons/io";
 import {
   MDBFooter,
   MDBContainer,
@@ -8,44 +10,45 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function Footer() {
+  const [visible, setVisible] = useState(false);
+
+  const toggleVisible = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 300) {
+      setVisible(true);
+    } else if (scrolled <= 300) {
+      setVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  window.addEventListener("scroll", toggleVisible);
   return (
     <>
       <div className="">
-        <MDBFooter
-          //   bgColor="light"
-
-          className="text-center text-lg-start text-muted bg-slate-200"
-        >
-          <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            <div className="me-5 d-none d-lg-block ">
-              <span className="font-serif text-2xl text-slate-600 ml-36">
+        <MDBFooter className="text-center text-lg-start text-muted bg-[#FAFAFA]">
+          <section className="d-flex justify-content-center justify-content-lg-between p-4  bg-[#FAFAFA]">
+            <div className="me-5 d-none d-lg-block bg-[#FAFAFA] ">
+              <span className="font-serif text-2xl text-slate-600 ml-[244px] bg-[#FAFAFA]">
                 Get connected with us on social networks:
               </span>
             </div>
 
-            <div>
-              <a href="" className="me-4 text-reset">
-                <MDBIcon fab icon="facebook-f" />
-              </a>
-              <a href="" className="me-4 text-reset">
-                <MDBIcon fab icon="twitter" />
-              </a>
-              <a href="" className="me-4 text-reset">
-                <MDBIcon fab icon="google" />
-              </a>
-              <a href="" className="me-4 text-reset">
-                <MDBIcon fab icon="instagram" />
-              </a>
-              <a href="" className="me-4 text-reset">
-                <MDBIcon fab icon="linkedin" />
-              </a>
-              <a href="" className="me-4 text-reset">
-                <MDBIcon fab icon="github" />
-              </a>
+            <div className="text-2xl ">
+              <IoIosArrowDropupCircle
+                className="z-auto bg-yellow-200 rounded-full animate-bounce"
+                onClick={scrollToTop}
+                // style={{ display: visible ? "inline" : "none" }}
+              />
             </div>
           </section>
-
-          <section className="ml-10">
+          <section className=" ml-[225px]">
             <MDBContainer className="text-center text-md-start mt-5 ">
               <MDBRow className="mt-3">
                 <MDBCol md="3" lg="4" xl="3" className="mx-auto mb-4">
@@ -62,37 +65,37 @@ export default function Footer() {
 
                 <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
                   <h6 className="text-uppercase fw-bold mb-4 text-slate-600">
-                    Products
+                    Categories
                   </h6>
                   <p>
                     <a href="#!" className="text-reset font-serif">
-                      Angular
+                      Recent property
                     </a>
                   </p>
                   <p>
                     <a href="#!" className="text-reset font-serif">
-                      React
+                      To Sell
                     </a>
                   </p>
                   <p>
                     <a href="#!" className="text-reset font-serif">
-                      Vue
+                      To Buy
                     </a>
                   </p>
                   <p>
                     <a href="#!" className="text-reset font-serif">
-                      Laravel
+                      To Rent
                     </a>
                   </p>
                 </MDBCol>
 
                 <MDBCol md="3" lg="2" xl="2" className="mx-auto mb-4">
                   <h6 className="text-uppercase fw-bold mb-4 text-slate-600">
-                    Useful links
+                    Links
                   </h6>
                   <p>
                     <a href="#!" className="text-reset font-serif">
-                      Pricing
+                      About Us
                     </a>
                   </p>
                   <p>
@@ -114,11 +117,11 @@ export default function Footer() {
 
                 <MDBCol md="4" lg="3" xl="3" className="mx-auto mb-md-0 mb-4">
                   <h6 className="text-uppercase fw-bold mb-4 text-slate-600">
-                    Contact
+                    Contact Us
                   </h6>
                   <p>
                     <MDBIcon icon="home" className="me-2 font-serif" />
-                    New York, NY 10012, US
+                    Kathmandu, Bagmati-44600 , Nepal
                   </p>
                   <p>
                     <MDBIcon icon="envelope" className="me-3 font-serif" />
@@ -137,13 +140,12 @@ export default function Footer() {
             </MDBContainer>
           </section>
 
-          <div className="text-center p-4 font-serif bg-[#E2E8F0]">
-            © 2024 Copyright: &nbsp;
+          <div className="text-center p-4 font-serif bg-[#FAFAFA] ">
             <a
-              className="text-reset fw-bold font-serif"
+              className="text-reset fw-bold font-serif "
               href="https://mdbootstrap.com/"
             >
-              HamroSampati.com
+              © 2024 Copyright: &nbsp; HamroSampati.com
             </a>
           </div>
         </MDBFooter>

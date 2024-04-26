@@ -38,6 +38,7 @@ import ShowAuctionTable from "./AuctionComponent/ShowAuctionTable";
 import UpdateAuction from "./AuctionComponent/UpdateAuction";
 import UserParticipate from "./AuctionComponent/UserParticipate";
 import NewContainer from "./Pages/NewContainer";
+import Footer from "./Pages/Footer";
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
             element={<ShowSingleAuctionListing />}
           />
           <Route path="/auctionDetails" element={<AuctionCard />} />
+          <Route path="/footer" element={<Footer />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />

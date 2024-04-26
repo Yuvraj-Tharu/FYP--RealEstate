@@ -25,8 +25,10 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const admin = sessionStorage.getItem("admin");
+  const user = sessionStorage.getItem("users");
 
-  console.log("adminListing", listing1);
+  // console.log("adminListing", listing1);
   const navigate = useNavigate();
 
   SwiperCore.use([Navigation]);
@@ -298,14 +300,17 @@ export default function Listing() {
               <></>
             )}
 
-            {currentUser && listing1.userRef !== currentUser.result._id && (
-              <button
-                onClick={() => createUser(listing1.userRef)}
-                className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
-              >
-                Contact Land Owner
-              </button>
-            )}
+            {admin ||
+              (user &&
+                currentUser &&
+                listing1.userRef !== currentUser.result._id && (
+                  <button
+                    onClick={() => createUser(listing1.userRef)}
+                    className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
+                  >
+                    Contact Land Owner
+                  </button>
+                ))}
           </div>
         </div>
       )}

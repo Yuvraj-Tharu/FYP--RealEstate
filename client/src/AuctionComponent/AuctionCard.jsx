@@ -25,8 +25,8 @@ export default function AuctionCard() {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
-        <div className="flex flex-wrap gap-4">
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10 bg-[#FFFFFF]">
+        <div className="flex flex-wrap  gap-4 bg-[#FFFFFF]">
           {auctionListing
             .slice(0, showMore ? auctionListing.length : 6)
             .map((listing) => (

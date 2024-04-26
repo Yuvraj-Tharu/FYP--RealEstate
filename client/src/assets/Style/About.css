@@ -2,14 +2,16 @@
     display: inline-block;
     position: relative;
     
+    
   }
   
   .hover-underline-animation:after {
     content: '';
+    
     position: absolute;
     width: 100%;
     transform: scaleX(0);
-    height: 6px;
+    height: 2px;
     bottom: 0;
     left: 0;
     background-color: #475569;

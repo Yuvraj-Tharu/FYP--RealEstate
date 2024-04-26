@@ -31,44 +31,83 @@
 // };
 
 // module.exports = { participate };
+// const mongoose = require("mongoose");
 const Auction = require("../Models/AuctionListingSchema");
 const AuctionParticipate = require("../Models/AuctionParticipateSchema");
 
-const MAX_BIDS_PER_MINUTE = 1;
+// const userBidTimestamps = new Map();
 
-const userBidTimestamps = new Map();
+// const participate = async (req, res) => {
+//   try {
+//     const { userDetails, auctionId, bidAmount } = req.body;
+//     const auctionListing = await Auction.findOne({ _id: req.params.id });
+//     if (!auctionListing) {
+//       return res.status(404).json({ error: "Auction not found" });
+//     }
+
+//     if (bidAmount <= auctionListing.MinimumPrice) {
+//       return res
+//         .status(400)
+//         .json({ error: "Bid amount must be higher than the minimum bid" });
+//     }
+//     const currentTime = Date.now();
+//     if (userBidTimestamps.has(userDetails)) {
+//       const lastBidTime = userBidTimestamps.get(userDetails);
+//       const timeDifference = currentTime - lastBidTime;
+//       if (timeDifference < 60000) {
+//         return res
+//           .status(429)
+//           .json({ error: "Too many requests. Please try again later." });
+//       }
+//     }
+
+//     userBidTimestamps.set(userDetails, currentTime);
+
+//     const participation = new AuctionParticipate({
+//       userDetails,
+//       auctionId,
+//       bidAmount,
+//     });
+//     const savedParticipation = await participation.save();
+
+//     return res.status(201).json(savedParticipation);
+//   } catch (error) {
+//     console.error("Error participating in auction:", error);
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 const participate = async (req, res) => {
   try {
     const { userDetails, auctionId, bidAmount } = req.body;
+
+    const lastBid = await AuctionParticipate.findOne({ auctionId }).sort({
+      createdAt: -1,
+    });
+    // console.log(lastBid);
     const auctionListing = await Auction.findOne({ _id: req.params.id });
     if (!auctionListing) {
       return res.status(404).json({ error: "Auction not found" });
     }
+    // console.log("a", auctionListing);
 
+    if (lastBid && lastBid.userDetails.toString() === userDetails.toString()) {
+      return res
+        .status(400)
+        .json({ error: "User made the last bid and cannot participate again" });
+    }
     if (bidAmount <= auctionListing.MinimumPrice) {
       return res
         .status(400)
         .json({ error: "Bid amount must be higher than the minimum bid" });
     }
-    const currentTime = Date.now();
-    if (userBidTimestamps.has(userDetails)) {
-      const lastBidTime = userBidTimestamps.get(userDetails);
-      const timeDifference = currentTime - lastBidTime;
-      if (timeDifference < 60000) {
-        return res
-          .status(429)
-          .json({ error: "Too many requests. Please try again later." });
-      }
-    }
-
-    userBidTimestamps.set(userDetails, currentTime);
 
     const participation = new AuctionParticipate({
       userDetails,
       auctionId,
       bidAmount,
     });
+
     const savedParticipation = await participation.save();
 
     return res.status(201).json(savedParticipation);

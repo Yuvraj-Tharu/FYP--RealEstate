@@ -27,7 +27,7 @@ export default function ShowSingleAuctionListing() {
   const [winner, SetWinner] = useState();
   const [bidAmount, setBidAmount] = useState("");
   const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState("");
+  // const [userDetails, setUserDetails] = useState("");
   const [auctionId, setAuctionId] = useState("");
   const [highestBid, SetHighestBid] = useState("");
   const [auctionError, setAuctionError] = useState(false);
@@ -35,6 +35,10 @@ export default function ShowSingleAuctionListing() {
 
   // console.log(winner);
   // console.log(highestBid);
+  const userDetails = currentUser.result._id;
+  // console.log("auctionId: " + auctionId);
+  // console.log("userD: " + userDetails);
+  // console.log("amount: " + bidAmount);
 
   useEffect(() => {
     showData();
@@ -65,7 +69,7 @@ export default function ShowSingleAuctionListing() {
       }
       result = await result.json();
       setListing(result.result);
-      setUserDetails(result.result.userRef);
+      // setUserDetails(result.result.userRef);
       setAuctionId(result.result._id);
       setError(false);
       setLoading(false);
@@ -113,37 +117,23 @@ export default function ShowSingleAuctionListing() {
   const ParticipateInAuction = async () => {
     try {
       setAuctionError(false);
+
       let result = await fetch(`/api/participate/${params.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userDetails, auctionId, bidAmount }),
       });
-      if (!result.ok) {
-        const errorMessage = await result.json();
-        if (
-          errorMessage.error === "Too many requests. Please try again later."
-        ) {
-          setAuctionError(
-            "You have already participated! Please wait 1 minute before bidding again."
-          );
-        } else if (
-          errorMessage.error ===
-          "Bid amount must be higher than the minimum bid"
-        ) {
-          setAuctionError("Bid amount must be higher than the minimum bid.");
-        } else {
-          setAuctionError(
-            "An error occurred while participating in the auction."
-          );
-        }
-      } else {
-        setAuctionError(false);
-        const data = await result.json();
+      result = await result.json();
+      // console.log(result);
+      if (result.auctionId) {
         toast.success(<div>Bidding Sucessfully</div>, {
           theme: "colored",
           autoClose: 1000,
         });
+      } else {
+        setAuctionError(result.error);
       }
+      setBidAmount("");
     } catch (error) {
       console.log("Internal error", error);
       setAuctionError("An internal error occurred. Please try again later.");
@@ -152,7 +142,7 @@ export default function ShowSingleAuctionListing() {
 
   return (
     <main>
-      {loading && <p className="text-center my-9 text-3xl">Loading...</p>}
+      {loading && <p className="text-center my-9 text-3xl ">Loading...</p>}
       {error && (
         <p className="text-center my-9 text-3xl">Some thing went wrong</p>
       )}

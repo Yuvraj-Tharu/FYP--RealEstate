@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const speakeasy = require("speakeasy");
 const User = require("../Models/UserSchema");
 const jwk = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const SECRET_KEY = "NOTESAPI";
 
 const secret = speakeasy.generateSecret({ length: 20 });
@@ -108,4 +109,44 @@ const sendOTP = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, sendOTP };
+const google = async (req, res) => {
+  try {
+    const { firstName, lastName, email, avatar } = req.body;
+
+    let existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res
+        .status(409)
+        .json({ message: "User already exists", result: existingUser });
+    }
+
+    const generatePassword =
+      Math.random().toString(36).slice(-8) +
+      Math.random().toString(36).slice(-8);
+
+    const hashedPassword = await bcrypt.hash(generatePassword, 10);
+    const hashedConfirmPassword = hashedPassword;
+
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      confirmPassword: hashedConfirmPassword,
+      avatar,
+      isVerified: true,
+    });
+
+    const savedUser = await newUser.save();
+
+    res
+      .status(201)
+      .json({ message: "User created successfully", result: savedUser });
+  } catch (error) {
+    console.error("Error storing Google user data:", error);
+    res.status(500).json({ error: "Failed to store user data" });
+  }
+};
+
+module.exports = { signupUser, sendOTP, google };

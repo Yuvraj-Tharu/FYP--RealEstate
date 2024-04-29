@@ -88,6 +88,11 @@ export default function Listing() {
 
       {listing && (
         <div>
+          {/* <div className="absolute w-full mt-[250px] ml-[200px]">
+            <h1 className="absolute text-white font-serif z-30 text-center items-center text-5xl">
+              Discover a new way of living
+            </h1>
+          </div> */}
           <Swiper navigation>
             {listing.imageUrl.map((url) => (
               <SwiperSlide key={url}>
@@ -120,7 +125,7 @@ export default function Listing() {
           )}
 
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
-            <p className="text-2xl font-semibold  gap-4 ">
+            <p className="text-2xl font-semibold  gap-4 w-full ">
               {listing.title} - Rs{" "}
               {listing.offer
                 ? (
@@ -128,29 +133,31 @@ export default function Listing() {
                     +listing.regularPrice * (listing.discountPrice / 100)
                   ).toLocaleString("en-RS")
                 : listing.regularPrice.toLocaleString("en-RS")}
+              {listing.type === "rent" && " / month"}
               {listing.offer && (
-                <p className="flex gap-1">
+                <p className="flex gap-1 font-sans">
                   <span className="text-sm">Regular Price</span>
                   <span className="line-through text-sm">
                     Rs {listing.regularPrice}
                   </span>
                 </p>
               )}
-              {listing.type === "rent" && " / month"}
-              {listing.type === "land" && " / Aana"}
+              <p className="font-sans">
+                {listing.type === "land" && " / Aana"}
+              </p>
             </p>
-            <p className="flex items-center mt-6 gap-2 text-slate-600  text-sm">
+            <p className="flex items-center mt-6 gap-2 text-slate-600 font-sans  text-sm">
               <FaMapMarkerAlt className="text-green-700" />
               {listing.address}
             </p>
 
             <div className="flex gap-4">
-              <p className="bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
+              <p className="bg-red-900  w-full max-w-[200px] text-white text-center p-1 rounded-md">
                 {listing.type === "rent" ? "For Rent" : "For Sale"}
               </p>
 
               {listing.offer && (
-                <p className="bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
+                <p className="bg-green-900  w-full max-w-[200px] text-white text-center p-1 rounded-md">
                   Rs. {+listing.regularPrice * (listing.discountPrice / 100)}
                   <span> OFF</span>
                 </p>

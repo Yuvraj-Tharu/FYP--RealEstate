@@ -183,7 +183,7 @@ export default function Home() {
           <div className="shape-2  bg-slate-700  w-[35vh] h-[35vh] opacity-65   "></div>
           <div className="shape-3  bg-slate-700  w-[35vh] h-[35vh] opacity-65 "></div>
         </div>
-        <div className="text-slate-600 font-semibold text-xs sm:text-sm absolute text-justify mr-[200px] mt-10">
+        <div className="text-slate-600 font-semibold font-sans text-xs sm:text-sm absolute text-justify mr-[200px] mt-10">
           Embark on a journey with us as we unlock the door to your dreams, one
           home at a time. Experience the transformative power of real estate,
           where each property becomes a chapter in the story of your life, and
@@ -210,11 +210,11 @@ export default function Home() {
         {offerListing && offerListing.length > 0 && (
           <div>
             <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-700 ">
+              <h2 className="text-2xl font-serif text-slate-700 ">
                 Recent Offer
               </h2>
               <Link
-                className="text-sm text-blue-500  hover:underline"
+                className="text-sm text-blue-500 font-serif  hover-underline-animation"
                 to={"/search?offer=true"}
               >
                 Show more Offers
@@ -239,11 +239,11 @@ export default function Home() {
         {saleListing && saleListing.length > 0 && (
           <div>
             <div className="my-3 ">
-              <h2 className="text-2xl font-semibold text-slate-700">
+              <h2 className="text-2xl font-serif text-slate-700">
                 Recent Places for Sale
               </h2>
               <Link
-                className="text-sm text-blue-500 hover:underline"
+                className="text-sm font-serif text-blue-500 hover-underline-animation"
                 to={"/search?type=sale"}
               >
                 Show more Places for Sale
@@ -267,11 +267,11 @@ export default function Home() {
         {rentListing && rentListing.length > 0 && (
           <div>
             <div className="my-3 ">
-              <h2 className="text-2xl font-semibold text-slate-700">
+              <h2 className="text-2xl font-serif text-slate-700">
                 Recent Places for Rent
               </h2>
               <Link
-                className="text-sm text-blue-500 hover:underline"
+                className="text-sm font-serif text-blue-500 hover-underline-animation"
                 to={"/search?type=rent"}
               >
                 Show more Places for Rent
@@ -296,11 +296,11 @@ export default function Home() {
         {landListing && landListing.length > 0 && (
           <div>
             <div className="my-3 ">
-              <h2 className="text-2xl font-semibold text-slate-700 ">
+              <h2 className="text-2xl font-serif text-slate-700 ">
                 Recent Places for Land
               </h2>
               <Link
-                className="text-sm text-blue-500 hover:underline"
+                className="text-sm font-serif text-blue-500 hover-underline-animation"
                 to={"/search?type=land"}
               >
                 Show more Places for Land

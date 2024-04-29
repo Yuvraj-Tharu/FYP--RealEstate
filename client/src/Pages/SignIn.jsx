@@ -19,6 +19,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../Components/OAuth/OAuth";
 
 export default function SignIn() {
   const navigate1 = useNavigate();
@@ -210,8 +211,8 @@ export default function SignIn() {
                   size="md"
                 >
                   {loading ? "Loading ..." : "Sign In"}
-                  {/* Sign In */}
                 </MDBBtn>
+                <OAuth />
                 {error && (
                   <p className="text-center text-xs text-red-500 mt-2">
                     {error}

@@ -16,20 +16,20 @@ export default function ListingItem({ listing }) {
           alt=""
         />
         <div className="p-3 flex flex-col gap-2 w-full">
-          <p className="truncate text-lg font-semibold text-slate-700 ">
+          <p className="truncate text-lg font-semibold  text-slate-700 ">
             {listing.title}
           </p>
           <div className="flex items-center gap-1">
             <MdLocationOn className="h-4 w-4 text-green-700" />
-            <p className="text-sm text-gray-600 truncate w-full">
+            <p className="text-sm text-gray-600 truncate w-full font-sans">
               {listing.address}
             </p>
           </div>
 
-          <p className="text-sm text-gray-600 line-clamp-2">
+          <p className="text-sm text-gray-600 line-clamp-2 font-sans ">
             {listing.description}
           </p>
-          <p className="text-slate-500 mt-2 font-semibold  text-xs flex gap-4">
+          <p className="text-slate-500 mt-2 font-semibold   text-xs flex gap-4">
             Rs{" "}
             {listing.offer
               ? (

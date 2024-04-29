@@ -32,6 +32,10 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    console.log(currentUser);
+  });
+
+  useEffect(() => {
     const urlPrams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlPrams.get("searchTerm");
     if (searchTermFromUrl) {

@@ -11,6 +11,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import OAuth from "../Components/OAuth/OAuth";
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -21,15 +22,6 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const [isVerified, setIsVerified] = useState(false);
-
-  // useEffect(() => {
-  //   // Check if user is verified in session storage
-  //   const isUserVerified = sessionStorage.getItem("signup-user");
-  //   if (isUserVerified) {
-  //     setIsVerified(true);
-  //   }
-  // }, []);
 
   const onTrigger = async () => {
     try {
@@ -188,6 +180,7 @@ export default function Signup() {
                 >
                   {loading ? "Loading..." : " Sign up"}
                 </MDBBtn>
+                <OAuth />
                 {error && (
                   <p className="text-center text-xs text-red-500 mt-2">
                     {error}
@@ -204,18 +197,6 @@ export default function Signup() {
                     {loading ? "wait..." : "Click here..."}
                   </Link>
                 </p>
-                {/* {isVerified && (
-                  <p className="text-center mt-2 text-xs">
-                    Verify your account
-                    <Link
-                      to="/verify/otp"
-                      className="text-orange-400 hover:text-slate-700"
-                    >
-                      {" "}
-                      {loading ? "wait..." : "Click here..."}
-                    </Link>
-                  </p>
-                )} */}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

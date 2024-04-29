@@ -102,6 +102,7 @@ export default function AdminsingleListing() {
                     (listing.discountPrice / 100)
                   ).toLocaleString("en-RS")
                 : listing.regularPrice.toLocaleString("en-RS")}
+              {listing.type === "rent" && " / month"}
               {listing.offer && (
                 <p className="flex gap-1">
                   <span className="text-sm">Regular Price</span>
@@ -110,10 +111,9 @@ export default function AdminsingleListing() {
                   </span>
                 </p>
               )}
-              {listing.type === "rent" && " / month"}
               {listing.type === "land" && " / Aana"}
             </p>
-            <p className="flex items-center mt-6 gap-2 text-slate-600  text-sm">
+            <p className="flex items-center mt-6 gap-2 text-slate-600 font-sans text-sm">
               <FaMapMarkerAlt className="text-green-700" />
               {listing.address}
             </p>

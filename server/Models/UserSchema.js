@@ -21,13 +21,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: 4,
-      maxlength: 10,
+      // maxlength: 10,
+      maxlength: 72,
     },
     confirmPassword: {
       type: String,
-      required: [true, "Confirm password is required"],
+      required: [false, "Confirm password is required"],
       minlength: 4,
-      maxlength: 10,
+      // maxlength: 10,
+      maxlength: 72,
     },
     avatar: {
       type: String,
@@ -36,6 +38,7 @@ const UserSchema = new mongoose.Schema(
     },
     otp: {
       type: String,
+      required: false,
     },
     isVerified: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },

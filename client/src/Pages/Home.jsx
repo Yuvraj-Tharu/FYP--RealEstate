@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 import ListingItem from "../Components/ListingItem";
-import NewContainer from "./NewContainer";
+
 import Footer from "./Footer";
 import "../assets/Style/About.css";
+import "../assets/Style/Button.css";
+import image from "../img/house2.png";
+import { FaHouse } from "react-icons/fa6";
 export default function Home() {
   const [videoSource, setVideoSource] = useState(0);
   const [offerListing, setOfferListing] = useState([]);
@@ -87,125 +90,109 @@ export default function Home() {
 
   return (
     <div className="bg-[#FFFFFF] ">
-      <div className="shape mt-10  ">
+      {/* <div className="shape mt-10  ">
         <div className="shape-2  bg-slate-700  opacity-75  "></div>
         <div className="shape-3  bg-slate-700 opacity-75   "></div>
-      </div>
+      </div> */}
 
-      <NewContainer />
-      <div className=" min-h[100vh] ">
-        {/* <div className="relative ml-[203px]  h-[500px] overflow-hidden z-20 rounded-xl p-5 w-[70%]"> */}
-        {/* <video
+      {/* <div className=" min-h[100vh] right-0 ">
+        <div className="relative ml-[203px]  h-[500px] overflow-hidden z-20 rounded-xl p-5 w-[70%]">
+          <video
             autoPlay
             loop
             muted
             className="absolute top-[207px] left-0 w-full h-[647px] object-cover transform -translate-y-1/2 rounded-xl  "
             src={videos[videoSource]}
             onClick={changeVideo}
-          ></video> */}
-        {/* </div> */}
-        {/* <div className="movingText  whitespace-nowrap overflow-x-auto uppercase mt-10  opacity-10">
-          <div className="con whitespace-nowrap inline-block">
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              Opening doors{" "}
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block">
-              {" "}
-            </div>{" "}
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              To your dreams
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              one key at a time
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-          </div>
-          <div className="con whitespace-nowrap inline-block">
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              Opening doors{" "}
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              To your dreams
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              one key at a time
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-          </div>
-          <div className="con whitespace-nowrap inline-block">
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              Opening doors{" "}
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              To your dreams
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
-            <h1 className="text-8xl font-semibold inline-block">
-              one key at a time
-            </h1>
-            &nbsp; &nbsp;&nbsp;
-            <div className="h-16 w-16 bg-slate-600 rounded-full inline-block"></div>
-            &nbsp; &nbsp;&nbsp;
+          ></video>
+        </div>
+      </div> */}
+
+      <div className=" bg-[#F2F6F7] h-full w-full min-h-[40vw] ">
+        <div className="flex justify-between">
+          <h1 className="  text-6xl  font-serif  mt-[100px]   ml-[300px]">
+            <div className="flex gap-3 font-serif">
+              <FaHouse className="text-2xl text-slate-600 mt-1" />
+              <h1 className="text-slate-700 text-3xl mb-2 font-serif ">
+                Real Estate Agency
+              </h1>
+            </div>
+            <span className="text-slate-500 font-serif ">
+              Find your Dream <br />
+            </span>{" "}
+            <span className="text-slate-700 font-serif">House with us</span>{" "}
+            <br />
+            <span className="flex gap-3 mt-2">
+              <span className=" border-[1px] border-black ml-2 h-26  "></span>
+              <span className="text-sm font-serif text-justify">
+                Embark on a journey with us as we unlock the door to your
+                dreams, one home at a time. Experience the transformative power
+                of real estate, where each property becomes a chapter in the
+                story of your life, and every key symbolizes new beginnings and
+                endless possibilities. Let us guide you through this exciting
+                adventure, turning your aspirations into reality, one door at a
+                time. we have wide range of property
+              </span>
+            </span>
+            <Link to="/about">
+              <button className="ml-2 mt-8 group relative inline-flex items-center overflow-hidden rounded-full border-2 border-slate-600 px-12 py-3 text-lg font-medium text-slate-700 hover:bg-gray-50 hover:text-white">
+                <span className="duration-400 ease absolute left-0 top-1/2 block h-0 w-full bg-slate-700 opacity-100 transition-all group-hover:top-0 group-hover:h-full"></span>
+                <span className="ease absolute right-0 flex h-10 w-10 translate-x-full transform items-center justify-start duration-500 group-hover:-translate-x-2">
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    ></path>
+                  </svg>
+                </span>
+                <span class="relative transform duration-700 group-hover:-translate-x-3">
+                  Make An Enquiry
+                </span>
+              </button>
+            </Link>
+          </h1>
+
+          <img className="" src={image} alt="" />
+        </div>
+        {/* <div className="flex justify-center items-center h-[20vh] w-full mt-60px p-3 bg-red-300 ">
+          <div className=" flex border-2 h-[15vh] w-[130vh] gap-10 border-sky-700">
+            <div className="flex items-center gap-5">
+              <label className="font-semibold">Sort:</label>
+              <select id="sort_order" className="border rounded-lg p-3">
+                <option value="regularPrice_desc">Price low to high</option>
+                <option value="regularPrice_asc">Price high to low</option>
+                <option value="createdAt_desc">Latest</option>
+                <option value="createdAt_asc">Oldest</option>
+              </select>
+            </div>
+         
+            <div className="flex items-center gap-2">
+              <label className="font-semibold">Property Type:</label>
+              <select id="sort_order" className=" rounded-lg p-3">
+                <option value="regularPrice_desc">Price low to high</option>
+                <option value="regularPrice_asc">Price high to low</option>
+                <option value="createdAt_desc">Latest</option>
+                <option value="createdAt_asc">Oldest</option>
+              </select>
+            </div>
           </div>
         </div> */}
       </div>
-
-      <div className="absolute top-2/4 left-1/3 ml-40 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center  ">
-        <h1 className="text-slate-700  font-sans font-medium text-3xl lg:text-6xl mr-[300px]">
-          Find your next <span className="text-slate-500">perfect</span>
-          <br /> place with ease
-        </h1>
-        <div className="shape  opacity-75 mr-[180px]  ">
-          {/* <div className="shape-1 bg-slate-700  "></div> */}
-          <div className="shape-2  bg-slate-700  w-[35vh] h-[35vh] opacity-65   "></div>
-          <div className="shape-3  bg-slate-700  w-[35vh] h-[35vh] opacity-65 "></div>
-        </div>
-        <div className="text-slate-600 font-semibold font-sans text-xs sm:text-sm absolute text-justify mr-[200px] mt-10">
-          Embark on a journey with us as we unlock the door to your dreams, one
-          home at a time. Experience the transformative power of real estate,
-          where each property becomes a chapter in the story of your life, and
-          every key symbolizes new beginnings and endless possibilities. Let us
-          guide you through this exciting adventure, turning your aspirations
-          into reality, one door at a time. we have wide range of property
-          <br />
-          <Link
-            to={"/search"}
-            className=" text-xs sm:text-sm text-violet-500 font-bold hover:opacity-80 ml-[200px]"
-          >
-            Let's get started ..
-          </Link>
-        </div>
-      </div>
-
+      {/* <div className="bg-[#F2F6F7] h-[20vw]"></div> */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10 z-50">
-        <h1 className="text-6xl  font-serif ">
+        <h1 className="  text-6xl  font-serif  mt-3  ">
           <span className="text-slate-500  ">
             Our choice of <br />
           </span>{" "}
-          <span className="text-slate-700">popular real estate</span>
+          <span className="text-slate-700">popular real estate</span> <br />
         </h1>
         {offerListing && offerListing.length > 0 && (
           <div>

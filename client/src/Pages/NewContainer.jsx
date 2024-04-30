@@ -9,10 +9,10 @@ export default function NewContainer() {
           <div className="left">
             <h3 className="text-lg w-[10vw] font-semibold leading-1"></h3>
           </div>
-          <div className="right z-10">
-            <h1 className="font-serif text-[10vw]  leading-[10vw] text-right text-violet-300 opacity-60">
+          <div className=" right-0 z-10">
+            {/* <h1 className="from-neutral-200 text-[10vw] poppins-semibold  leading-[10vw] text-right text-slate-600 opacity-60">
               Space <br /> That <br /> Inspire
-            </h1>
+            </h1> */}
           </div>
         </div>
         <div className="shape absolute right-0 top-0 bottom-0 ">

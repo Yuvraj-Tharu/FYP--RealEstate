@@ -46,7 +46,8 @@ const adminCancel = async (req, res) => {
   try {
     const cancelRequest = await approve.findByIdAndUpdate(
       req.params.id,
-      { isCanceled: true },
+
+      { ...req.body, isCanceled: true },
       { new: true }
     );
 

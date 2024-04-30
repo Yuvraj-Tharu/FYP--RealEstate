@@ -65,6 +65,9 @@ const ListingSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    CancelledMessage: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

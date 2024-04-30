@@ -3,13 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/Sidebar";
 import "../../assets/Style/table.css";
 import { toast } from "react-toastify";
+import { TextField, Button } from "@mui/material";
 
 export default function Approve() {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [showInput, setShowInput] = useState(false);
+  const [cancelText, setCancelText] = useState("");
 
-  // console.log(data);
+  console.log(cancelText);
 
   useEffect(() => {
     showData();
@@ -53,10 +56,14 @@ export default function Approve() {
     try {
       let result = await fetch(`/api/admin-cancel/${id}`, {
         method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ CancelledMessage: cancelText }),
       });
 
       result = await result.json();
+
       if (result) {
+        setCancelText("");
         showData();
       }
       if (result.isCanceled === true) {
@@ -70,6 +77,14 @@ export default function Approve() {
       console.log("sth went wrong with the server", error);
     }
   };
+
+  const handelnot = () => {
+    setShowInput(true);
+  };
+
+  const handleCancel = () => {
+    setShowInput(false);
+  };
   return (
     <>
       <div className="flex">
@@ -82,6 +97,7 @@ export default function Approve() {
             Approve User Property Listing
           </h1>
           {message && <p className="text-red-700 text-sm">{error}</p>}
+
           <table className="">
             <thead>
               <tr>
@@ -126,9 +142,10 @@ export default function Approve() {
                     </td>
                     <td className="flex flex-col gap-3">
                       <button
-                        onClick={() => {
-                          notApproveListing(data._id);
-                        }}
+                        // onClick={() => {
+                        //   notApproveListing(data._id);
+                        // }}
+                        onClick={handelnot}
                         className="text-red-700"
                       >
                         {data.isCanceled === false ? "Cancel" : "Cancelled"}
@@ -147,6 +164,77 @@ export default function Approve() {
                 ))}
             </tbody>
           </table>
+          {showInput && data && (
+            <div className="w-full mt-4 flex justify-center items-center">
+              <div className="mt-10 flex flex-col gap-10  w-[70vh]">
+                <TextField
+                  className=" "
+                  id="standard-basic"
+                  label="Reason for cancellation"
+                  variant="standard"
+                  value={cancelText}
+                  onChange={(e) => setCancelText(e.target.value)}
+                />
+
+                <div className="flex justify-between gap-4">
+                  {data.map((data, i) => (
+                    <button
+                      onClick={() => {
+                        notApproveListing(data._id);
+                      }}
+                      class="group relative inline-flex items-center overflow-hidden rounded-full border-2 border-slate-600 px-12 py-3 text-lg font-medium text-slate-600 hover:bg-gray-50 hover:text-white"
+                    >
+                      <span class="duration-400 ease absolute left-0 top-1/2 block h-0 w-full bg-slate-600 opacity-100 transition-all group-hover:top-0 group-hover:h-full"></span>
+                      <span class="ease absolute right-0 flex h-10 w-10 translate-x-full transform items-center justify-start duration-500 group-hover:-translate-x-2">
+                        <svg
+                          class="h-5 w-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span class="relative transform duration-700 group-hover:-translate-x-3">
+                        Submit
+                      </span>
+                    </button>
+                  ))}
+                  <button
+                    onClick={handleCancel}
+                    class="group relative inline-flex items-center overflow-hidden rounded-full border-2 border-slate-600 px-12 py-3 text-lg font-medium text-slate-600 hover:bg-gray-50 hover:text-white"
+                  >
+                    <span class="duration-400 ease absolute left-0 top-1/2 block h-0 w-full bg-slate-600 opacity-100 transition-all group-hover:top-0 group-hover:h-full"></span>
+                    <span class="ease absolute right-0 flex h-10 w-10 translate-x-full transform items-center justify-start duration-500 group-hover:-translate-x-2">
+                      <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span class="relative transform duration-700 group-hover:-translate-x-3">
+                      Back
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

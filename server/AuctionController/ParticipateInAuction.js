@@ -34,6 +34,10 @@
 // const mongoose = require("mongoose");
 const Auction = require("../Models/AuctionListingSchema");
 const AuctionParticipate = require("../Models/AuctionParticipateSchema");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+const autherEmail = process.env.EMAIL;
+const autherPassword = process.env.PASSWORD;
 
 // const userBidTimestamps = new Map();
 
@@ -117,6 +121,14 @@ const participate = async (req, res) => {
   }
 };
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: autherEmail,
+    pass: autherPassword,
+  },
+});
+
 const getHighestBidder = async (req, res) => {
   try {
     const { auctionId } = req.params;
@@ -129,7 +141,30 @@ const getHighestBidder = async (req, res) => {
       return res.status(404).json({ error: "No bids found" });
     }
 
-    const { userDetails, bidAmount } = highestBidAuction;
+    const { userDetails, bidAmount, emailSent } = highestBidAuction;
+
+    // Check if the email has already been sent
+    if (!emailSent) {
+      // Send an email to the highest bidder
+      const mailOptions = {
+        from: "yuvrajtharu123@gmail.com",
+        to: userDetails.email,
+        subject: "Congratulations! You are the highest bidder",
+        text: `Dear ${userDetails.firstName},\n\nCongratulations! You are the highest bidder with a bid amount of ${bidAmount}.\n\nThank you for participating in the auction.\n\nBest regards,\nAuction Team \nContact us 9812121212`,
+      };
+
+      transporter.sendMail(mailOptions, async (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+        } else {
+          console.log("Email sent:", info.response);
+
+          // Update the emailSent flag to true
+          highestBidAuction.emailSent = true;
+          await highestBidAuction.save();
+        }
+      });
+    }
 
     return res.status(200).json({ userDetails, bidAmount });
   } catch (error) {
@@ -138,4 +173,23 @@ const getHighestBidder = async (req, res) => {
   }
 };
 
-module.exports = { participate, getHighestBidder };
+const bidderUsers = async (req, res) => {
+  try {
+    const { auctionId } = req.params;
+    const user = await AuctionParticipate.findOne({ auctionId })
+      .sort({
+        bidAmount: -1,
+      })
+      .populate("userDetails");
+
+    if (!user) {
+      return res.status(400).json({ message: "user not found" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(403).json({ error: "Something went wrong", error });
+  }
+};
+
+module.exports = { participate, getHighestBidder, bidderUsers };

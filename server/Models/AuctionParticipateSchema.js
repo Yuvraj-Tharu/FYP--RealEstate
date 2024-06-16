@@ -17,6 +17,7 @@ const AuuctionParticipateSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    emailSent: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

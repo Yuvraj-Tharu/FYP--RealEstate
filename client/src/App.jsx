@@ -36,9 +36,10 @@ import ShowSingleAuctionListing from "./AuctionComponent/ShowSingleAuctionListin
 import AuctionCard from "./AuctionComponent/AuctionCard";
 import ShowAuctionTable from "./AuctionComponent/ShowAuctionTable";
 import UpdateAuction from "./AuctionComponent/UpdateAuction";
-import UserParticipate from "./AuctionComponent/UserParticipate";
+// import UserParticipate from "./AuctionComponent/UserParticipate";
 import NewContainer from "./Pages/NewContainer";
 import Footer from "./Pages/Footer";
+import UnitConverter from "./Pages/UnitConverter";
 
 function App() {
   return (
@@ -58,10 +59,10 @@ function App() {
             <Route path="/createListing" element={<CreateListiing />} />
             <Route path="/showUserlisting" element={<ShowListing />} />
             <Route path="/updateListing/:id" element={<UpdateListiing />} />
-            <Route
+            {/* <Route
               path="/user/auction/participate"
               element={<UserParticipate />}
-            />
+            /> */}
           </Route>
 
           <Route path="/" element={<Home />} />
@@ -83,6 +84,7 @@ function App() {
           />
           <Route path="/auctionDetails" element={<AuctionCard />} />
           <Route path="/footer" element={<Footer />} />
+          <Route path="/unitconverter" element={<UnitConverter />} />
 
           <Route element={<PrivateComponentADmin />}>
             <Route path="/admin-dash" element={<AdminPage />} />

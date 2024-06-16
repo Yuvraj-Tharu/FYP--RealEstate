@@ -160,19 +160,6 @@ export default function AdminsingleListing() {
             ) : (
               <></>
             )}
-
-            {/* {currentUser &&
-              listing.userRef !== currentUser.result._id &&
-              !contact && (
-                <button
-                  onClick={() => setContact(true)}
-                  className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
-                >
-                  Contact Land Owner
-                </button>
-              )}
-
-            {contact && <Contact listing={listing} />} */}
           </div>
         </div>
       )}

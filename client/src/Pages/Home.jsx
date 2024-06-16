@@ -110,7 +110,7 @@ export default function Home() {
 
       <div className=" bg-[#F2F6F7] h-full w-full min-h-[40vw] ">
         <div className="flex justify-between">
-          <h1 className="  text-6xl  font-serif  mt-[100px]   ml-[300px]">
+          <h1 className="  text-6xl  font-serif  mt-[100px]   ml-[220px]">
             <div className="flex gap-3 font-serif">
               <FaHouse className="text-2xl text-slate-600 mt-1" />
               <h1 className="text-slate-700 text-3xl mb-2 font-serif ">
@@ -310,7 +310,7 @@ export default function Home() {
         )}
       </div>
 
-      <div className="conatiner bg-[#EDF9F9] flex" ref={ref}>
+      <div className="conatiner bg-[#EDF9F9] flex gap-28" ref={ref}>
         <motion.div
           className="w-full min-h-[30vw] p-5 ml-[229px]"
           initial={{ opacity: 0, y: -100 }}

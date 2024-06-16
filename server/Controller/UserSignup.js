@@ -4,6 +4,9 @@ const User = require("../Models/UserSchema");
 const jwk = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const SECRET_KEY = "NOTESAPI";
+require("dotenv").config();
+const autherEmail = process.env.EMAIL;
+const autherPassword = process.env.PASSWORD;
 
 const secret = speakeasy.generateSecret({ length: 20 });
 
@@ -21,8 +24,8 @@ const signupUser = async (req, res) => {
         const transporter = nodemailer.createTransport({
           service: "Gmail",
           auth: {
-            user: "yuvrajtharu123@gmail.com",
-            pass: "wqot zipt zmje jhum",
+            user: autherEmail,
+            pass: autherPassword,
           },
         });
 

@@ -13,6 +13,7 @@ const {
 const {
   participate,
   getHighestBidder,
+  bidderUsers,
 } = require("../AuctionController/ParticipateInAuction");
 
 auctionRoutes.post("/api/createAuction", createAuction);
@@ -24,4 +25,7 @@ auctionRoutes.put("/api/updateAuctionListing/:id", updateAuctionListing);
 
 auctionRoutes.post("/api/participate/:id", participate);
 auctionRoutes.get("/api/getwinner/:auctionId", getHighestBidder);
+
+auctionRoutes.get("/api/getallUserParticipate/:auctionId", bidderUsers);
+
 module.exports = auctionRoutes;

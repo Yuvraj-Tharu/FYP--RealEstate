@@ -307,17 +307,16 @@ export default function Listing() {
               <></>
             )}
 
-            {admin ||
-              (user &&
-                currentUser &&
-                listing1.userRef !== currentUser.result._id && (
-                  <button
-                    onClick={() => createUser(listing1.userRef)}
-                    className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
-                  >
-                    Contact Land Owner
-                  </button>
-                ))}
+            {user &&
+              currentUser &&
+              listing1.userRef !== currentUser.result._id && (
+                <button
+                  onClick={() => createUser(listing1.userRef)}
+                  className="text-white bg-slate-600 rounded-lg uppercase hover:opacity-80 p-3"
+                >
+                  Contact Land Owner
+                </button>
+              )}
           </div>
         </div>
       )}

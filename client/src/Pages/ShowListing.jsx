@@ -89,7 +89,11 @@ export default function ShowListing() {
                 <td>
                   {listing.isVerified === true ? "Approved" : "Not Approved"}
                 </td>
-                <td>{listing.CancelledMessage}</td>
+                <td>
+                  {listing.isCanceled === true
+                    ? listing.CancelledMessage
+                    : "Verified"}
+                </td>
 
                 <td className="flex flex-col  items-center gap-3">
                   <button

@@ -57,7 +57,7 @@ export default function ShowAuctionTable() {
 
       <div className="p-4 grow flex flex-col text-center ">
         <h1 className="text-center  my-7 text-3xl font-semibold">
-          Your Property Listing
+          Your Auction Listing
         </h1>
 
         <table id="customers" className="">

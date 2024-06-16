@@ -56,11 +56,11 @@ export default function Navbar() {
       <header className="bg-[#F6F9FC] ">
         <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
           <Link to="/">
-            <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+            <h1 className="font-bold text-sm sm:text-xl flex flex-wrap ">
               {/* <span className="text-slate-500 text-xl">HamroSampati</span>
               <span className="text-slate-700">Realestate</span> */}
               <img
-                className="h-24
+                className="h-24 
                  w-24 rounded-lg scale-90 "
                 src={img}
                 alt=""

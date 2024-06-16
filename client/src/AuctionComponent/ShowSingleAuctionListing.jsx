@@ -31,6 +31,7 @@ export default function ShowSingleAuctionListing() {
   const [auctionId, setAuctionId] = useState("");
   const [highestBid, SetHighestBid] = useState("");
   const [auctionError, setAuctionError] = useState(false);
+  const [winnerDetermined, setWinnerDetermined] = useState(false);
   SwiperCore.use([Navigation]);
 
   // console.log(winner);
@@ -39,6 +40,9 @@ export default function ShowSingleAuctionListing() {
   // console.log("auctionId: " + auctionId);
   // console.log("userD: " + userDetails);
   // console.log("amount: " + bidAmount);
+
+  const [userParticipate, setUserParticipate] = useState([]);
+  console.log(userParticipate);
 
   useEffect(() => {
     showData();
@@ -89,7 +93,7 @@ export default function ShowSingleAuctionListing() {
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
       setRemainingTime({ hours, minutes, seconds });
-    } else {
+    } else if (!winnerDetermined) {
       AuctionWinner();
       setRemainingTime(null);
     }
@@ -104,7 +108,7 @@ export default function ShowSingleAuctionListing() {
       result = await result.json();
       SetWinner(result.userDetails);
       SetHighestBid(result.bidAmount);
-      console.log("ss", result);
+      setWinnerDetermined(true);
     } catch (error) {
       console.log("internal error", error);
     }
@@ -117,7 +121,6 @@ export default function ShowSingleAuctionListing() {
   const ParticipateInAuction = async () => {
     try {
       setAuctionError(false);
-
       let result = await fetch(`/api/participate/${params.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -125,6 +128,7 @@ export default function ShowSingleAuctionListing() {
       });
       result = await result.json();
       // console.log(result);
+      // setUserParticipate(result);
       if (result.auctionId) {
         toast.success(<div>Bidding Sucessfully</div>, {
           theme: "colored",
@@ -140,6 +144,27 @@ export default function ShowSingleAuctionListing() {
     }
   };
 
+  useEffect(() => {
+    showLatestBidder();
+  }, []);
+
+  const showLatestBidder = async () => {
+    try {
+      let result = await fetch(`/api/getallUserParticipate/${params.id}`);
+      if (!result) {
+        console.log("result is empty");
+      }
+      result = await result.json();
+      // console.log("result", result);
+      setUserParticipate(result);
+      if (result) {
+        showLatestBidder();
+      }
+    } catch (error) {
+      console.log("sth went wrong", error);
+    }
+  };
+
   return (
     <main>
       {loading && <p className="text-center my-9 text-3xl ">Loading...</p>}
@@ -147,7 +172,7 @@ export default function ShowSingleAuctionListing() {
         <p className="text-center my-9 text-3xl">Some thing went wrong</p>
       )}
 
-      {listing && (
+      {listing && userParticipate && (
         <div>
           <Swiper navigation>
             {listing.imageUrl.map((url) => (
@@ -246,12 +271,35 @@ export default function ShowSingleAuctionListing() {
             {currentUser &&
               listing.userRef !== currentUser.result._id &&
               winner && (
-                <div className="text-4xl font-semibold text-green-900">
-                  Winner : {winner.firstName} {winner.lastName}
-                  <br />
-                  Amount Bid :{highestBid}
-                </div>
+                <>
+                  <div className="flex justify-between">
+                    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                      <h5 class="mb-2 text-2xl  font-medium font-poppins tracking-tight">
+                        Winner: {winner.firstName} {winner.lastName}
+                      </h5>
+
+                      <p class="mb-3 font-poppins text-gray-700 dark:text-gray-600">
+                        Amount Bid: {highestBid}
+                      </p>
+                    </div>
+                  </div>
+                </>
               )}
+
+            <div className="  ">
+              <div className="-0 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <h5 className="mb-2 text-2xl font-medium font-poppins tracking-tight">
+                  Latest Bidder
+                </h5>
+                {/* <p className="mb-3 font-poppins text-gray-700 dark:text-gray-600">
+                  Name: {userParticipate.userDetails.firstName}{" "}
+                  {userParticipate.userDetails.lastName}
+                </p> */}
+                <p className="mb-3 font-poppins text-gray-700 dark:text-gray-600">
+                  Amount Bid: {userParticipate.bidAmount}
+                </p>
+              </div>
+            </div>
 
             {currentUser &&
               listing.userRef !== currentUser.result._id &&

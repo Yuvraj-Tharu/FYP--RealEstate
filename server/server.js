@@ -54,18 +54,30 @@ app.use("/", auctionRoutes);
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 // });
-app.use(express.static(path.join(__dirname, "client", "dist")));
 
-// Handle all other routes by sending the index.html file
+const fs = require("fs");
+
+const staticPath = path.join(__dirname, "client", "dist");
+console.log("Static files are served from:", staticPath);
+
+app.use(express.static(staticPath));
+
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"), (err) => {
-    if (err) {
-      console.error("Error sending file:", err);
-      res.status(err.status || 500).end();
-    }
-  });
-});
+  const indexPath = path.join(staticPath, "index.html");
+  console.log("Sending file:", indexPath);
 
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error("Error sending file:", err);
+        res.status(err.status || 500).end();
+      }
+    });
+  } else {
+    console.error("Index file does not exist:", indexPath);
+    res.status(404).send("File not found");
+  }
+});
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);
 });

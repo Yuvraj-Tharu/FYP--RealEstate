@@ -25,7 +25,7 @@ const auctionRoutes = require("./Routes/Auction.Routes");
 app.use(express.json());
 app.use(cors());
 const path = require("path");
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 const port = process.env.PORT || 3000;
 
@@ -55,29 +55,12 @@ app.use("/", auctionRoutes);
 //   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 // });
 
-const fs = require("fs");
-
-const staticPath = path.join(__dirname, "client", "dist");
-console.log("Static files are served from:", staticPath);
-
-app.use(express.static(staticPath));
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
 app.get("*", (req, res) => {
-  const indexPath = path.join(staticPath, "index.html");
-  console.log("Sending file:", indexPath);
-
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath, (err) => {
-      if (err) {
-        console.error("Error sending file:", err);
-        res.status(err.status || 500).end();
-      }
-    });
-  } else {
-    console.error("Index file does not exist:", indexPath);
-    res.status(404).send("File not found");
-  }
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
+
 app.listen(port, () => {
   console.log(`app listening on port ${port}`);
 });

@@ -12,7 +12,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Signup from "./Pages/Signup";
 import SignIn from "./Pages/SignIn";
 import OTPVerify from "./Pages/OTPVerify";
-import ForgetPassword from "./Pages/ForgetPassword";
+import ForgetPassword from "./Pages/forgetPassword";
 import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 import CreateListiing from "./Pages/CreateListiing";

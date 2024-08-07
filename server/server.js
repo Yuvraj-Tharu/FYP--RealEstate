@@ -50,9 +50,20 @@ app.use("/", MsgRoutes);
 app.use("/", auctionRoutes);
 
 // app.use(express.static(path.join(__dirname, "/client/dist")));
+
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+// });
 app.use(express.static(path.join(__dirname, "client", "dist")));
+
+// Handle all other routes by sending the index.html file
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"), (err) => {
+    if (err) {
+      console.error("Error sending file:", err);
+      res.status(err.status || 500).end();
+    }
+  });
 });
 
 app.listen(port, () => {

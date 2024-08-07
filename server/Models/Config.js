@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/HamroSampati")
-  // .connect(
-  //   `mongodb+srv://yuvraj:12345@hamrosampati.u1mmn23.mongodb.net/HamroSampati`
-  // )
+  // .connect("mongodb://127.0.0.1:27017/HamroSampati")
+  .connect(process.env.MONGODB_URI)
   .then(console.log("Connected to database"))
   .catch((err) => console.log(err));
 

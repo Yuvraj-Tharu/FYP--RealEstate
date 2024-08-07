@@ -24,7 +24,12 @@ const MsgRoutes = require("./Routes/Msg.Routes");
 const auctionRoutes = require("./Routes/Auction.Routes");
 app.use(express.json());
 app.use(cors());
-
+const path = require("path");
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 const port = process.env.PORT || 3000;
 
 app.use("/", userRouter);

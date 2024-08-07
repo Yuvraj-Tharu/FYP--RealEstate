@@ -17,7 +17,7 @@ import PrivateComponent from "./Components/PrivateComponent";
 import PrivateComponentADmin from "./Components/PrivateComponentADmin";
 import CreateListiing from "./Pages/CreateListiing";
 import ShowListing from "./Pages/ShowListing";
-import UpdateListiing from "./Pages/updateListing";
+import UpdateListiing from "./Pages/UpdateListing";
 import Listing from "./Pages/Listing";
 import Search from "./Pages/Search";
 import AdminPage from "./Pages/AdminPage";

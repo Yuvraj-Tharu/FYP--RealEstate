@@ -38,7 +38,26 @@ const signupUser = async (req, res) => {
           from: "yuvrajtharu123@gmail.com",
           to: email,
           subject: "Your OTP",
-          text: `Your verification OTP is: ${otp}`,
+          // text: `Your verification OTP is: ${otp}`,
+          html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+            <h2 style="color: #4CAF50; text-align: center;">Welcome to Our Service!</h2>
+            <p style="font-size: 16px;">Dear ${firstName} ${lastName},</p>
+            <p style="font-size: 14px;">Your verification OTP is:</p>
+            <h3 style="color: #FF5733; background-color: #f4f4f4; padding: 10px; border-radius: 5px; text-align: center;">
+              ${otp}
+            </h3>
+            <p style="font-size: 14px;">Use this OTP to complete your registration. This OTP is valid for the next 10 minutes.</p>
+            <p style="font-size: 14px;">If you didn't request this email, please ignore it.</p>
+            <br />
+            <p style="font-size: 14px;">Best regards,</p>
+            <p style="font-size: 14px;">Your Company Name</p>
+            <footer style="margin-top: 20px; text-align: center; font-size: 12px; color: #777;">
+              <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+              <p><a href="#" style="color: #4CAF50; text-decoration: none;">Unsubscribe</a></p>
+            </footer>
+          </div>
+        `,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

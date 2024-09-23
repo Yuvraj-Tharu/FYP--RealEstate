@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://deploy-realestate.onrender.com",
+        target: "http://localhost:8080",
         secure: false,
       },
     },
